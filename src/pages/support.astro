@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Support — Macroline">
+  <section class="hero">
+    <h1>Support</h1>
+    <p>Need help? We're a small team and we read every email.</p>
+  </section>
+
+  <section class="contact-card">
+    <h2>Contact us</h2>
+    <p>
+      <a href="mailto:support@macroline.app">support@macroline.app</a> — usually a reply within one business day.
+    </p>
+    <p>
+      Press: <a href="mailto:press@macroline.app">press@macroline.app</a><br/>
+      Security: <a href="mailto:security@macroline.app">security@macroline.app</a><br/>
+      Legal: <a href="mailto:legal@macroline.app">legal@macroline.app</a>
+    </p>
+  </section>
+
+  <section class="faq">
+    <h2>FAQ</h2>
+
+    <details>
+      <summary>How do I cancel my Pro subscription?</summary>
+      <p>If you signed up via the iOS app, manage your subscription in <em>Settings → Apple ID → Subscriptions</em> on your phone. If you signed up on the web, log in at macroline.app and visit <em>Settings → Subscription</em>.</p>
+    </details>
+
+    <details>
+      <summary>How do I connect Macroline to Claude?</summary>
+      <p>In the iOS app: <em>Settings → Connect to Claude</em>. This walks you through the OAuth flow inside Claude. Once connected, you can ask Claude things like "Log dinner: chicken caesar wrap and a coke" and Claude will use Macroline's MCP tools to log on your behalf.</p>
+    </details>
+
+    <details>
+      <summary>How accurate is the AI describe-meal feature?</summary>
+      <p>It's reliable for common meals (sandwiches, bowls, named dishes) and named restaurant items. For ambiguous descriptions you'll see a confirmation screen with quantity sliders before anything is logged. We always show a confidence badge on each parsed item.</p>
+    </details>
+
+    <details>
+      <summary>Where does my food data come from?</summary>
+      <p>USDA FoodData Central, OpenFoodFacts (barcoded products), and official chain restaurant nutrition pages. When a food is missing, our research agent fetches the official source and caches it. Every food row carries a source URL you can tap to verify.</p>
+    </details>
+
+    <details>
+      <summary>Can I export my data?</summary>
+      <p>Yes — Pro users can export their full diary as CSV from <em>Settings → Export</em>. Free users can request a JSON export by emailing support.</p>
+    </details>
+
+    <details>
+      <summary>How do I delete my account?</summary>
+      <p>Email <a href="mailto:support@macroline.app">support@macroline.app</a> with subject "Delete my data" from your account email. Your account, diary, and subscription records are deleted within 30 days.</p>
+    </details>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 60px 0 24px; }
+  .hero h1 { font-size: 40px; }
+  .hero p { color: var(--text-muted); font-size: 17px; margin-top: 8px; }
+
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    margin: 32px 0;
+  }
+  .contact-card h2 { font-size: 20px; margin-bottom: 12px; }
+
+  .faq h2 { font-size: 24px; margin-bottom: 16px; }
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 16px 20px;
+    margin-bottom: 8px;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { margin-bottom: 12px; }
+  details p { color: var(--text-muted); margin: 0; line-height: 1.6; }
+</style>

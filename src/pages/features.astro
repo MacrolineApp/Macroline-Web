@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Features — Macroline">
+  <section class="hero">
+    <h1>Features</h1>
+    <p>Macroline does fewer things than MyFitnessPal. It does them honestly.</p>
+  </section>
+
+  <section class="feature">
+    <h2>🎙 Describe meals in plain language</h2>
+    <p>
+      Tap the mic or type. "I had a chicken caesar wrap with extra parmesan and a coke." Macroline parses
+      the description, finds matching foods (or researches them on the fly), and logs the right portions.
+      You confirm with quantity sliders before anything saves. Free tier: 3/day.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>🔍 Verified sources on every food</h2>
+    <p>
+      USDA FoodData Central, OpenFoodFacts barcoded products, and official chain restaurant nutrition.
+      Every food row carries a source URL. Tap any number to see where it came from. No more wondering
+      if "chicken breast" entry #3 is the one with the right macros.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>📷 Barcode scanning</h2>
+    <p>
+      Point your camera at any packaged-food barcode. Macroline checks our database, then OpenFoodFacts,
+      then USDA Branded Foods. If it's still missing, the research agent grabs it from the manufacturer's
+      site. Cached forever after one successful scan. Free tier: 5/day.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>🤖 Research agent finds the missing foods</h2>
+    <p>
+      Mention "Olive Garden herb-grilled salmon"? If we don't have it, our research agent fetches Olive
+      Garden's official nutrition page, parses it, and stores the result with a citation. Every Macroline
+      user benefits. Pro feature.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>🔌 MCP server for AI assistants</h2>
+    <p>
+      Connect Macroline to Claude, ChatGPT, or any MCP-compatible client. Then you can log meals from
+      anywhere — your phone via Claude voice, your desktop while cooking, your IDE in the middle of
+      coding. The food database, your diary, and your goals are all available as MCP tools. Pro feature.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>📊 Honest dashboards</h2>
+    <p>
+      Calories, macros, weight, trends. No streak shame, no fasting nudges, no "you ate too much" copy.
+      Tracking is for awareness, not punishment.
+    </p>
+  </section>
+
+  <section class="feature">
+    <h2>🚪 Your data, your call</h2>
+    <p>
+      Full CSV export (Pro). One-click account deletion. We don't sell data, run ads, or use your meal
+      content to train AI models.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero h1 { font-size: 44px; }
+  .hero p { color: var(--text-muted); font-size: 17px; margin-top: 8px; }
+
+  .feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .feature h2 { font-size: 22px; margin-bottom: 12px; }
+  .feature p { color: var(--text-muted); margin: 0; line-height: 1.7; }
+</style>

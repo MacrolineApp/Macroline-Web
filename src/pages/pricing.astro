@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pricing — Macroline" description="Free tier for everyone. Pro at $4.99/mo unlocks AI input, the research agent, MCP for Claude, and full history.">
+  <section class="hero">
+    <h1>Honest pricing. Just like the data.</h1>
+    <p>Free tier covers daily use. Pro adds the AI features that make Macroline feel magic.</p>
+  </section>
+
+  <section class="tiers">
+    <div class="tier free">
+      <h2>Free</h2>
+      <div class="price">$0<span>forever</span></div>
+      <ul>
+        <li>✓ Unlimited food logging</li>
+        <li>✓ Search USDA + barcoded products</li>
+        <li>✓ Daily macro dashboard</li>
+        <li>✓ Goals &amp; weight tracking</li>
+        <li>✓ 5 saved meals</li>
+        <li>✓ 30-day history</li>
+        <li class="muted">— 5 barcode scans/day</li>
+        <li class="muted">— 3 AI meal descriptions/day</li>
+        <li class="muted">— No research agent (auto-find missing chain foods)</li>
+        <li class="muted">— No MCP / Claude integration</li>
+      </ul>
+      <a href="#download" class="btn-ghost">Start free</a>
+    </div>
+
+    <div class="tier pro">
+      <span class="badge">Recommended</span>
+      <h2>Pro</h2>
+      <div class="price">$4.99<span>/month</span></div>
+      <p class="annual-hint">or $39.99/yr — save 33%</p>
+      <ul>
+        <li>✓ Everything in Free</li>
+        <li>✓ <strong>Unlimited AI meal descriptions</strong></li>
+        <li>✓ <strong>Unlimited barcode scans</strong></li>
+        <li>✓ <strong>Research agent</strong> auto-finds missing chain restaurant foods</li>
+        <li>✓ <strong>MCP server</strong> — connect Claude or any MCP assistant</li>
+        <li>✓ Full unlimited history</li>
+        <li>✓ Unlimited saved meals &amp; recipes</li>
+        <li>✓ CSV export</li>
+        <li>✓ Public REST API access (per-user keys)</li>
+      </ul>
+      <a href="#download" class="btn-primary">Go Pro</a>
+    </div>
+  </section>
+
+  <section class="comparison">
+    <h2>Why we charge for Pro</h2>
+    <p>
+      Macroline's research agent and AI input call out to Claude on every miss. That costs us per-call.
+      Free-tier quotas keep the lights on without ads, dark patterns, or selling your data. Pro is the
+      sustainable way to use the magic features — and the entire database benefits, since researched
+      foods get cached for everyone.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); }
+  .hero p { color: var(--text-muted); font-size: 17px; margin-top: 12px; }
+
+  .tiers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 800px;
+    margin: 40px auto 0;
+  }
+  @media (max-width: 720px) { .tiers { grid-template-columns: 1fr; } }
+
+  .tier {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 32px;
+  }
+  .tier.pro {
+    border: 2px solid var(--primary);
+  }
+  .badge {
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tier h2 { font-size: 22px; margin-bottom: 8px; }
+  .price {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .price span { font-size: 15px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
+  .annual-hint { color: var(--text-muted); font-size: 13px; margin: 4px 0 16px; }
+  .tier ul { list-style: none; padding: 0; margin: 24px 0; }
+  .tier li { padding: 8px 0; font-size: 14px; color: var(--text); }
+  .tier li.muted { color: var(--text-muted); }
+  .btn-primary, .btn-ghost {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 16px;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-ghost { color: var(--text); border: 1px solid var(--border); }
+
+  .comparison {
+    margin-top: 60px;
+    text-align: center;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .comparison h2 { font-size: 24px; }
+  .comparison p { color: var(--text-muted); margin-top: 12px; }
+</style>

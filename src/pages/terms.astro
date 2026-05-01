@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+const lastUpdated = '2026-05-01';
+---
+
+<Base title="Terms of Service — Macroline">
+  <article class="prose">
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: {lastUpdated}</p>
+
+    <p><strong>Placeholder.</strong> Replace with a real ToS before App Store submission.</p>
+
+    <h2>Use of the service</h2>
+    <p>
+      Macroline provides nutrition tracking tools. The macro and calorie information shown is for
+      informational purposes only and is not medical advice. Consult a registered dietitian or your
+      physician for medical decisions.
+    </p>
+
+    <h2>Account</h2>
+    <p>
+      You are responsible for keeping your account credentials secure. We may suspend accounts that
+      abuse the service (e.g., scraping, bypassing rate limits, sharing API keys with unauthorized
+      parties).
+    </p>
+
+    <h2>Subscriptions</h2>
+    <p>
+      Pro subscriptions auto-renew until canceled. Cancel anytime in your platform's subscription
+      settings (App Store on iOS, web account page elsewhere). No refunds on partial periods.
+    </p>
+
+    <h2>Contact</h2>
+    <p><a href="mailto:legal@macroline.app">legal@macroline.app</a></p>
+  </article>
+</Base>
+
+<style>
+  .prose {
+    max-width: 720px;
+    margin: 60px auto;
+    padding: 0 24px;
+    line-height: 1.7;
+  }
+  .prose h1 { font-size: 36px; }
+  .prose h2 { font-size: 22px; margin-top: 36px; margin-bottom: 12px; }
+  .prose .updated { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+</style>

@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+const lastUpdated = '2026-05-01';
+---
+
+<Base title="Privacy Policy — Macroline">
+  <article class="prose">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: {lastUpdated}</p>
+
+    <p>
+      <strong>This is a placeholder privacy policy.</strong> Replace this content with a final version
+      generated via Termly, iubenda, or hand-drafted before App Store submission. Apple requires a real
+      privacy policy at a public URL for app review.
+    </p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li>Account: email address, hashed password.</li>
+      <li>Diary: foods logged, meal types, timestamps, weight entries (if provided).</li>
+      <li>Preferences: macro/calorie goals, timezone.</li>
+      <li>Subscription state: Stripe customer ID or Apple original transaction ID.</li>
+      <li>Usage events (for free-tier quota enforcement): event type and timestamp only.</li>
+    </ul>
+
+    <h2>What we do NOT collect</h2>
+    <ul>
+      <li>Health metrics from HealthKit (unless you explicitly enable HealthKit sync).</li>
+      <li>Location.</li>
+      <li>Contacts.</li>
+      <li>Photos beyond food photos you take inside the app.</li>
+      <li>Advertising identifiers.</li>
+    </ul>
+
+    <h2>Third parties</h2>
+    <ul>
+      <li><strong>Stripe</strong> — payment processing for web subscriptions.</li>
+      <li><strong>Apple</strong> — payment processing and receipt validation for in-app purchases.</li>
+      <li><strong>Anthropic</strong> — text you submit to the "Describe meal" feature is sent to Anthropic's API for parsing. Macroline does not use this content for model training.</li>
+      <li><strong>Resend</strong> — transactional email (signup confirmation, password reset).</li>
+      <li><strong>Cloudflare</strong> — DNS, edge cache, and Pages hosting.</li>
+      <li><strong>Fly.io</strong> — backend application hosting.</li>
+      <li><strong>Neon</strong> — Postgres database hosting.</li>
+    </ul>
+
+    <h2>How to delete your data</h2>
+    <p>
+      Email <a href="mailto:support@macroline.app">support@macroline.app</a> with the subject "Delete my
+      data" from the email address tied to your account. We will delete your account, diary, weight
+      history, and any subscription records within 30 days.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions: <a href="mailto:privacy@macroline.app">privacy@macroline.app</a>
+    </p>
+  </article>
+</Base>
+
+<style>
+  .prose {
+    max-width: 720px;
+    margin: 60px auto;
+    padding: 0 24px;
+    line-height: 1.7;
+  }
+  .prose h1 { font-size: 36px; }
+  .prose h2 { font-size: 22px; margin-top: 36px; margin-bottom: 12px; }
+  .prose .updated { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+  .prose p, .prose ul { color: var(--text); }
+  .prose ul { padding-left: 24px; }
+  .prose li { margin-bottom: 6px; }
+</style>
