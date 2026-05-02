@@ -2,6 +2,7 @@
 title: What 'verified' nutrition data actually means
 description: Most macro trackers display numbers without telling you where they came from. Here's why that's a problem, and how Macroline shows its work on every food row.
 publishedAt: 2026-05-02
+author: marcus-hayes
 tags: ["provenance", "data quality", "philosophy"]
 ---
 

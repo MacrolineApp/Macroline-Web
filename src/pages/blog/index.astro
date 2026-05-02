@@ -1,26 +1,56 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+// Resolve author for each post
+const postsWithAuthors = await Promise.all(
+  posts.map(async (post) => {
+    const author = post.data.author && post.data.author !== 'macroline'
+      ? await getEntry('authors', post.data.author)
+      : null;
+    return { post, author };
+  }),
+);
+
+const authors = await getCollection('authors');
 ---
 
 <Base
   title="Blog — Macroline"
   description="Notes on AI macro tracking, GLP-1, and food data done right."
+  ogImage="/og-blog.png"
 >
   <section class="blog-hero">
     <p class="eyebrow">The Macroline Blog</p>
     <h1>Notes from a tracker built differently.</h1>
     <p class="lede">
-      AI-native macro tracking, GLP-1 + nutrition, and what it means for food data
-      to actually be trustworthy.
+      AI-native macro tracking, GLP-1 and nutrition science, what makes food data
+      actually trustworthy.
     </p>
   </section>
 
+  {authors.length > 0 && (
+    <section class="contributors">
+      <h2 class="section-label">Writers</h2>
+      <div class="author-grid">
+        {authors.map((author) => (
+          <a href={`/blog/by/${author.id}`} class="author-chip">
+            <img src={author.data.photo} alt={author.data.name} />
+            <div>
+              <span class="chip-name">{author.data.name}</span>
+              <span class="chip-role">{author.data.role}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
   <section class="post-list">
-    {posts.map((post) => (
+    {postsWithAuthors.map(({ post, author }) => (
       <a href={`/blog/${post.id}`} class="post-card">
         <div class="post-meta">
           <time datetime={post.data.publishedAt.toISOString()}>
@@ -34,7 +64,15 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         </div>
         <h2>{post.data.title}</h2>
         <p>{post.data.description}</p>
-        <span class="read-more">Read →</span>
+        <div class="post-footer">
+          {author && (
+            <div class="post-author">
+              <img src={author.data.photo} alt={author.data.name} />
+              <span>{author.data.name}</span>
+            </div>
+          )}
+          <span class="read-more">Read →</span>
+        </div>
       </a>
     ))}
   </section>
@@ -43,7 +81,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 <style>
   .blog-hero {
     text-align: center;
-    padding: 60px 0 40px;
+    padding: 60px 0 30px;
     max-width: 720px;
     margin: 0 auto;
   }
@@ -67,14 +105,60 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     line-height: 1.5;
   }
 
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  .contributors {
+    margin-top: 50px;
+    padding: 24px 0 32px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .author-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .author-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.15s ease;
+  }
+  .author-chip:hover {
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .author-chip img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .author-chip > div { display: flex; flex-direction: column; }
+  .chip-name { font-weight: 600; font-size: 14px; }
+  .chip-role { font-size: 12px; color: var(--text-muted); }
+
   .post-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 18px;
-    margin-top: 40px;
+    margin-top: 32px;
   }
   .post-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
@@ -106,10 +190,33 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     color: var(--text-muted);
     line-height: 1.55;
     margin: 0 0 18px;
+    flex: 1;
+  }
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .post-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .post-author img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
   }
   .read-more {
     color: var(--primary);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
   }
 </style>

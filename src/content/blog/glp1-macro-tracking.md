@@ -2,6 +2,7 @@
 title: GLP-1 and macro tracking — why precision matters more, not less
 description: GLP-1 medications change appetite, satiety, and food choices. Here's how macro tracking should adapt — and why "good enough" calorie estimates aren't.
 publishedAt: 2026-05-02
+author: maya-chen
 tags: ["GLP-1", "weight loss", "tracking philosophy"]
 ---
 

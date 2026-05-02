@@ -2,6 +2,7 @@
 title: Why we built an MCP server for nutrition data
 description: Macroline runs as a Model Context Protocol server. Here's what that means, why it matters, and how AI-native tools change what a tracker can be.
 publishedAt: 2026-05-02
+author: alex-rivera
 tags: ["MCP", "AI", "developer tools"]
 ---
 

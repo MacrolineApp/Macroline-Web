@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -10,6 +10,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+const author = post.data.author && post.data.author !== 'macroline'
+  ? await getEntry('authors', post.data.author)
+  : null;
+
 const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric',
 });
@@ -18,6 +22,7 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
 <Base
   title={`${post.data.title} — Macroline`}
   description={post.data.description}
+  ogImage={post.data.ogImage}
 >
   <article class="post">
     <header class="post-header">
@@ -25,8 +30,13 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
       <h1>{post.data.title}</h1>
       <p class="post-description">{post.data.description}</p>
       <div class="post-meta">
+        {author && (
+          <a href={`/blog/by/${author.id}`} class="author-line">
+            <img src={author.data.photo} alt={author.data.name} class="author-avatar" />
+            <span class="author-name">{author.data.name}</span>
+          </a>
+        )}
         <time datetime={post.data.publishedAt.toISOString()}>{formatted}</time>
-        {post.data.author && <span> · {post.data.author}</span>}
         {post.data.tags.length > 0 && (
           <span class="tags">
             {post.data.tags.map((tag) => (
@@ -40,6 +50,18 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
     <div class="post-body">
       <Content />
     </div>
+
+    {author && (
+      <aside class="author-card">
+        <img src={author.data.photo} alt={author.data.name} class="author-card-photo" />
+        <div class="author-card-body">
+          <p class="author-card-role">{author.data.role}</p>
+          <h3 class="author-card-name">{author.data.name}</h3>
+          <p class="author-card-bio">{author.data.bio}</p>
+          <a href={`/blog/by/${author.id}`} class="author-card-link">More from {author.data.name.split(' ')[0]} →</a>
+        </div>
+      </aside>
+    )}
 
     <footer class="post-footer">
       <h2>Want this in your phone?</h2>
@@ -78,13 +100,29 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
     line-height: 1.5;
   }
   .post-meta {
-    margin-top: 18px;
+    margin-top: 22px;
     color: var(--text-muted);
     font-size: 13px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px;
     align-items: center;
+  }
+  .author-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .author-line:hover { text-decoration: none; }
+  .author-line:hover .author-name { color: var(--primary); }
+  .author-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
   }
   .tags { display: inline-flex; gap: 6px; margin-left: 4px; }
   .tag {
@@ -144,6 +182,51 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
     padding-left: 1.4em;
   }
   .post-body :global(li) { margin-bottom: 0.4em; }
+
+  .author-card {
+    margin-top: 60px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 540px) {
+    .author-card { grid-template-columns: 1fr; }
+    .author-card-photo { margin: 0 auto; }
+  }
+  .author-card-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .author-card-role {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .author-card-name {
+    font-size: 20px;
+    margin: 0 0 8px;
+  }
+  .author-card-bio {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0 0 12px;
+  }
+  .author-card-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+  }
 
   .post-footer {
     margin-top: 60px;
