@@ -41,9 +41,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   <body>
     <header class="site-header">
       <a href="/" class="brand">
-        <span class="brand-mark">
-          <span class="seg" style="background: var(--protein)"></span><span class="seg" style="background: var(--carbs)"></span><span class="seg" style="background: var(--fat)"></span>
-        </span>
+        <svg class="brand-mark" viewBox="0 0 24 18" width="24" height="18" aria-hidden="true">
+          <rect x="1"  y="6.84" width="5" height="11.16" rx="2.5" fill="var(--protein)" />
+          <rect x="9.5" y="0"  width="5" height="18"    rx="2.5" fill="var(--carbs)" />
+          <rect x="18" y="3.96" width="5" height="14.04" rx="2.5" fill="var(--fat)" />
+        </svg>
         <span class="brand-name">macroline</span>
       </a>
       <nav>
@@ -147,14 +149,9 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     font-size: 18px;
   }
   .brand-mark {
-    display: inline-flex;
-    width: 28px;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-    gap: 1px;
+    display: inline-block;
+    vertical-align: middle;
   }
-  .brand-mark .seg { flex: 1; height: 100%; }
   .brand-name { font-family: 'Inter Display', 'Inter', sans-serif; }
 
   .site-header nav { display: flex; gap: 24px; }
