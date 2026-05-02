@@ -2,12 +2,15 @@
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = 'Macroline — Just say what you ate.',
   description = 'The AI-native macro & calorie tracker. Describe a meal in plain language, scan a barcode, or connect Claude. Every food has a verified source.',
+  ogImage = '/og.png',
 } = Astro.props;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app${ogImage}`;
 ---
 
 <!doctype html>
@@ -24,13 +27,13 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://macroline.app" />
-    <meta property="og:image" content="https://macroline.app/og.png" />
+    <meta property="og:url" content={`https://macroline.app${Astro.url.pathname}`} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://macroline.app/og.png" />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
@@ -46,7 +49,7 @@ const {
       <nav>
         <a href="/features">Features</a>
         <a href="/pricing">Pricing</a>
-        <a href="/api">API</a>
+        <a href="/blog">Blog</a>
       </nav>
     </header>
 

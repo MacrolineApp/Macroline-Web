@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Payment received — Macroline"
+  description="Welcome to Macroline Pro."
+>
+  <section class="billing">
+    <div class="check">✓</div>
+    <h1>You're Pro.</h1>
+    <p class="lede">Payment received. Your account is now Macroline Pro — unlimited AI input, the research agent, MCP integration, and full history.</p>
+
+    <div class="next-steps">
+      <h2>Open the app to continue</h2>
+      <p>Tap below to return to Macroline. If your tier hasn't updated yet, tap <strong>Refresh status</strong> in the Subscription screen.</p>
+      <a href="macroline://billing/success" class="btn-primary">Open Macroline</a>
+      <p class="hint">If the button doesn't work, just close this page and tap "Refresh status" in the Subscription screen.</p>
+    </div>
+
+    <div class="receipt-note">
+      <h3>About your receipt</h3>
+      <p>
+        Stripe will email you a receipt within a minute. To manage your subscription
+        (cancel, change plan, update card), use the link in that receipt — Stripe's
+        billing portal handles everything. A self-serve portal in the app comes in a
+        future update.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .billing {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .check {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-size: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.4);
+  }
+  h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin: 18px auto 0;
+    line-height: 1.5;
+    max-width: 460px;
+  }
+  .next-steps {
+    margin-top: 48px;
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .next-steps h2 { font-size: 22px; }
+  .next-steps p { color: var(--text-muted); margin: 12px 0; line-height: 1.55; }
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+  }
+  .btn-primary:hover { background: var(--primary-hover); text-decoration: none; }
+  .hint { font-size: 12px; margin-top: 14px; }
+
+  .receipt-note {
+    margin-top: 32px;
+    text-align: left;
+    padding: 24px;
+    background: var(--surface-2);
+    border-radius: var(--r-md);
+  }
+  .receipt-note h3 { font-size: 15px; margin-bottom: 8px; }
+  .receipt-note p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.55; }
+</style>

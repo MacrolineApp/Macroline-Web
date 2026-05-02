@@ -1,6 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0F172A"/>
-  <rect x="10" y="28" width="14" height="8" rx="4" fill="#F97316"/>
-  <rect x="25" y="28" width="14" height="8" fill="#EAB308"/>
-  <rect x="40" y="28" width="14" height="8" rx="4" fill="#8B5CF6"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182440"/>
+      <stop offset="100%" stop-color="#0A1020"/>
+    </linearGradient>
+    <linearGradient id="protein" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#B85211"/>
+    </linearGradient>
+    <linearGradient id="carbs" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#A47F06"/>
+    </linearGradient>
+    <linearGradient id="fat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#5F3FA8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <!-- Bar chart: heights 62%, 100%, 78% of max (24px) -->
+  <rect x="14" y="35" width="9" height="15" rx="4.5" fill="url(#protein)"/>
+  <rect x="27.5" y="26" width="9" height="24" rx="4.5" fill="url(#carbs)"/>
+  <rect x="41" y="31" width="9" height="19" rx="4.5" fill="url(#fat)"/>
+  <!-- Baseline -->
+  <rect x="11" y="50" width="42" height="1.5" rx="0.75" fill="#7884A0" fill-opacity="0.5"/>
 </svg>

@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+---
+
+<Base
+  title="Blog — Macroline"
+  description="Notes on AI macro tracking, GLP-1, and food data done right."
+>
+  <section class="blog-hero">
+    <p class="eyebrow">The Macroline Blog</p>
+    <h1>Notes from a tracker built differently.</h1>
+    <p class="lede">
+      AI-native macro tracking, GLP-1 + nutrition, and what it means for food data
+      to actually be trustworthy.
+    </p>
+  </section>
+
+  <section class="post-list">
+    {posts.map((post) => (
+      <a href={`/blog/${post.id}`} class="post-card">
+        <div class="post-meta">
+          <time datetime={post.data.publishedAt.toISOString()}>
+            {post.data.publishedAt.toLocaleDateString('en-US', {
+              year: 'numeric', month: 'short', day: 'numeric',
+            })}
+          </time>
+          {post.data.tags.length > 0 && (
+            <span class="post-tags">{post.data.tags.slice(0, 2).join(' · ')}</span>
+          )}
+        </div>
+        <h2>{post.data.title}</h2>
+        <p>{post.data.description}</p>
+        <span class="read-more">Read →</span>
+      </a>
+    ))}
+  </section>
+</Base>
+
+<style>
+  .blog-hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .blog-hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .lede {
+    font-size: 17px;
+    color: var(--text-muted);
+    margin-top: 18px;
+    line-height: 1.5;
+  }
+
+  .post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .post-card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .post-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .post-tags { font-weight: 500; }
+  .post-card h2 {
+    font-size: 22px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+  }
+  .post-card p {
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0 0 18px;
+  }
+  .read-more {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>

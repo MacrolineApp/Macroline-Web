@@ -4,16 +4,61 @@ import Base from '../layouts/Base.astro';
 
 <Base>
   <section class="hero">
-    <h1>Just say what you ate.</h1>
-    <p class="hero-sub">
-      The AI-native macro &amp; calorie tracker. Describe a meal in plain English,
-      scan a barcode, or connect Claude — every food has a verified source.
-    </p>
-    <div class="cta-row">
-      <a href="#download" class="btn-primary">Get Macroline</a>
-      <a href="/pricing" class="btn-ghost">See pricing</a>
+    <div class="hero-text">
+      <p class="eyebrow">AI-native macro tracker</p>
+      <h1>Just say what<br/>you ate.</h1>
+      <p class="hero-sub">
+        Describe a meal, scan a barcode, or connect Claude. Every food has a
+        verified source. No more guessing whether your tracker got the macros right.
+      </p>
+      <div class="cta-row">
+        <a href="#download" class="btn-primary">Join the waitlist</a>
+        <a href="/features" class="btn-ghost">See features</a>
+      </div>
+      <p class="cta-sub">Free tier with everything that matters · Pro $4.99/mo unlocks AI input + Claude</p>
     </div>
-    <p class="cta-sub">Free tier with all the basics · Pro $4.99/mo unlocks AI input + Claude integration</p>
+
+    <!-- Stylized in-app preview card — gives the hero a visual anchor -->
+    <div class="hero-preview" aria-hidden="true">
+      <div class="card-stack">
+        <div class="card today-card">
+          <div class="card-head">
+            <span class="card-label">Today</span>
+            <span class="card-cal">1,847 <span class="cal-unit">cal</span></span>
+          </div>
+          <div class="ring-row">
+            <div class="ring-bar protein">
+              <span class="bar-fill" style="width: 78%"></span>
+              <span class="bar-label">Protein</span>
+              <span class="bar-num">142g</span>
+            </div>
+            <div class="ring-bar carbs">
+              <span class="bar-fill" style="width: 62%"></span>
+              <span class="bar-label">Carbs</span>
+              <span class="bar-num">186g</span>
+            </div>
+            <div class="ring-bar fat">
+              <span class="bar-fill" style="width: 54%"></span>
+              <span class="bar-label">Fat</span>
+              <span class="bar-num">64g</span>
+            </div>
+          </div>
+        </div>
+        <div class="card describe-card">
+          <div class="describe-prompt">"chicken caesar wrap and a coke"</div>
+          <div class="describe-result">
+            <div class="match">
+              <span class="match-name">Chicken Caesar Wrap <span class="tier authoritative">Verified</span></span>
+              <span class="match-cal">540 cal</span>
+            </div>
+            <div class="match">
+              <span class="match-name">Coca-Cola, 12 fl oz <span class="tier authoritative">Verified</span></span>
+              <span class="match-cal">140 cal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="pillars">
@@ -73,32 +118,48 @@ import Base from '../layouts/Base.astro';
       <input type="email" name="email" placeholder="you@example.com" required />
       <button type="submit">Join waitlist</button>
     </form>
+    <p class="download-note">No spam. One launch email. Unsubscribe in one click.</p>
   </section>
 </Base>
 
 <style>
   .hero {
-    padding: 80px 0 40px;
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto;
+    padding: 60px 0 40px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; padding: 40px 0; }
+    .hero-text { text-align: center; }
+    .cta-row { justify-content: center; }
+  }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
   }
   .hero h1 {
-    font-size: clamp(40px, 7vw, 72px);
-    line-height: 1.05;
+    font-size: clamp(40px, 6.5vw, 72px);
+    line-height: 1.02;
     letter-spacing: -0.04em;
+    margin: 0;
   }
   .hero-sub {
-    font-size: 19px;
+    font-size: 18px;
     color: var(--text-muted);
-    margin: 24px auto 0;
-    max-width: 560px;
+    margin: 22px 0 0;
+    max-width: 540px;
+    line-height: 1.55;
   }
   .cta-row {
     display: flex;
     gap: 12px;
-    justify-content: center;
-    margin-top: 32px;
+    margin-top: 28px;
     flex-wrap: wrap;
   }
   .btn-primary, .btn-ghost {
@@ -120,13 +181,134 @@ import Base from '../layouts/Base.astro';
     border: 1px solid var(--border);
   }
   .btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
-  .cta-sub { color: var(--text-muted); font-size: 13px; margin-top: 16px; }
+  .cta-sub { color: var(--text-muted); font-size: 13px; margin-top: 18px; }
+
+  /* Hero preview — stylized in-app card */
+  .hero-preview {
+    position: relative;
+    min-height: 420px;
+  }
+  .card-stack {
+    position: relative;
+    height: 100%;
+  }
+  .card {
+    background: linear-gradient(160deg, #1a2a4a 0%, #0f1830 100%);
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    border-radius: 20px;
+    padding: 22px;
+    color: #f8fafc;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.4), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(16px);
+  }
+  .today-card {
+    width: 100%;
+    max-width: 360px;
+    transform: rotate(-1.5deg);
+    margin-left: auto;
+  }
+  .describe-card {
+    width: 100%;
+    max-width: 320px;
+    margin-top: -32px;
+    margin-left: 0;
+    transform: rotate(2deg);
+    position: relative;
+    z-index: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card {
+      background: linear-gradient(160deg, #1a2a4a 0%, #0a0f1f 100%);
+      border-color: rgba(96, 165, 250, 0.2);
+    }
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .card-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+  .card-cal {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .cal-unit {
+    font-size: 14px;
+    color: #94a3b8;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .ring-row { display: grid; gap: 10px; }
+  .ring-bar {
+    position: relative;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 14px;
+    opacity: 0.5;
+  }
+  .ring-bar.protein .bar-fill { background: #F97316; }
+  .ring-bar.carbs   .bar-fill { background: #EAB308; }
+  .ring-bar.fat     .bar-fill { background: #8B5CF6; }
+  .bar-label, .bar-num { position: relative; z-index: 1; }
+  .bar-num { font-family: ui-monospace, 'SF Mono', monospace; font-weight: 600; }
+
+  .describe-prompt {
+    font-style: italic;
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    background: rgba(96, 165, 250, 0.1);
+    border-left: 3px solid var(--primary);
+    border-radius: 4px;
+  }
+  .describe-result { display: grid; gap: 10px; }
+  .match {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .match-name { display: flex; align-items: center; gap: 8px; }
+  .match-cal { font-weight: 600; font-family: ui-monospace, 'SF Mono', monospace; font-size: 12px; }
+  .tier {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .tier.authoritative { background: rgba(16, 185, 129, 0.2); color: #34d399; }
 
   .pillars {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
-    margin-top: 60px;
+    margin-top: 80px;
   }
   .pillar {
     background: var(--surface);
@@ -150,14 +332,19 @@ import Base from '../layouts/Base.astro';
     gap: 16px;
     text-align: left;
   }
-  .tier {
+  .tier-grid .tier {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-md);
     padding: 20px;
+    font-size: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+    color: var(--text);
   }
-  .tier h3 { font-size: 16px; margin-bottom: 6px; }
-  .tier p { font-size: 14px; color: var(--text-muted); margin: 0; }
+  .tier-grid .tier h3 { font-size: 16px; margin-bottom: 6px; }
+  .tier-grid .tier p { font-size: 14px; color: var(--text-muted); margin: 0; }
   .tier-dot {
     display: inline-block;
     width: 10px;
@@ -165,10 +352,10 @@ import Base from '../layouts/Base.astro';
     border-radius: 50%;
     margin-bottom: 8px;
   }
-  .authoritative .tier-dot { background: #10B981; }
-  .computed     .tier-dot { background: #3B82F6; }
-  .estimated    .tier-dot { background: #EAB308; }
-  .unverified   .tier-dot { background: #94A3B8; }
+  .tier-grid .authoritative .tier-dot { background: #10B981; }
+  .tier-grid .computed     .tier-dot { background: #3B82F6; }
+  .tier-grid .estimated    .tier-dot { background: #EAB308; }
+  .tier-grid .unverified   .tier-dot { background: #94A3B8; }
 
   .download {
     margin-top: 100px;
@@ -180,6 +367,7 @@ import Base from '../layouts/Base.astro';
   }
   .download h2 { font-size: 32px; }
   .download p { color: var(--text-muted); margin-top: 12px; }
+  .download-note { font-size: 12px; margin-top: 14px; }
   .signup-form {
     display: flex;
     gap: 8px;
