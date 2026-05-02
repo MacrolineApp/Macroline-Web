@@ -1,73 +1,225 @@
 ---
 import Base from '../layouts/Base.astro';
-const lastUpdated = '2026-05-01';
+
+// AI-DRAFTED PRIVACY POLICY — review with a lawyer before final App Store
+// submission. Covers US/GDPR/CCPA basics + the calorie-tracker specifics.
+const effectiveDate = '2026-05-02';
 ---
 
 <Base title="Privacy Policy — Macroline">
   <article class="prose">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: {lastUpdated}</p>
+    <p class="updated">Effective: {effectiveDate}</p>
+
+    <div class="tldr">
+      <strong>TL;DR.</strong> Macroline is a macro and calorie tracker. We collect what's needed to make the app work — your email, foods you log, goals you set — and process payment info via Stripe. We don't sell your data, run ads, or use your meal logs to train AI models. You can delete your account any time by emailing <a href="mailto:info@macroline.app">info@macroline.app</a>.
+    </div>
 
     <p>
-      <strong>This is a placeholder privacy policy.</strong> Replace this content with a final version
-      generated via Termly, iubenda, or hand-drafted before App Store submission. Apple requires a real
-      privacy policy at a public URL for app review.
+      This policy describes how Macroline ("we", "us", "our", or "Macroline") collects, uses, and shares information about you when you use the Macroline iOS app or visit <a href="https://macroline.app">macroline.app</a> (together, the "Service"). Macroline is operated by Michael Calvert, an individual doing business as Macroline ("Operator"). In this policy, "we" refers to the Operator.
     </p>
 
-    <h2>What we collect</h2>
+    <h2>1. Information we collect</h2>
+
+    <h3>You give us</h3>
     <ul>
-      <li>Account: email address, hashed password.</li>
-      <li>Diary: foods logged, meal types, timestamps, weight entries (if provided).</li>
-      <li>Preferences: macro/calorie goals, timezone.</li>
-      <li>Subscription state: Stripe customer ID or Apple original transaction ID.</li>
-      <li>Usage events (for free-tier quota enforcement): event type and timestamp only.</li>
+      <li><strong>Account information.</strong> Email address and a password you create. Passwords are hashed with bcrypt and never stored in readable form.</li>
+      <li><strong>Diary entries.</strong> Foods you log, the quantity, optional meal type (breakfast/lunch/dinner/snack), the timestamp, and any optional notes.</li>
+      <li><strong>Body and goal data.</strong> Calorie and macronutrient targets you set, weight entries you log (if any), display name, and timezone.</li>
+      <li><strong>Custom foods.</strong> Foods you add to your private library that aren't in our public database.</li>
+      <li><strong>Free-text descriptions.</strong> When you use the "Describe meal" feature, the text you submit is sent to our AI provider (Anthropic) for parsing into structured items. The text is not used by Anthropic to train models (per the API terms in effect at the time of this policy).</li>
+      <li><strong>Customer support communications.</strong> If you email us, we keep the message to respond.</li>
     </ul>
 
-    <h2>What we do NOT collect</h2>
+    <h3>Generated automatically</h3>
     <ul>
-      <li>Health metrics from HealthKit (unless you explicitly enable HealthKit sync).</li>
+      <li><strong>Authentication metadata.</strong> Session refresh-token hashes, the user-agent string from your device, and the IP address of the request, recorded when you sign in or refresh a session. Used to detect compromised sessions.</li>
+      <li><strong>Subscription state.</strong> Your current tier (Free or Pro), and identifiers from our payment processors (Stripe customer ID, Apple original transaction ID) used to associate your subscription with your account.</li>
+      <li><strong>Usage events.</strong> Counts of feature use (e.g., "describe meal" call, "barcode scan" call) timestamped per user, used to enforce free-tier quotas. We do not record the content of those events beyond a feature label.</li>
+      <li><strong>Server logs.</strong> Standard request logs (URL, status code, timing) retained for up to 30 days for debugging and security.</li>
+    </ul>
+
+    <h3>What we do NOT collect</h3>
+    <ul>
+      <li>HealthKit data, unless you explicitly enable HealthKit sync in a future version of the app.</li>
       <li>Location.</li>
-      <li>Contacts.</li>
-      <li>Photos beyond food photos you take inside the app.</li>
-      <li>Advertising identifiers.</li>
+      <li>Contacts, calendar, or other on-device personal data.</li>
+      <li>Photos beyond images you take or pick inside the app for food scanning.</li>
+      <li>Advertising identifiers (IDFA). We do not run advertising.</li>
+      <li>Cross-app or cross-site tracking data.</li>
     </ul>
 
-    <h2>Third parties</h2>
+    <h2>2. How we use information</h2>
     <ul>
-      <li><strong>Stripe</strong> — payment processing for web subscriptions.</li>
-      <li><strong>Apple</strong> — payment processing and receipt validation for in-app purchases.</li>
-      <li><strong>Anthropic</strong> — text you submit to the "Describe meal" feature is sent to Anthropic's API for parsing. Macroline does not use this content for model training.</li>
-      <li><strong>Resend</strong> — transactional email (signup confirmation, password reset).</li>
-      <li><strong>Cloudflare</strong> — DNS, edge cache, and Pages hosting.</li>
-      <li><strong>Fly.io</strong> — backend application hosting.</li>
-      <li><strong>Neon</strong> — Postgres database hosting.</li>
+      <li><strong>Operate the Service.</strong> Authenticate you, store your diary, calculate daily macro/calorie totals, send transactional emails (signup confirmation, password reset).</li>
+      <li><strong>Personalize.</strong> Apply your goals to dashboards and summaries.</li>
+      <li><strong>Improve the Service.</strong> Aggregated, non-identifying analysis of which features get used. We do not use your individual diary content to train AI models.</li>
+      <li><strong>Communicate.</strong> Send service updates, security notices, and replies to your support requests.</li>
+      <li><strong>Detect and prevent abuse.</strong> Block fraudulent signups, payment fraud, and unauthorized access.</li>
+      <li><strong>Legal compliance.</strong> Respond to lawful requests, enforce our Terms.</li>
     </ul>
 
-    <h2>How to delete your data</h2>
+    <h2>3. Who we share information with</h2>
+
+    <p>We share data with the following service providers strictly to operate Macroline. We do not sell your personal information to anyone.</p>
+
+    <table class="vendors">
+      <thead>
+        <tr><th>Service</th><th>What it processes</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Stripe</strong></td><td>Payment card data, billing email</td><td>Process web subscription payments</td></tr>
+        <tr><td><strong>Apple</strong></td><td>In-app purchase receipt</td><td>Process iOS subscriptions</td></tr>
+        <tr><td><strong>Anthropic</strong></td><td>Meal-description text you submit</td><td>Parse natural language into structured food items</td></tr>
+        <tr><td><strong>Resend</strong></td><td>Email address, message body</td><td>Send signup confirmation, password reset, account notifications</td></tr>
+        <tr><td><strong>Neon</strong></td><td>All structured data described above</td><td>Database hosting</td></tr>
+        <tr><td><strong>Fly.io</strong></td><td>Server logs, in-memory request data</td><td>Application hosting</td></tr>
+        <tr><td><strong>Cloudflare</strong></td><td>DNS records, edge cache, marketing site requests</td><td>Domain DNS, CDN, marketing site hosting, email routing</td></tr>
+        <tr><td><strong>Upstash</strong></td><td>Background-job metadata</td><td>Job queue for the food-research worker</td></tr>
+      </tbody>
+    </table>
+
+    <p>Each of these vendors has its own privacy policy. We've selected vendors that have public policies and recognized data-protection practices.</p>
+
+    <p>We may also disclose information when required by law (subpoena, court order), to enforce our Terms, or to protect the rights, property, or safety of Macroline or others.</p>
+
+    <h2>4. Where data is stored</h2>
     <p>
-      Email <a href="mailto:info@macroline.app">info@macroline.app</a> with the subject "Delete my
-      data" from the email address tied to your account. We will delete your account, diary, weight
-      history, and any subscription records within 30 days.
+      Macroline's primary infrastructure is hosted in the United States (Neon Postgres in AWS US-East, Fly.io in IAD region, Upstash US-East). If you access the Service from outside the United States, your information will be transferred to and processed in the US. By using Macroline, you consent to this transfer.
+    </p>
+    <p>
+      Email and DNS routing pass through Cloudflare's global network. Cloudflare may temporarily process data through edge locations near you for performance.
     </p>
 
-    <h2>Contact</h2>
+    <h2>5. How long we keep data</h2>
+    <ul>
+      <li><strong>Active account data</strong> — kept as long as your account is active.</li>
+      <li><strong>Server logs</strong> — up to 30 days.</li>
+      <li><strong>Deleted account data</strong> — fully removed within 30 days of deletion request, except where we are legally required to retain certain financial records (Stripe subscription history is retained per Stripe's policy).</li>
+      <li><strong>Backups</strong> — Neon takes daily automatic backups retained for 7 days. Deleted records may persist in those backups for up to 7 days after deletion.</li>
+    </ul>
+
+    <h2>6. Your rights</h2>
+
+    <p>You have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> the data we have about you. Most of it is visible in the app (Settings, Diary). For a complete export, email us.</li>
+      <li><strong>Correct</strong> any inaccuracies. Edit goals, weight, food entries directly in the app.</li>
+      <li><strong>Delete</strong> your account. Email <a href="mailto:info@macroline.app">info@macroline.app</a> with the subject "Delete my data" from the email address tied to your account. We will delete your account, diary, weight history, custom foods, and subscription records within 30 days.</li>
+      <li><strong>Export</strong> your data. Pro users can export their full diary as CSV from the app. Free users can request a JSON export by emailing us.</li>
+      <li><strong>Withdraw consent</strong> for processing where consent is the basis (e.g., describing a meal sends text to Anthropic — you can simply not use that feature).</li>
+      <li><strong>Object</strong> to certain processing or request portability where required by your local law.</li>
+    </ul>
+
+    <h3>For California residents (CCPA/CPRA)</h3>
     <p>
-      Questions: <a href="mailto:info@macroline.app">info@macroline.app</a>
+      You have the right to know what categories of personal information we collect, to delete your information, to correct inaccurate information, and to opt out of "sale" or "sharing" of personal information. <strong>We do not sell or share personal information for cross-context behavioral advertising.</strong> To exercise any right, email <a href="mailto:info@macroline.app">info@macroline.app</a>. We will not discriminate against you for exercising any CCPA right.
+    </p>
+
+    <h3>For EU/UK/EEA residents (GDPR)</h3>
+    <p>
+      Our legal bases for processing are: (a) <em>contract</em> — to provide the Service you requested; (b) <em>legitimate interests</em> — to keep the Service secure and improve it; (c) <em>consent</em> — for optional features like meal description text submission to Anthropic; (d) <em>legal obligation</em> — to comply with applicable law. You may lodge a complaint with your local data protection authority. The Operator does not currently appoint an EU representative as we operate below the threshold requiring one; this may change as we grow.
+    </p>
+
+    <h2>7. Security</h2>
+    <p>
+      Passwords are hashed with bcrypt. All connections to the Service are over HTTPS/TLS. Subscription payment data does not touch our servers — it is handled by Stripe and Apple. Database access is authenticated and role-restricted. We use industry-standard security practices but no system is perfectly secure; if you believe your account has been compromised, contact us immediately at <a href="mailto:info@macroline.app">info@macroline.app</a>.
+    </p>
+
+    <h2>8. Children's privacy</h2>
+    <p>
+      Macroline is intended for users <strong>13 years of age or older</strong>. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has created an account, contact us at <a href="mailto:info@macroline.app">info@macroline.app</a> and we will delete the account.
+    </p>
+    <p>
+      <strong>Health note for younger users and their guardians.</strong> Calorie and macro tracking can intersect with eating disorders. If you or someone you care about is struggling with food or body image, please consider reaching out to a qualified professional. The National Eating Disorders Association helpline (US) is available at 1-800-931-2237.
+    </p>
+
+    <h2>9. Cookies and similar technologies</h2>
+    <p>
+      The Macroline iOS app does not use cookies. The marketing site (macroline.app) uses minimal analytics provided by Cloudflare Pages, which counts page views without setting tracking cookies or collecting personally identifiable information. We do not use third-party advertising or social-media tracking pixels.
+    </p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>
+      We may update this policy as Macroline evolves. The "Effective" date at the top reflects the current version. For material changes, we will notify you by email or by an in-app notice at least 7 days before the change takes effect. Continued use after the effective date constitutes acceptance.
+    </p>
+
+    <h2>11. Contact</h2>
+    <p>
+      Questions or requests: <a href="mailto:info@macroline.app">info@macroline.app</a>
+    </p>
+    <p class="footer-note">
+      Macroline is operated by Michael Calvert (Operator), an individual doing business as Macroline.
     </p>
   </article>
 </Base>
 
 <style>
   .prose {
-    max-width: 720px;
+    max-width: 760px;
     margin: 60px auto;
-    padding: 0 24px;
+    padding: 0 24px 80px;
     line-height: 1.7;
   }
   .prose h1 { font-size: 36px; }
-  .prose h2 { font-size: 22px; margin-top: 36px; margin-bottom: 12px; }
-  .prose .updated { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
-  .prose p, .prose ul { color: var(--text); }
-  .prose ul { padding-left: 24px; }
-  .prose li { margin-bottom: 6px; }
+  .prose h2 {
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+  .prose h2:first-of-type { border-top: none; padding-top: 0; }
+  .prose h3 {
+    font-size: 17px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .prose .updated {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .prose p, .prose ul, .prose ol { color: var(--text); }
+  .prose ul, .prose ol { padding-left: 24px; }
+  .prose li { margin-bottom: 8px; }
+  .prose a { color: var(--primary); }
+
+  .tldr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--r-md);
+    padding: 16px 20px;
+    margin: 24px 0 32px;
+    font-size: 15px;
+  }
+
+  .vendors {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .vendors th, .vendors td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .vendors th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .vendors td:first-child { white-space: nowrap; }
+
+  .footer-note {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 24px;
+  }
 </style>

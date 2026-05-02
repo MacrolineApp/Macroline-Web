@@ -1,48 +1,233 @@
 ---
 import Base from '../layouts/Base.astro';
-const lastUpdated = '2026-05-01';
+
+// AI-DRAFTED TERMS OF SERVICE — review with a lawyer before final App Store
+// submission. Delaware governing law (per Operator selection). Strong NOT
+// MEDICAL ADVICE language because Macroline is health-adjacent.
+const effectiveDate = '2026-05-02';
 ---
 
 <Base title="Terms of Service — Macroline">
   <article class="prose">
     <h1>Terms of Service</h1>
-    <p class="updated">Last updated: {lastUpdated}</p>
+    <p class="updated">Effective: {effectiveDate}</p>
 
-    <p><strong>Placeholder.</strong> Replace with a real ToS before App Store submission.</p>
+    <div class="tldr">
+      <strong>Plain-language summary.</strong> By using Macroline you agree to these terms. Macroline is a macro and calorie tracker — it gives you information based on data sources we believe are accurate, but it is <strong>not medical, dietary, or nutritional advice</strong>. Pro subscriptions auto-renew until you cancel. You can stop using the Service any time. We can't promise the Service will always be perfect, and our liability is limited.
+    </div>
 
-    <h2>Use of the service</h2>
     <p>
-      Macroline provides nutrition tracking tools. The macro and calorie information shown is for
-      informational purposes only and is not medical advice. Consult a registered dietitian or your
-      physician for medical decisions.
+      These Terms of Service ("Terms") govern your use of the Macroline iOS application and the website at <a href="https://macroline.app">macroline.app</a> (together, the "Service"). The Service is operated by Michael Calvert, an individual doing business as Macroline ("we", "us", "our", or "Operator").
     </p>
 
-    <h2>Account</h2>
     <p>
-      You are responsible for keeping your account credentials secure. We may suspend accounts that
-      abuse the service (e.g., scraping, bypassing rate limits, sharing API keys with unauthorized
-      parties).
+      <strong>By creating an account or using the Service, you agree to these Terms and to our <a href="/privacy">Privacy Policy</a>. If you do not agree, do not use the Service.</strong>
     </p>
 
-    <h2>Subscriptions</h2>
+    <h2>1. Eligibility</h2>
+    <p>You must be at least 13 years old to use Macroline. If you are between 13 and the age of legal majority where you live, you must have a parent or legal guardian's permission to use the Service. By creating an account you represent that you meet these requirements.</p>
+
+    <h2>2. Your account</h2>
+    <ul>
+      <li>You must provide accurate information when signing up.</li>
+      <li>You are responsible for keeping your password secret. Do not share your account credentials with anyone.</li>
+      <li>You are responsible for activity that happens under your account.</li>
+      <li>If you believe your account has been accessed without authorization, contact us immediately at <a href="mailto:info@macroline.app">info@macroline.app</a>.</li>
+      <li>One account per person. Sharing accounts violates these Terms.</li>
+    </ul>
+
+    <h2>3. The Service</h2>
     <p>
-      Pro subscriptions auto-renew until canceled. Cancel anytime in your platform's subscription
-      settings (App Store on iOS, web account page elsewhere). No refunds on partial periods.
+      Macroline lets you log foods, see daily calorie and macronutrient totals, set goals, and (with a Pro subscription) use AI features to log meals from natural-language descriptions, scan barcodes, and connect to compatible AI assistants via the Model Context Protocol (MCP).
+    </p>
+    <p>
+      Macroline relies on public food databases (USDA FoodData Central, OpenFoodFacts), official restaurant nutrition pages, manufacturer-published data, and AI-derived estimates. Each food in our database carries a "source tier" indicating where the data came from. We make reasonable efforts to keep this data accurate but do not guarantee it.
     </p>
 
-    <h2>Contact</h2>
+    <h2>4. Important disclaimer — not medical, dietary, or nutritional advice</h2>
+    <p class="warn">
+      <strong>Macroline is informational only.</strong> The calorie counts, macronutrient values, goal recommendations, and AI-generated outputs in the Service are not medical, dietary, nutritional, or fitness advice. Macroline is not a substitute for consultation with a licensed physician, registered dietitian, or other qualified professional.
+    </p>
+    <ul>
+      <li>Do not use Macroline to diagnose, treat, cure, or prevent any disease or health condition.</li>
+      <li>Consult a qualified healthcare provider before making changes to your diet, exercise, or medication based on anything you see in the Service — particularly if you have a medical condition (including but not limited to diabetes, kidney disease, eating disorders, or pregnancy).</li>
+      <li>Macros and calories shown for restaurant or branded items can change without notice. Verify with the source if accuracy is critical.</li>
+      <li>If you are struggling with disordered eating, please consider reaching out to a qualified professional. In the US, the National Eating Disorders Association helpline is 1-800-931-2237.</li>
+    </ul>
+
+    <h2>5. Subscriptions, billing, and refunds</h2>
+
+    <h3>Plans</h3>
+    <p>
+      Macroline offers a free tier with usage limits and a Pro subscription priced at <strong>$4.99 per month</strong> or <strong>$39.99 per year</strong>. Current pricing and feature lists are on our <a href="https://macroline.app/pricing">pricing page</a>.
+    </p>
+
+    <h3>Auto-renewal</h3>
+    <p>
+      Subscriptions auto-renew at the end of each billing period unless you cancel before that period ends. You will be charged for the next period using the payment method on file. We may attempt to retry payment if a charge fails.
+    </p>
+
+    <h3>Cancellation</h3>
+    <ul>
+      <li><strong>Subscriptions purchased on iOS:</strong> manage and cancel in your iPhone's <em>Settings → [Your Name] → Subscriptions → Macroline</em>. Per Apple's App Store policy, cancellations take effect at the end of the current billing period.</li>
+      <li><strong>Subscriptions purchased on the web (via Stripe):</strong> manage via the Stripe customer portal link in your billing email. Cancellations take effect at the end of the current billing period.</li>
+    </ul>
+
+    <h3>Refunds</h3>
+    <p>
+      Subscription fees are non-refundable except where required by law. We do not provide partial refunds for unused time within a billing period. iOS refunds are handled by Apple per <a href="https://reportaproblem.apple.com">Apple's refund policy</a>. Web subscription refund requests can be sent to <a href="mailto:info@macroline.app">info@macroline.app</a> and will be considered case-by-case.
+    </p>
+
+    <h3>Price changes</h3>
+    <p>
+      We may change subscription prices. If we do, we'll notify you at least 30 days before the change takes effect. Continued subscription after the change constitutes acceptance of the new price.
+    </p>
+
+    <h2>6. Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the Service to violate any law or regulation.</li>
+      <li>Reverse-engineer, decompile, or disassemble the Service except to the extent permitted by applicable law.</li>
+      <li>Scrape, crawl, or use bots to extract data from the Service.</li>
+      <li>Bypass usage limits, rate limits, or other technical restrictions.</li>
+      <li>Share your account credentials or your API keys with unauthorized parties.</li>
+      <li>Use the Service to abuse, harass, or harm others.</li>
+      <li>Attempt to gain unauthorized access to other users' accounts or to our infrastructure.</li>
+      <li>Submit content that infringes intellectual property, contains malware, or is unlawful.</li>
+      <li>Use the Service in a way that imposes an unreasonable load on our infrastructure.</li>
+    </ul>
+
+    <h2>7. Your content</h2>
+    <p>
+      You retain ownership of the diary entries, custom foods, weight logs, and other content you submit to the Service ("Your Content"). You grant us a limited, non-exclusive, worldwide, royalty-free license to host, store, transmit, and process Your Content solely as needed to operate the Service for you.
+    </p>
+    <p>
+      We may use aggregated, de-identified data derived from Your Content to improve the Service (for example, to identify which foods are missing from our public database). We will not use the content of your meal descriptions or diary entries to train AI models.
+    </p>
+    <p>
+      If you submit a custom food and choose to make it public, you grant other Macroline users a limited license to use it within the Service.
+    </p>
+
+    <h2>8. Our intellectual property</h2>
+    <p>
+      The Macroline name, logo, app design, source code (where not open-sourced), database schema, and curated chain-restaurant data are owned by the Operator. Nothing in these Terms grants you any rights in our intellectual property except the limited license to use the Service as intended.
+    </p>
+    <p>
+      Underlying nutritional data may come from public sources (USDA, OpenFoodFacts, etc.) — those have their own licensing terms; we comply with each source's terms.
+    </p>
+
+    <h2>9. Third-party services</h2>
+    <p>
+      The Service integrates with third-party services including Stripe (payments), Apple (App Store and in-app purchases), Anthropic (AI processing), Resend (email), and others described in our <a href="/privacy">Privacy Policy</a>. Those services have their own terms and policies; we are not responsible for them.
+    </p>
+    <p>
+      The Service may also be used in conjunction with third-party AI assistants (such as Claude) via the Model Context Protocol. When you connect such an assistant, you authorize Macroline to share your data with that assistant on your behalf, subject to the scopes you grant.
+    </p>
+
+    <h2>10. Disclaimer of warranties</h2>
+    <p class="warn">
+      <strong>The Service is provided "as is" and "as available."</strong> To the fullest extent permitted by law, the Operator disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, and uninterrupted operation. We do not warrant that the Service will be error-free, that defects will be corrected, or that the food data we provide will be accurate or complete.
+    </p>
+
+    <h2>11. Limitation of liability</h2>
+    <p>
+      To the fullest extent permitted by law, the Operator shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, revenues, data, or goodwill, arising out of or related to your use of the Service. The Operator's total cumulative liability for any claim arising out of or relating to these Terms or the Service shall not exceed the greater of <strong>(a) the amount you paid us in the 12 months preceding the claim</strong> or <strong>(b) USD $50.00</strong>.
+    </p>
+    <p>
+      Some jurisdictions do not allow the exclusion or limitation of certain damages, so portions of this section may not apply to you.
+    </p>
+
+    <h2>12. Indemnification</h2>
+    <p>
+      You agree to indemnify and hold harmless the Operator from any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, or your violation of any third party's rights.
+    </p>
+
+    <h2>13. Termination</h2>
+    <p>
+      You may stop using the Service at any time and delete your account by emailing <a href="mailto:info@macroline.app">info@macroline.app</a>. We may suspend or terminate your access if you violate these Terms or engage in conduct that we reasonably believe is harmful to the Service or to other users. Sections that by their nature should survive termination (including disclaimers, limitations of liability, indemnification, and governing law) will survive.
+    </p>
+
+    <h2>14. Governing law and dispute resolution</h2>
+    <p>
+      These Terms are governed by the laws of the <strong>State of Delaware, United States</strong>, without regard to its conflict-of-laws principles. The federal and state courts located in Delaware shall have exclusive jurisdiction over any dispute arising out of or relating to these Terms or the Service, except that either party may seek injunctive or equitable relief in any court of competent jurisdiction.
+    </p>
+    <p>
+      Before filing any legal action, you agree to first contact us at <a href="mailto:info@macroline.app">info@macroline.app</a> and attempt in good faith to resolve the dispute informally for at least 30 days.
+    </p>
+
+    <h2>15. Changes to these Terms</h2>
+    <p>
+      We may update these Terms as the Service evolves. The "Effective" date at the top reflects the current version. For material changes, we will give you at least 14 days' notice by email or in-app notice. If you do not agree to a change, your remedy is to stop using the Service before the change takes effect. Continued use after the effective date constitutes acceptance.
+    </p>
+
+    <h2>16. Miscellaneous</h2>
+    <ul>
+      <li>If any provision of these Terms is found unenforceable, the remaining provisions remain in effect.</li>
+      <li>Our failure to enforce any provision does not waive our right to enforce it later.</li>
+      <li>You may not assign these Terms without our written consent. We may assign them in connection with a sale, merger, or other corporate transaction.</li>
+      <li>These Terms (together with the Privacy Policy) constitute the entire agreement between you and the Operator regarding the Service.</li>
+    </ul>
+
+    <h2>17. Contact</h2>
     <p><a href="mailto:info@macroline.app">info@macroline.app</a></p>
+    <p class="footer-note">
+      Macroline is operated by Michael Calvert (Operator), an individual doing business as Macroline.
+    </p>
   </article>
 </Base>
 
 <style>
   .prose {
-    max-width: 720px;
+    max-width: 760px;
     margin: 60px auto;
-    padding: 0 24px;
+    padding: 0 24px 80px;
     line-height: 1.7;
   }
   .prose h1 { font-size: 36px; }
-  .prose h2 { font-size: 22px; margin-top: 36px; margin-bottom: 12px; }
-  .prose .updated { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+  .prose h2 {
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+  .prose h2:first-of-type { border-top: none; padding-top: 0; }
+  .prose h3 {
+    font-size: 17px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .prose .updated {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .prose p, .prose ul { color: var(--text); }
+  .prose ul { padding-left: 24px; }
+  .prose li { margin-bottom: 8px; }
+  .prose a { color: var(--primary); }
+  .prose strong { color: var(--text); }
+
+  .tldr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--r-md);
+    padding: 16px 20px;
+    margin: 24px 0 32px;
+    font-size: 15px;
+  }
+  .warn {
+    background: color-mix(in srgb, var(--carbs) 12%, transparent);
+    border-left: 4px solid var(--carbs);
+    border-radius: var(--r-md);
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+  .footer-note {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 24px;
+  }
 </style>
