@@ -39,9 +39,22 @@ const effectiveDate = '2026-05-02';
       <li><strong>Server logs.</strong> Standard request logs (URL, status code, timing) retained for up to 30 days for debugging and security.</li>
     </ul>
 
+    <h3>Apple Health (HealthKit)</h3>
+    <p>
+      If you opt in via Settings → Apple Health, Macroline can read and write body weight (<code>HKQuantityTypeIdentifierBodyMass</code>) to/from Apple Health on your device. Specifically:
+    </p>
+    <ul>
+      <li><strong>Read:</strong> the latest weight sample and a recent history window, used only to display alongside your Macroline-logged weights so trends stay continuous if you've been logging weight in another app.</li>
+      <li><strong>Write:</strong> when you log a weight in Macroline and the "Mirror weight logs" toggle is on, the same kilogram value is written to Apple Health, sourced as "Macroline."</li>
+    </ul>
+    <p>
+      Apple Health data <strong>is processed on your device only</strong> — it is not transmitted to our servers, not shared with third parties, and not used for advertising or other use-based data mining. You can revoke access at any time in iOS Settings → Health → Data Access &amp; Devices → Macroline.
+    </p>
+
     <h3>What we do NOT collect</h3>
     <ul>
-      <li>HealthKit data, unless you explicitly enable HealthKit sync in a future version of the app.</li>
+      <li>Apple Health data on our servers (HealthKit reads/writes stay on your device — see above).</li>
+      <li>Health data types other than body weight (we do not request access to active energy, basal energy, water, or any other HealthKit type at this time).</li>
       <li>Location.</li>
       <li>Contacts, calendar, or other on-device personal data.</li>
       <li>Photos beyond images you take or pick inside the app for food scanning.</li>
