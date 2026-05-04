@@ -13,7 +13,7 @@ The marketing & support site at macroline.app. Astro 5 static site, deployed via
 
 - The app itself (that's `Macroline/` — Tauri/Svelte)
 - API or auth endpoints (that's `MacrolineDb/`)
-- Authenticated user dashboard (lives in the Tauri app, also accessible at app.macroline.app web build)
+- Authenticated user dashboard (lives in the Tauri app, also accessible at my.macroline.app via the separate Macroline-WebApp repo)
 
 ## Working principles
 
