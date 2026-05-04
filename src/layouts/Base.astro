@@ -52,6 +52,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
         <a href="/features">Features</a>
         <a href="/pricing">Pricing</a>
         <a href="/blog">Blog</a>
+        <a href="https://my.macroline.app/login" class="nav-login">Log in</a>
       </nav>
     </header>
 
@@ -154,9 +155,20 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   }
   .brand-name { font-family: 'Inter Display', 'Inter', sans-serif; }
 
-  .site-header nav { display: flex; gap: 24px; }
+  .site-header nav { display: flex; gap: 24px; align-items: center; }
   .site-header nav a { color: var(--text-muted); font-weight: 500; }
   .site-header nav a:hover { color: var(--text); text-decoration: none; }
+  /* Right-anchored "Log in" pill — visually separates the call-to-action
+     from the regular nav links so signed-out visitors find the entry point. */
+  .site-header nav .nav-login {
+    margin-left: 8px;
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+  }
+  .site-header nav .nav-login:hover { background: var(--primary-hover); color: white; }
 
   .site-footer {
     border-top: 1px solid var(--border);
