@@ -12,10 +12,14 @@ import Base from '../../layouts/Base.astro';
     <p class="lede">Payment received. Your account is now Macroline Pro — unlimited AI input, the research agent, MCP integration, and full history.</p>
 
     <div class="next-steps">
-      <h2>Open the app to continue</h2>
-      <p>Tap below to return to Macroline. If your tier hasn't updated yet, tap <strong>Refresh status</strong> in the Subscription screen.</p>
-      <a href="macroline://billing/success" class="btn-primary">Open Macroline</a>
-      <p class="hint">If the button doesn't work, just close this page and tap "Refresh status" in the Subscription screen.</p>
+      <h2>Continue where you came from</h2>
+      <div class="continue-row">
+        <a href="macroline://billing/success" class="btn-primary">Open iOS app</a>
+        <a href="https://my.macroline.app/today" class="btn-ghost">Continue on web</a>
+      </div>
+      <p class="hint">
+        Pick whichever you came from. Your Pro status is now live in both — sync may take ~30 seconds. If your tier doesn't show as Pro right away, refresh the page or pull to refresh in the iOS app.
+      </p>
     </div>
 
     <div class="receipt-note">
@@ -71,17 +75,33 @@ import Base from '../../layouts/Base.astro';
   }
   .next-steps h2 { font-size: 22px; }
   .next-steps p { color: var(--text-muted); margin: 12px 0; line-height: 1.55; }
-  .btn-primary {
+  .continue-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .btn-primary, .btn-ghost {
     display: inline-block;
-    padding: 14px 32px;
-    background: var(--primary);
-    color: white;
+    padding: 14px 24px;
     border-radius: var(--r-pill);
     font-weight: 600;
     text-decoration: none;
-    margin-top: 12px;
+    border: 1px solid transparent;
+    font-size: 15px;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
   }
   .btn-primary:hover { background: var(--primary-hover); text-decoration: none; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
   .hint { font-size: 12px; margin-top: 14px; }
 
   .receipt-note {
