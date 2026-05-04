@@ -1,0 +1,22 @@
+/**
+ * Cloudflare Workers config for the Macroline marketing site.
+ *
+ * The site is a fully static Astro build — no SSR, no sessions, no
+ * server-side anything. We declare it as a static-asset-only Worker
+ * so wrangler stops trying to non-interactively run `astro add cloudflare`
+ * (which adds the server adapter, which enables sessions, which dies on
+ * KV provisioning every build).
+ *
+ * If/when we add server-rendered routes (e.g. a real waitlist endpoint),
+ * we'll add `main` here and configure the adapter properly. Until then:
+ * static dist/, no surprises.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "macrolineweb",
+	"compatibility_date": "2026-01-01",
+
+	"assets": {
+		"directory": "./dist"
+	}
+}
