@@ -1,0 +1,469 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Connect Macroline to Claude — Macroline"
+  description="Add Macroline to Claude as a connector. Log meals, search foods, and read your macro summary by chatting with Claude."
+>
+  <section class="hero">
+    <p class="eyebrow">Connector setup</p>
+    <h1>Connect Macroline to Claude</h1>
+    <p class="lede">
+      Macroline runs as an MCP server. Once it's connected to Claude, you can log meals, search foods, and read your macro summary directly from chat — no app switching.
+    </p>
+  </section>
+
+  <section class="what-you-get">
+    <h2>What you can do</h2>
+    <ul class="value-grid">
+      <li>
+        <strong>Log meals from chat.</strong>
+        <span>"I had a chicken caesar wrap and a coke for lunch — log it." Claude finds the foods, calculates macros, writes the diary entry.</span>
+      </li>
+      <li>
+        <strong>Ask about your trends.</strong>
+        <span>"What was my average protein last week?" or "Which day this month did I eat over my carb goal?"</span>
+      </li>
+      <li>
+        <strong>Search the food database.</strong>
+        <span>Get verified macros for any food, brand, or chain restaurant item — with the source cited.</span>
+      </li>
+      <li>
+        <strong>Adjust your goals.</strong>
+        <span>Tell Claude to bump your protein target up to 180g; it updates Macroline directly.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="setup">
+    <h2>Setup, in three steps</h2>
+
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div>
+          <h3>Open Claude and go to Connectors</h3>
+          <p>
+            On <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> or the Claude desktop app: <strong>Settings → Connectors → Add custom connector</strong>.
+          </p>
+          <p class="note">
+            If "Add custom connector" isn't visible, your account may need to be opted in. See <a href="https://support.claude.com/en/articles/11596036">Anthropic's connector docs</a>.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">2</span>
+        <div>
+          <h3>Paste the Macroline server URL</h3>
+          <p>
+            Use this URL when Claude asks for the MCP server address:
+          </p>
+          <pre class="code">https://api.macroline.app/mcp</pre>
+          <p>
+            Claude reads our metadata, discovers the available tools, and asks you to authorize. You'll be redirected to Macroline's sign-in page.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <span class="step-num">3</span>
+        <div>
+          <h3>Sign in and approve</h3>
+          <p>
+            Sign in with your Macroline email and password. You'll see exactly what Claude is allowed to do (search foods, read diary, log meals, set goals). Approve, and you're connected.
+          </p>
+          <p class="note">
+            Don't have a Macroline account yet? <a href="/">Get the app</a> first — signup takes about a minute.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="tools">
+    <h2>What's exposed to Claude</h2>
+    <p class="section-lede">
+      Five tools, scoped to your account. Each one is read-only or write-only — no surprise mutations.
+    </p>
+    <table class="tool-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>What it does</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>search_food</code></td>
+          <td>Find foods by name or brand. Returns verified macros + source.</td>
+          <td><span class="pill read">Read</span></td>
+        </tr>
+        <tr>
+          <td><code>get_diary</code></td>
+          <td>Read your diary entries within a date range.</td>
+          <td><span class="pill read">Read</span></td>
+        </tr>
+        <tr>
+          <td><code>get_summary</code></td>
+          <td>Daily macro totals and your goals for any date.</td>
+          <td><span class="pill read">Read</span></td>
+        </tr>
+        <tr>
+          <td><code>log_meal</code></td>
+          <td>Add foods to your diary. Idempotent — safe to retry.</td>
+          <td><span class="pill write">Write</span></td>
+        </tr>
+        <tr>
+          <td><code>set_goals</code></td>
+          <td>Update your daily calorie and macro goals.</td>
+          <td><span class="pill write">Write</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="permissions">
+    <h2>Permissions you'll see</h2>
+    <p class="section-lede">
+      OAuth 2.1 scopes, requested explicitly during the approve step. You can deny any of them.
+    </p>
+    <ul class="scope-list">
+      <li>
+        <code>read:foods</code>
+        <span>Search the food database (public foods + your custom foods).</span>
+      </li>
+      <li>
+        <code>read:diary</code>
+        <span>Read your diary entries and daily summaries.</span>
+      </li>
+      <li>
+        <code>write:diary</code>
+        <span>Add new entries to your diary.</span>
+      </li>
+      <li>
+        <code>write:goals</code>
+        <span>Update your calorie and macro targets.</span>
+      </li>
+    </ul>
+    <p class="note">
+      Macroline never grants access to weight, body composition, or HealthKit data through MCP. Those stay in the iOS app.
+    </p>
+  </section>
+
+  <section class="privacy">
+    <h2>Privacy + security</h2>
+    <ul class="privacy-list">
+      <li>
+        <strong>OAuth 2.1 with PKCE.</strong>
+        <span>Token-based auth. No passwords stored on Claude's side. Revoke any time from your Macroline account.</span>
+      </li>
+      <li>
+        <strong>Scoped access.</strong>
+        <span>Claude can only do what the four scopes above allow. Adding new capabilities requires re-authorizing.</span>
+      </li>
+      <li>
+        <strong>No model training on your data.</strong>
+        <span>Your diary, goals, and search history are not used by us or Anthropic to train AI models.</span>
+      </li>
+      <li>
+        <strong>Snapshot integrity.</strong>
+        <span>Diary entries logged via Claude are snapshotted with the macros at log time. Future corrections to a food row don't change your past totals.</span>
+      </li>
+    </ul>
+    <p class="note">
+      Full details: <a href="/privacy">privacy policy</a>.
+    </p>
+  </section>
+
+  <section class="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <details>
+      <summary>Claude says it can't find the connector</summary>
+      <p>Make sure you pasted the URL exactly: <code>https://api.macroline.app/mcp</code>. No trailing slash, no extra protocol prefix. If that's right, try removing and re-adding the connector.</p>
+    </details>
+    <details>
+      <summary>The sign-in page rejects my password</summary>
+      <p>Use the same email and password you use for the Macroline iOS app. If you signed up via Apple or Google SSO and never set a password, open the iOS app, sign out, and choose "Sign up with email" to create one — then come back to the connector flow.</p>
+    </details>
+    <details>
+      <summary>I get an "access_denied" error</summary>
+      <p>That means you clicked Cancel on the consent screen. Re-trigger the connector flow from Claude and choose Approve.</p>
+    </details>
+    <details>
+      <summary>Claude logs an entry twice</summary>
+      <p>This shouldn't happen — the <code>log_meal</code> tool is idempotent and Claude is supposed to retry with the same request id. If you see a duplicate, please <a href="mailto:info@macroline.app">let us know</a> with the entry IDs and timestamp.</p>
+    </details>
+    <details>
+      <summary>How do I disconnect Claude?</summary>
+      <p>From Claude: Settings → Connectors → Macroline → Remove. From Macroline: open the iOS app, Settings → Connect AI → Revoke all sessions.</p>
+    </details>
+  </section>
+
+  <section class="cta">
+    <h2>Ready?</h2>
+    <p>Open Claude, add a custom connector, and paste the URL.</p>
+    <pre class="code-cta">https://api.macroline.app/mcp</pre>
+    <p class="note">
+      Don't have Macroline yet? <a href="/">Get the app</a> first — connecting Claude after takes about 90 seconds.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 60px 0 12px; }
+  .eyebrow {
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+  }
+  .hero h1 {
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .lede {
+    color: var(--text-muted);
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  section { margin: 48px 0; }
+  section h2 {
+    font-size: 24px;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+  .section-lede {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+    max-width: 640px;
+  }
+
+  .value-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .value-grid li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 18px 20px;
+  }
+  .value-grid strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .value-grid span {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .steps h3 {
+    font-size: 17px;
+    margin: 4px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .steps p {
+    margin: 0 0 10px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  .steps p strong { color: var(--text); font-weight: 600; }
+  .steps a { color: var(--primary); text-decoration: underline; text-decoration-color: rgba(0,0,0,0.18); }
+  .note { font-size: 13px; }
+
+  .code, .code-cta {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 14px;
+    color: var(--text);
+    overflow-x: auto;
+    margin: 8px 0;
+  }
+  .code-cta {
+    text-align: center;
+    font-size: 16px;
+    padding: 16px;
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+  }
+
+  .tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .tool-table th, .tool-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .tool-table th {
+    background: var(--surface-2);
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tool-table tbody tr:last-child td { border-bottom: none; }
+  .tool-table code {
+    font-family: ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--primary);
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pill.read {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+  }
+  .pill.write {
+    background: color-mix(in srgb, var(--protein) 16%, transparent);
+    color: var(--protein);
+  }
+
+  .scope-list, .privacy-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .scope-list li, .privacy-list li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 14px;
+    align-items: baseline;
+    font-size: 14px;
+  }
+  .scope-list code {
+    font-family: ui-monospace, monospace;
+    color: var(--primary);
+    font-size: 13px;
+  }
+  .privacy-list strong {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .scope-list span, .privacy-list span {
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+    font-size: 15px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { margin-bottom: 10px; }
+  details p {
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  details p code {
+    font-family: ui-monospace, monospace;
+    background: var(--surface-2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+
+  .cta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 32px;
+    text-align: center;
+    margin: 48px 0 80px;
+  }
+  .cta h2 { margin: 0 0 4px; }
+  .cta p { color: var(--text-muted); margin: 0 0 8px; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 32px; }
+    .value-grid { grid-template-columns: 1fr; }
+    .scope-list li, .privacy-list li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .tool-table { font-size: 13px; }
+    .tool-table th, .tool-table td { padding: 10px 12px; }
+    .steps li { grid-template-columns: 44px 1fr; gap: 12px; }
+    .step-num { width: 36px; height: 36px; font-size: 15px; }
+  }
+</style>
