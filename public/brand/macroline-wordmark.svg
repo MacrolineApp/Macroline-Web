@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48">
+  <title>Macroline wordmark</title>
+  <desc>Macroline horizontal wordmark — bar-chart mark on the left, lowercase "macroline" wordmark on the right. Use on dark backgrounds.</desc>
+
+  <!-- Mark, centered vertically in 48px height. 24×18 viewBox → scaled 1.778x to 42.67×32. -->
+  <g transform="translate(8, 8) scale(1.333)">
+    <rect x="1"  y="6.84" width="5" height="11.16" rx="2.5" fill="#F97316"/>
+    <rect x="9.5" y="0"   width="5" height="18"    rx="2.5" fill="#EAB308"/>
+    <rect x="18" y="3.96" width="5" height="14.04" rx="2.5" fill="#8B5CF6"/>
+  </g>
+
+  <!-- Wordmark — Inter-ish weights via simple text. Consumers should have
+       Inter loaded; the system-ui fallback is reasonable. -->
+  <text x="50" y="32"
+        font-family="Inter Display, Inter, -apple-system, system-ui, sans-serif"
+        font-size="24"
+        font-weight="600"
+        letter-spacing="-0.5"
+        fill="#F8FAFC">macroline</text>
+</svg>

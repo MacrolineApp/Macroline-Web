@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width="24" height="18">
+  <title>Macroline mark</title>
+  <desc>Macroline brand mark — three vertical bars representing protein, carbs, and fat. Use this version in headers and inline text where the framed logo is too heavy.</desc>
+  <rect x="1"  y="6.84" width="5" height="11.16" rx="2.5" fill="#F97316"/>
+  <rect x="9.5" y="0"   width="5" height="18"    rx="2.5" fill="#EAB308"/>
+  <rect x="18" y="3.96" width="5" height="14.04" rx="2.5" fill="#8B5CF6"/>
+</svg>
