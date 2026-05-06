@@ -6,7 +6,7 @@ author: marcus-hayes
 tags: ["provenance", "data quality", "philosophy"]
 ---
 
-Open MyFitnessPal. Search for "chicken breast." You'll get hundreds of results. Half are user-submitted. Some are wrong by 30%. None of them tell you where the numbers came from.
+Open most calorie trackers and search for "chicken breast." You'll get hundreds of results. Half are user-submitted. Some are wrong by 30%. None of them tell you where the numbers came from.
 
 This is the macro-tracking industry's open secret: the data is mostly **community-contributed and unverified**. The app shows you a calorie count. You log it. You make a decision based on it. And nobody — not the app, not you — knows if that number is right.
 
