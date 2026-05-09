@@ -15,3 +15,7 @@ node_modules/
 
 # macOS
 .DS_Store
+
+# Local backups of OG images / other assets — keep on disk only.
+public/og-pre-*-backup/
+public/*-backup/
