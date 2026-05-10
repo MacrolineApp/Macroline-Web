@@ -26,18 +26,18 @@ import Base from '../layouts/Base.astro';
             <span class="card-label">Today</span>
             <span class="card-cal">1,847 <span class="cal-unit">cal</span></span>
           </div>
-          <div class="ring-row">
-            <div class="ring-bar protein">
+          <div class="macro-row">
+            <div class="macro-bar protein">
               <span class="bar-fill" style="width: 78%"></span>
               <span class="bar-label">Protein</span>
               <span class="bar-num">142g</span>
             </div>
-            <div class="ring-bar carbs">
+            <div class="macro-bar carbs">
               <span class="bar-fill" style="width: 62%"></span>
               <span class="bar-label">Carbs</span>
               <span class="bar-num">186g</span>
             </div>
-            <div class="ring-bar fat">
+            <div class="macro-bar fat">
               <span class="bar-fill" style="width: 54%"></span>
               <span class="bar-label">Fat</span>
               <span class="bar-num">64g</span>
@@ -123,35 +123,48 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
+  /* Navy hero band — breaks out of the constrained <main> to fill the
+     viewport, then re-constrains its inner content. Bridges the visual
+     seam between marketing site (light) and the iOS app (navy) so the
+     handoff at install feels continuous. */
   .hero {
-    padding: 60px 0 40px;
+    margin-inline: calc(50% - 50vw);
+    padding-inline: max(24px, calc(50vw - 538px));
+    padding-block: 80px 72px;
+    background:
+      radial-gradient(ellipse 700px 500px at 92% 8%, rgba(91, 158, 255, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 600px 450px at 4% 96%, rgba(139, 108, 255, 0.16) 0%, transparent 60%),
+      linear-gradient(180deg, #0E1A35 0%, #0A1628 60%, #061029 100%);
+    color: #F8FAFC;
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 48px;
     align-items: center;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.12);
   }
   @media (max-width: 880px) {
-    .hero { grid-template-columns: 1fr; padding: 40px 0; }
+    .hero { grid-template-columns: 1fr; padding-block: 56px 48px; }
     .hero-text { text-align: center; }
     .cta-row { justify-content: center; }
   }
   .eyebrow {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #5B9EFF;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
   }
   .hero h1 {
     font-size: clamp(40px, 6.5vw, 72px);
     line-height: 1.02;
     letter-spacing: -0.04em;
     margin: 0;
+    color: #FFFFFF;
   }
   .hero-sub {
     font-size: 18px;
-    color: var(--text-muted);
+    color: #94B3D7;
     margin: 22px 0 0;
     max-width: 540px;
     line-height: 1.55;
@@ -171,17 +184,19 @@ import Base from '../layouts/Base.astro';
     font-size: 15px;
     text-decoration: none;
   }
-  .btn-primary {
-    background: var(--primary);
-    color: white;
+  /* Inside the navy hero band, the primary CTA flips to brand blue
+     on near-black so it reads as a glowing pill against the gradient. */
+  .hero .btn-primary {
+    background: #5B9EFF;
+    color: #04122E;
   }
-  .btn-primary:hover { background: var(--primary-hover); text-decoration: none; }
-  .btn-ghost {
-    color: var(--text);
-    border: 1px solid var(--border);
+  .hero .btn-primary:hover { background: #76B6FF; text-decoration: none; }
+  .hero .btn-ghost {
+    color: #F8FAFC;
+    border: 1px solid rgba(248, 250, 252, 0.22);
   }
-  .btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
-  .cta-sub { color: var(--text-muted); font-size: 13px; margin-top: 18px; }
+  .hero .btn-ghost:hover { background: rgba(248, 250, 252, 0.08); text-decoration: none; }
+  .cta-sub { color: #8AA0C4; font-size: 13px; margin-top: 18px; }
 
   /* Hero preview — stylized in-app card */
   .hero-preview {
@@ -246,8 +261,8 @@ import Base from '../layouts/Base.astro';
     font-weight: 400;
     margin-left: 4px;
   }
-  .ring-row { display: grid; gap: 10px; }
-  .ring-bar {
+  .macro-row { display: grid; gap: 10px; }
+  .macro-bar {
     position: relative;
     height: 28px;
     background: rgba(255, 255, 255, 0.06);
@@ -266,9 +281,9 @@ import Base from '../layouts/Base.astro';
     border-radius: 14px;
     opacity: 0.5;
   }
-  .ring-bar.protein .bar-fill { background: #F97316; }
-  .ring-bar.carbs   .bar-fill { background: #EAB308; }
-  .ring-bar.fat     .bar-fill { background: #8B5CF6; }
+  .macro-bar.protein .bar-fill { background: var(--protein); }
+  .macro-bar.carbs   .bar-fill { background: var(--carbs); }
+  .macro-bar.fat     .bar-fill { background: var(--fat); }
   .bar-label, .bar-num { position: relative; z-index: 1; }
   .bar-num { font-family: ui-monospace, 'SF Mono', monospace; font-weight: 600; }
 
