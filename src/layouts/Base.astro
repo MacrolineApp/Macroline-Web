@@ -39,7 +39,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header" data-nav-open="false">
       <a href="/" class="brand">
         <svg class="brand-mark" viewBox="0 0 24 18" width="24" height="18" aria-hidden="true">
           <rect x="1"  y="6.84" width="5" height="11.16" rx="2.5" fill="var(--protein)" />
@@ -48,13 +48,53 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
         </svg>
         <span class="brand-name">macroline</span>
       </a>
-      <nav>
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        aria-label="Open navigation"
+      >
+        <span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <nav id="primary-nav" class="primary-nav">
         <a href="/features">Features</a>
         <a href="/pricing">Pricing</a>
         <a href="/blog">Blog</a>
         <a href="https://my.macroline.app/login" class="nav-login">Log in</a>
       </nav>
     </header>
+
+    <script>
+      // Mobile nav toggle. Vanilla JS; runs once on page load. Toggling the
+      // data-nav-open attribute on the header is what flips the CSS state.
+      const header = document.querySelector('.site-header');
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('primary-nav');
+      if (header && toggle && nav) {
+        const setOpen = (open: boolean) => {
+          header.setAttribute('data-nav-open', String(open));
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        };
+        toggle.addEventListener('click', () => {
+          const open = header.getAttribute('data-nav-open') === 'true';
+          setOpen(!open);
+        });
+        // Close the menu when a nav link is tapped — feels more like a real
+        // navigation surface than leaving the drawer open after a route change.
+        nav.querySelectorAll('a').forEach((a) => {
+          a.addEventListener('click', () => setOpen(false));
+        });
+        // Esc closes the drawer.
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && header.getAttribute('data-nav-open') === 'true') {
+            setOpen(false);
+            (toggle as HTMLButtonElement).focus();
+          }
+        });
+      }
+    </script>
 
     <main>
       <slot />
@@ -175,6 +215,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     max-width: 1100px;
     margin: 0 auto;
     padding: 20px 24px;
+    position: relative;
   }
   .brand {
     display: flex;
@@ -191,12 +232,17 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   }
   .brand-name { font-family: 'Inter Display', 'Inter', sans-serif; }
 
-  .site-header nav { display: flex; gap: 24px; align-items: center; }
-  .site-header nav a { color: var(--text-muted); font-weight: 500; }
-  .site-header nav a:hover { color: var(--text); text-decoration: none; }
+  /* Desktop nav (default — links inline at the right edge). */
+  .site-header .primary-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .site-header .primary-nav a { color: var(--text-muted); font-weight: 500; }
+  .site-header .primary-nav a:hover { color: var(--text); text-decoration: none; }
   /* Right-anchored "Log in" pill — visually separates the call-to-action
      from the regular nav links so signed-out visitors find the entry point. */
-  .site-header nav .nav-login {
+  .site-header .primary-nav .nav-login {
     margin-left: 8px;
     padding: 8px 16px;
     border-radius: var(--r-pill);
@@ -204,7 +250,89 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     color: white;
     font-weight: 600;
   }
-  .site-header nav .nav-login:hover { background: var(--primary-hover); color: white; }
+  .site-header .primary-nav .nav-login:hover { background: var(--primary-hover); color: white; }
+
+  /* Hamburger button — desktop hidden, mobile visible. Three-bar icon
+     animates into an X when open. */
+  .nav-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .nav-toggle:hover { background: var(--surface-2); }
+  .nav-toggle-bars {
+    display: grid;
+    gap: 4px;
+    width: 18px;
+  }
+  .nav-toggle-bars > span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+    transform-origin: center;
+  }
+  .site-header[data-nav-open="true"] .nav-toggle-bars > span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .site-header[data-nav-open="true"] .nav-toggle-bars > span:nth-child(2) {
+    opacity: 0;
+  }
+  .site-header[data-nav-open="true"] .nav-toggle-bars > span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle { display: inline-flex; }
+
+    /* Drawer mode: nav slides down from below the header on mobile.
+       Hidden by default, revealed by data-nav-open="true" on the header. */
+    .site-header .primary-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px 16px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.18);
+      /* Hide via clip-path so display:none doesn't interrupt the focus order
+         while the menu is open mid-animation. */
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+      z-index: 5;
+    }
+    .site-header[data-nav-open="true"] .primary-nav {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .site-header .primary-nav a {
+      padding: 14px 12px;
+      border-radius: var(--r-md);
+      font-size: 16px;
+    }
+    .site-header .primary-nav a:hover { background: var(--surface-2); }
+    .site-header .primary-nav .nav-login {
+      margin-left: 0;
+      margin-top: 8px;
+      text-align: center;
+    }
+  }
 
   /* Footer — full-bleed band so the page closes cleanly. The brand
      column on the left re-states the pitch and gives signed-out users
