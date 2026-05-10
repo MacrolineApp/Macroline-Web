@@ -61,14 +61,46 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     </main>
 
     <footer class="site-footer">
-      <div class="footer-row">
-        <span>© {new Date().getFullYear()} Macroline</span>
-        <nav>
-          <a href="/privacy">Privacy</a>
-          <a href="/terms">Terms</a>
-          <a href="/support">Support</a>
-          <a href="mailto:info@macroline.app">info@macroline.app</a>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <svg viewBox="0 0 24 18" width="22" height="17" aria-hidden="true">
+              <rect x="1"    y="6.84" width="5" height="11.16" rx="2.5" fill="var(--protein)" />
+              <rect x="9.5"  y="0"    width="5" height="18"    rx="2.5" fill="var(--carbs)" />
+              <rect x="18"   y="3.96" width="5" height="14.04" rx="2.5" fill="var(--fat)" />
+            </svg>
+            <span>macroline</span>
+          </a>
+          <p class="footer-tag">The AI-native macro tracker. Just say what you ate.</p>
+          <form class="footer-waitlist" action="https://api.macroline.app/api/waitlist" method="post">
+            <input type="email" name="email" placeholder="you@example.com" aria-label="Email for waitlist" required />
+            <button type="submit">Join waitlist</button>
+          </form>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="/features">Features</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/connect-claude">Connect Claude</a>
+            <a href="https://my.macroline.app/login">Log in</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="/blog">Blog</a>
+            <a href="/support">Support</a>
+            <a href="mailto:info@macroline.app">info@macroline.app</a>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+          </div>
         </nav>
+      </div>
+      <div class="footer-baseline">
+        <span>© {new Date().getFullYear()} Macroline. All rights reserved.</span>
+        <span class="status-line">Coming soon to the App Store.</span>
       </div>
     </footer>
   </body>
@@ -174,21 +206,112 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   }
   .site-header nav .nav-login:hover { background: var(--primary-hover); color: white; }
 
+  /* Footer — full-bleed band so the page closes cleanly. The brand
+     column on the left re-states the pitch and gives signed-out users
+     a second chance to drop their email; link columns on the right
+     cover product/company/legal. The faint baseline strip at the bottom
+     carries copyright + a launch-status reminder. */
   .site-footer {
     border-top: 1px solid var(--border);
-    margin-top: 80px;
-    padding: 40px 24px;
+    margin-top: 96px;
+    padding: 56px 24px 24px;
+    background: var(--surface);
     color: var(--text-muted);
     font-size: 14px;
   }
-  .footer-row {
+  .footer-inner {
     max-width: 1100px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .footer-brand { max-width: 360px; }
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter Display', 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 17px;
+  }
+  .footer-logo:hover { text-decoration: none; color: var(--text); }
+  .footer-tag {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 14px 0 18px;
+  }
+  .footer-waitlist {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .footer-waitlist input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+  }
+  .footer-waitlist button {
+    padding: 10px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .footer-waitlist button:hover { background: var(--primary-hover); }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 480px) {
+    .footer-links { grid-template-columns: repeat(2, 1fr); }
+  }
+  .footer-col { display: flex; flex-direction: column; gap: 8px; }
+  .footer-col h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .footer-col a {
+    color: var(--text-muted);
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .footer-col a:hover { color: var(--text); text-decoration: none; }
+
+  .footer-baseline {
+    max-width: 1100px;
+    margin: 32px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 8px;
   }
-  .footer-row nav { display: flex; gap: 20px; }
-  .footer-row a { color: var(--text-muted); }
+  .footer-baseline .status-line { font-style: italic; }
 </style>

@@ -4,8 +4,9 @@ import Base from '../layouts/Base.astro';
 
 <Base title="Pricing — Macroline" description="Free tier for everyone. Pro at $4.99/mo unlocks AI input, the research agent, MCP for Claude, and full history.">
   <section class="hero">
-    <h1>Honest pricing. Just like the data.</h1>
-    <p>Free tier covers daily use. Pro adds the AI features that make Macroline feel magic.</p>
+    <p class="eyebrow">Pricing</p>
+    <h1>Honest pricing.<br/>Just like the data.</h1>
+    <p class="lede">Free tier covers daily use. Pro adds the AI features that make Macroline feel magic.</p>
   </section>
 
   <section class="tiers">
@@ -59,9 +60,40 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
-  .hero { text-align: center; padding: 60px 0 40px; }
-  .hero h1 { font-size: clamp(32px, 5vw, 52px); }
-  .hero p { color: var(--text-muted); font-size: 17px; margin-top: 12px; }
+  /* Navy hero band — mirrors the homepage pattern. Breaks out of the
+     constrained <main>, then re-constrains its content. Keeps the marketing
+     → install visual handoff consistent across pages. */
+  .hero {
+    margin-inline: calc(50% - 50vw);
+    padding-inline: max(24px, calc(50vw - 538px));
+    padding-block: 80px 64px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 700px 480px at 92% 8%, rgba(91, 158, 255, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 600px 420px at 4% 96%, rgba(139, 108, 255, 0.16) 0%, transparent 60%),
+      linear-gradient(180deg, #0E1A35 0%, #0A1628 60%, #061029 100%);
+    color: #F8FAFC;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.12);
+  }
+  .hero .eyebrow {
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #5B9EFF;
+    margin: 0 0 14px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+  }
+  .hero .lede {
+    color: #94B3D7;
+    font-size: 17px;
+    margin: 18px auto 0;
+    max-width: 560px;
+    line-height: 1.55;
+  }
 
   .tiers {
     display: grid;

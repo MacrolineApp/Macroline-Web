@@ -79,30 +79,43 @@ const authors = await getCollection('authors');
 </Base>
 
 <style>
+  /* Navy hero band — matches /pricing and / so blog visitors land in
+     the same brand world. Breaks out of the constrained <main> via
+     viewport-relative margins, then re-constrains its content. */
   .blog-hero {
+    margin-inline: calc(50% - 50vw);
+    padding-inline: max(24px, calc(50vw - 538px));
+    padding-block: 72px 56px;
     text-align: center;
-    padding: 60px 0 30px;
-    max-width: 720px;
-    margin: 0 auto;
+    background:
+      radial-gradient(ellipse 700px 480px at 92% 8%, rgba(91, 158, 255, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 600px 420px at 4% 96%, rgba(139, 108, 255, 0.16) 0%, transparent 60%),
+      linear-gradient(180deg, #0E1A35 0%, #0A1628 60%, #061029 100%);
+    color: #F8FAFC;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.12);
   }
   .eyebrow {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #5B9EFF;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
   }
   .blog-hero h1 {
     font-size: clamp(32px, 5vw, 52px);
-    line-height: 1.05;
+    line-height: 1.04;
     letter-spacing: -0.03em;
+    color: #FFFFFF;
+    max-width: 720px;
+    margin: 0 auto;
   }
   .lede {
     font-size: 17px;
-    color: var(--text-muted);
-    margin-top: 18px;
-    line-height: 1.5;
+    color: #94B3D7;
+    margin: 18px auto 0;
+    max-width: 560px;
+    line-height: 1.55;
   }
 
   .section-label {

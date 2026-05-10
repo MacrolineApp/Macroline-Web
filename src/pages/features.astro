@@ -8,80 +8,255 @@ import Base from '../layouts/Base.astro';
     <p>Macroline does fewer things than other trackers. It does them honestly.</p>
   </section>
 
-  <section class="feature">
-    <h2>🎙 Describe meals in plain language</h2>
-    <p>
-      Tap the mic or type. "I had a chicken caesar wrap with extra parmesan and a coke." Macroline parses
-      the description, finds matching foods (or researches them on the fly), and logs the right portions.
-      You confirm with quantity sliders before anything saves. Free tier: 3/day.
-    </p>
+  <!-- 1. Describe -->
+  <section class="feat">
+    <div class="feat-text">
+      <p class="eyebrow">Describe</p>
+      <h2>Speak it. Log it.</h2>
+      <p>
+        Tap the mic or type. <em>"I had a chicken caesar wrap with extra parmesan and a coke."</em>
+        Macroline parses the description, finds matching foods (or researches them on the fly),
+        and logs the right portions. You confirm with quantity sliders before anything saves.
+      </p>
+      <p class="meta">Free tier: 3/day · Pro: unlimited</p>
+    </div>
+    <div class="feat-art">
+      <img src="/screenshots/06-describe.png" alt="Macroline describe-a-meal screen with three parsed items" loading="lazy" />
+    </div>
   </section>
 
-  <section class="feature">
-    <h2>🔍 Verified sources on every food</h2>
-    <p>
-      USDA FoodData Central, OpenFoodFacts barcoded products, and official chain restaurant nutrition.
-      Every food row carries a source URL. Tap any number to see where it came from. No more wondering
-      if "chicken breast" entry #3 is the one with the right macros.
-    </p>
+  <!-- 2. Provenance -->
+  <section class="feat reverse">
+    <div class="feat-text">
+      <p class="eyebrow">Provenance</p>
+      <h2>Every food, sourced.</h2>
+      <p>
+        USDA FoodData Central, OpenFoodFacts barcoded products, and official chain restaurant
+        nutrition. Every food row carries a source URL — tap any number to see where it came
+        from. No more wondering if "chicken breast" entry #3 is the one with the right macros.
+      </p>
+      <p class="meta">Plus barcode scan: free 5/day, Pro unlimited.</p>
+    </div>
+    <div class="feat-art">
+      <img src="/screenshots/02-honest.png" alt="Search results showing tier-verified foods" loading="lazy" />
+    </div>
   </section>
 
-  <section class="feature">
-    <h2>📷 Barcode scanning</h2>
-    <p>
-      Point your camera at any packaged-food barcode. Macroline checks our database, then OpenFoodFacts,
-      then USDA Branded Foods. If it's still missing, the research agent grabs it from the manufacturer's
-      site. Cached forever after one successful scan. Free tier: 5/day.
-    </p>
+  <!-- 3. MCP -->
+  <section class="feat">
+    <div class="feat-text">
+      <p class="eyebrow">Bring your own AI</p>
+      <h2>Log meals from Claude, ChatGPT, anywhere.</h2>
+      <p>
+        Macroline runs as an MCP server. Connect Claude, ChatGPT, or any MCP-compatible client.
+        Then log dinner from your phone via voice, your desktop while cooking, or your IDE in
+        the middle of coding. The food database, your diary, and your goals are all available
+        as MCP tools.
+      </p>
+      <p class="meta">Pro feature. <a href="/connect-claude">See setup guide →</a></p>
+    </div>
+    <div class="feat-art">
+      <img src="/screenshots/04-connect.png" alt="Connect AI screen with MCP token and 1-2-3 setup steps" loading="lazy" />
+    </div>
   </section>
 
-  <section class="feature">
-    <h2>🤖 Research agent finds the missing foods</h2>
-    <p>
-      Mention "Olive Garden herb-grilled salmon"? If we don't have it, our research agent fetches Olive
-      Garden's official nutrition page, parses it, and stores the result with a citation. Every Macroline
-      user benefits. Pro feature.
-    </p>
+  <!-- 4. Dashboards -->
+  <section class="feat reverse">
+    <div class="feat-text">
+      <p class="eyebrow">Honest dashboards</p>
+      <h2>Trends, not streak shame.</h2>
+      <p>
+        30-day rolling averages, weight history, calorie trends, macro stacks. Charts adopt the
+        color of your dominant data tier — when most of your week is estimated, your calorie
+        chart says so. Tracking is for awareness, not punishment.
+      </p>
+      <p class="meta">No fasting nudges, no "you ate too much" copy.</p>
+    </div>
+    <div class="feat-art">
+      <img src="/screenshots/03-history.png" alt="History view with averages, calorie chart, macro stacked-bar chart, and weight chart" loading="lazy" />
+    </div>
   </section>
 
-  <section class="feature">
-    <h2>🔌 MCP server for AI assistants</h2>
-    <p>
-      Connect Macroline to Claude, ChatGPT, or any MCP-compatible client. Then you can log meals from
-      anywhere — your phone via Claude voice, your desktop while cooking, your IDE in the middle of
-      coding. The food database, your diary, and your goals are all available as MCP tools. Pro feature.
-    </p>
+  <!-- Compact text-only features -->
+  <section class="feat-extra">
+    <article>
+      <span class="ico" aria-hidden="true">↗</span>
+      <h3>Research agent finds the missing foods</h3>
+      <p>
+        Mention "Olive Garden herb-grilled salmon"? If we don't have it, our research agent
+        fetches the official nutrition page, parses it, and caches the result with a citation.
+        Every Macroline user benefits.
+      </p>
+      <p class="row-meta">Pro feature.</p>
+    </article>
+
+    <article>
+      <span class="ico" aria-hidden="true">⌖</span>
+      <h3>Goals that fit your life</h3>
+      <p>
+        Cut, maintain, bulk, lifter. Pick a starting point and fine-tune calories or macros
+        any time. Your goal is yours — Macroline doesn't moralize about it.
+      </p>
+      <p class="row-meta">Free.</p>
+    </article>
+
+    <article>
+      <span class="ico" aria-hidden="true">⎋</span>
+      <h3>Your data, your call</h3>
+      <p>
+        Full CSV export. One-click account deletion. We don't sell data, run ads, or use your
+        meal content to train AI models. Pro adds public REST API access with per-user keys.
+      </p>
+      <p class="row-meta">CSV export Pro · Account deletion free.</p>
+    </article>
   </section>
 
-  <section class="feature">
-    <h2>📊 Honest dashboards</h2>
-    <p>
-      Calories, macros, weight, trends. No streak shame, no fasting nudges, no "you ate too much" copy.
-      Tracking is for awareness, not punishment.
-    </p>
-  </section>
-
-  <section class="feature">
-    <h2>🚪 Your data, your call</h2>
-    <p>
-      Full CSV export (Pro). One-click account deletion. We don't sell data, run ads, or use your meal
-      content to train AI models.
-    </p>
+  <section class="cta">
+    <h2>Ready to try it?</h2>
+    <p>Join the waitlist — we'll let you know when Macroline lands on the App Store.</p>
+    <form class="signup-form" action="https://api.macroline.app/api/waitlist" method="post">
+      <input type="email" name="email" placeholder="you@example.com" required />
+      <button type="submit">Join waitlist</button>
+    </form>
   </section>
 </Base>
 
 <style>
-  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero { text-align: center; padding: 60px 0 32px; }
   .hero h1 { font-size: 44px; }
   .hero p { color: var(--text-muted); font-size: 17px; margin-top: 8px; }
 
-  .feature {
+  /* Illustrated feature row — alternating image / text. Stacks on narrow viewports.
+     The image surface has a soft navy gradient + subtle border so the
+     screenshots read as device-shots without an overpowering frame. */
+  .feat {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 420px);
+    align-items: center;
+    gap: 64px;
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+  }
+  .feat:first-of-type { border-top: 0; }
+  .feat.reverse { grid-template-columns: minmax(280px, 420px) 1fr; }
+  .feat.reverse .feat-text { order: 2; }
+  .feat.reverse .feat-art  { order: 1; }
+  @media (max-width: 800px) {
+    .feat, .feat.reverse { grid-template-columns: 1fr; gap: 32px; }
+    .feat.reverse .feat-text, .feat.reverse .feat-art { order: initial; }
+  }
+
+  .feat-text .eyebrow {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+  .feat-text h2 {
+    font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .feat-text p {
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0 0 12px;
+    font-size: 16px;
+  }
+  .feat-text em { color: var(--text); font-style: italic; }
+  .feat-text .meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 14px;
+  }
+
+  .feat-art {
+    position: relative;
+    border-radius: 28px;
+    background:
+      radial-gradient(ellipse 60% 40% at 92% 8%, rgba(91, 158, 255, 0.18) 0%, transparent 60%),
+      linear-gradient(180deg, #0E1A35 0%, #0A1628 100%);
+    padding: 24px;
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.45);
+  }
+  .feat-art img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 18px;
+    /* Soften the screenshot edge against the gradient frame. */
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Compact text-only feature cards for the points that don't have a
+     dedicated illustration. Three-up grid, collapses to one column. */
+  .feat-extra {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+    padding-top: 56px;
+    border-top: 1px solid var(--border);
+  }
+  .feat-extra article {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
-    padding: 28px;
-    margin-bottom: 16px;
+    padding: 24px;
   }
-  .feature h2 { font-size: 22px; margin-bottom: 12px; }
-  .feature p { color: var(--text-muted); margin: 0; line-height: 1.7; }
+  .feat-extra .ico {
+    display: inline-grid;
+    place-items: center;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .feat-extra h3 { font-size: 18px; margin-bottom: 8px; }
+  .feat-extra p { color: var(--text-muted); margin: 0; line-height: 1.6; font-size: 14px; }
+  .feat-extra .row-meta {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .cta {
+    margin-top: 64px;
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .cta h2 { font-size: 28px; }
+  .cta p { color: var(--text-muted); margin-top: 8px; }
+  .signup-form {
+    display: flex; gap: 8px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .signup-form input {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font-size: 15px;
+    min-width: 240px;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .signup-form button {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    cursor: pointer;
+  }
 </style>
