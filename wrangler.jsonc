@@ -7,9 +7,10 @@
  * (which adds the server adapter, which enables sessions, which dies on
  * KV provisioning every build).
  *
- * If/when we add server-rendered routes (e.g. a real waitlist endpoint),
- * we'll add `main` here and configure the adapter properly. Until then:
- * static dist/, no surprises.
+ * If/when we add server-rendered routes, we'll add `main` here and
+ * configure the adapter properly. (Waitlist signup posts to the
+ * MacrolineDb API at api.macroline.app, no SSR needed here.)
+ * Until then: static dist/, no surprises.
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",

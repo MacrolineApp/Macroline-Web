@@ -112,9 +112,10 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
             <span>macroline</span>
           </a>
           <p class="footer-tag">The AI-native macro tracker. Just say what you ate.</p>
-          <form class="footer-waitlist" action="https://api.macroline.app/api/waitlist" method="post">
+          <form class="footer-waitlist waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="footer">
             <input type="email" name="email" placeholder="you@example.com" aria-label="Email for waitlist" required />
             <button type="submit">Join waitlist</button>
+            <p class="waitlist-msg" role="status" aria-live="polite"></p>
           </form>
         </div>
         <nav class="footer-links" aria-label="Footer">
@@ -143,6 +144,77 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
         <span class="status-line">Coming soon to the App Store.</span>
       </div>
     </footer>
+
+    <script>
+      // Waitlist forms: intercept submit and POST via fetch so we can show
+      // an inline success state without taking the user away from the page.
+      // The forms still have action="..." and method="post", so if JS is
+      // disabled the browser will do a full-page POST and the API will
+      // accept the form-urlencoded body (handler supports both content-types).
+      //
+      // Class hook is `.waitlist-form`; data-source attribute is sent along
+      // so the server can attribute signups to which form/page they came from
+      // (`home`, `features`, `blog:<slug>`, `footer`).
+      const forms = document.querySelectorAll<HTMLFormElement>('.waitlist-form');
+      for (const form of forms) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const emailEl = form.querySelector<HTMLInputElement>('input[name="email"]');
+          const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+          const msgEl = form.querySelector<HTMLParagraphElement>('.waitlist-msg');
+          if (!emailEl || !btn) return;
+
+          const email = emailEl.value.trim();
+          if (!email) return;
+          const source = form.dataset.source ?? 'unknown';
+
+          btn.disabled = true;
+          const originalLabel = btn.textContent;
+          btn.textContent = 'Sending…';
+          if (msgEl) msgEl.textContent = '';
+
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ email, source }),
+            });
+            const data = (await res.json().catch(() => ({}))) as { ok?: boolean; alreadyOnList?: boolean; error?: string };
+
+            if (res.ok && data.ok) {
+              // Swap the input + button for the success message. Keep the
+              // form mounted (don't hide it) so screen readers see the
+              // state change via aria-live.
+              emailEl.style.display = 'none';
+              btn.style.display = 'none';
+              if (msgEl) {
+                msgEl.classList.add('is-success');
+                msgEl.textContent = data.alreadyOnList
+                  ? "You're already on the list. We'll be in touch."
+                  : "You're on the list — check your inbox.";
+              }
+            } else {
+              btn.disabled = false;
+              btn.textContent = originalLabel;
+              if (msgEl) {
+                msgEl.classList.add('is-error');
+                msgEl.textContent =
+                  data.error === 'invalid_email'
+                    ? 'That email doesn’t look right — try again.'
+                    : 'Something went wrong. Try again in a moment.';
+              }
+            }
+          } catch {
+            btn.disabled = false;
+            btn.textContent = originalLabel;
+            if (msgEl) {
+              msgEl.classList.add('is-error');
+              msgEl.textContent = 'Couldn’t reach the server. Try again.';
+            }
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 
@@ -403,6 +475,21 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     font-family: inherit;
   }
   .footer-waitlist button:hover { background: var(--primary-hover); }
+  .footer-waitlist button:disabled { opacity: 0.55; cursor: default; }
+
+  /* Inline status under a `.waitlist-form`. Hidden by default (empty
+     content) and revealed once the script sets text. Used by footer +
+     hero + features + post-article forms. */
+  .waitlist-msg {
+    margin: 4px 0 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    flex-basis: 100%;
+  }
+  .waitlist-msg:empty { display: none; }
+  .waitlist-msg.is-success { color: var(--protein); font-weight: 600; }
+  .waitlist-msg.is-error { color: #DC2626; font-weight: 500; }
 
   .footer-links {
     display: grid;

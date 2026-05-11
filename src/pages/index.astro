@@ -114,9 +114,10 @@ import Base from '../layouts/Base.astro';
   <section id="download" class="download">
     <h2>Coming soon to the App Store.</h2>
     <p>Macroline launches first on iOS via TestFlight. Drop your email and we'll let you know.</p>
-    <form class="signup-form" action="https://api.macroline.app/api/waitlist" method="post">
+    <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="home">
       <input type="email" name="email" placeholder="you@example.com" required />
       <button type="submit">Join waitlist</button>
+      <p class="waitlist-msg" role="status" aria-live="polite"></p>
     </form>
     <p class="download-note">No spam. One launch email. Unsubscribe in one click.</p>
   </section>
