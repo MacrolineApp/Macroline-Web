@@ -7,7 +7,7 @@ The marketing & support site at macroline.app. Astro 5 static site, deployed via
 - **Public marketing** — hero, features, pricing, provenance pillars
 - **Apple-required pages** — privacy policy, terms of service (currently placeholders)
 - **Support FAQ** — public help, no auth needed
-- **Waitlist signup** — `<form action="https://api.macroline.app/api/waitlist">` (TODO: implement endpoint in MacrolineDb)
+- **Waitlist signup** — four `.waitlist-form` forms (footer in Base.astro, hero on /, features CTA, post-article on /blog/*). All POST to `https://api.macroline.app/api/waitlist`. A global script in Base.astro intercepts submits and uses fetch + inline success state; native form POST is the no-JS fallback (backend accepts form-urlencoded too).
 
 ## What does NOT live here
 
@@ -30,7 +30,6 @@ The marketing & support site at macroline.app. Astro 5 static site, deployed via
 
 - Real privacy policy (currently placeholder)
 - Real terms (currently placeholder)
-- Waitlist endpoint in MacrolineDb (form posts somewhere that doesn't exist)
 - App Store badges (need actual download URL after launch)
 - OG image at `/og.png` (1200×630, generate via Pillow once logo is finalized)
 - Actual blog (no `/blog` index yet)
