@@ -51,6 +51,29 @@ const effectiveDate = '2026-05-02';
       Apple Health data <strong>is processed on your device only</strong> — it is not transmitted to our servers, not shared with third parties, and not used for advertising or other use-based data mining. You can revoke access at any time in iOS Settings → Health → Data Access &amp; Devices → Macroline.
     </p>
 
+    <h3>AI assistants via the Claude connector (MCP)</h3>
+    <p>
+      Macroline operates an MCP (Model Context Protocol) server at <code>api.macroline.app/mcp</code>. If you choose to connect an AI assistant such as Claude to your Macroline account, the assistant authorizes with OAuth 2.1 + PKCE and receives a scoped access token tied to your user.
+    </p>
+    <p>
+      The token grants <strong>only</strong> the scopes you approve on the consent screen. As of this policy the available scopes are:
+    </p>
+    <ul>
+      <li><strong>read:foods</strong> — search the public food database and your custom foods.</li>
+      <li><strong>read:diary</strong> — read your diary entries, exercise logs, and daily summaries.</li>
+      <li><strong>write:diary</strong> — add new diary, exercise, and water entries.</li>
+      <li><strong>write:goals</strong> — update your calorie and macro targets.</li>
+    </ul>
+    <p>
+      Weight entries, body-composition data, HealthKit data, subscription/billing data, and authentication credentials are <strong>not</strong> exposed through any MCP scope. The connector cannot delete account-level data or change your password.
+    </p>
+    <p>
+      When you ask Claude to "log a meal" or "show me last week's protein," the request flows: <em>Claude → Anthropic's servers → Macroline's MCP server (server-to-server, bearer token) → your account data → response back through the same path.</em> Anthropic processes only the conversation content you submit to Claude (which may include data Claude has retrieved from Macroline). Anthropic does not bulk-export your Macroline data; the data flow is request-by-request, scoped to the active chat. Anthropic's handling of that content is governed by their own privacy policy at <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.
+    </p>
+    <p>
+      You can revoke connector access at any time. From Claude: <em>Settings → Connectors → Macroline → Remove</em>. From Macroline: open the iOS app, <em>Settings → Connect AI → Revoke all sessions</em>. Revocation invalidates the access token immediately; any future tool calls fail until you re-authorize.
+    </p>
+
     <h3>What we do NOT collect</h3>
     <ul>
       <li>Apple Health data on our servers (HealthKit reads/writes stay on your device — see above).</li>
