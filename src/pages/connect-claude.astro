@@ -85,7 +85,7 @@ import Base from '../layouts/Base.astro';
   <section class="tools">
     <h2>What's exposed to Claude</h2>
     <p class="section-lede">
-      Five tools, scoped to your account. Each one is read-only or write-only — no surprise mutations.
+      Nine tools, scoped to your account. Each one is annotated as read-only or write — no surprise mutations.
     </p>
     <table class="tool-table">
       <thead>
@@ -112,8 +112,28 @@ import Base from '../layouts/Base.astro';
           <td><span class="pill read">Read</span></td>
         </tr>
         <tr>
+          <td><code>list_exercises</code></td>
+          <td>Browse the supported exercise catalog with MET values. Filter by name or category.</td>
+          <td><span class="pill read">Read</span></td>
+        </tr>
+        <tr>
+          <td><code>get_exercise_logs</code></td>
+          <td>Read your exercise sessions in a date range, with the calories-burned estimate from log time.</td>
+          <td><span class="pill read">Read</span></td>
+        </tr>
+        <tr>
           <td><code>log_meal</code></td>
           <td>Add foods to your diary. Idempotent — safe to retry.</td>
+          <td><span class="pill write">Write</span></td>
+        </tr>
+        <tr>
+          <td><code>log_exercise</code></td>
+          <td>Record an exercise session. Calories estimated from MET × weight × duration.</td>
+          <td><span class="pill write">Write</span></td>
+        </tr>
+        <tr>
+          <td><code>log_water</code></td>
+          <td>Log a hydration entry by volume (mL). Idempotent.</td>
           <td><span class="pill write">Write</span></td>
         </tr>
         <tr>
