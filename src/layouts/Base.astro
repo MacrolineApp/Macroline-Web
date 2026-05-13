@@ -112,11 +112,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
             <span>macroline</span>
           </a>
           <p class="footer-tag">The AI-native macro tracker. Just say what you ate.</p>
-          <form class="footer-waitlist waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="footer">
-            <input type="email" name="email" placeholder="you@example.com" aria-label="Email for waitlist" required />
-            <button type="submit">Join waitlist</button>
-            <p class="waitlist-msg" role="status" aria-live="polite"></p>
-          </form>
+          <a class="footer-blog-cta" href="/blog">
+            <span class="footer-blog-cta-title">Notes from the macro lab.</span>
+            <span class="footer-blog-cta-sub">Twice-weekly posts on macros, GLP-1, and the science of food data.</span>
+            <span class="footer-blog-cta-link">Read the blog →</span>
+          </a>
         </div>
         <nav class="footer-links" aria-label="Footer">
           <div class="footer-col">
@@ -141,7 +141,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
       </div>
       <div class="footer-baseline">
         <span>© {new Date().getFullYear()} Macroline. All rights reserved.</span>
-        <span class="status-line">Coming soon to the App Store.</span>
+        <span class="status-line">
+          <a href="https://testflight.apple.com/join/SBhsGn9q" target="_blank" rel="noopener">Public TestFlight open</a>
+          <span aria-hidden="true"> · </span>
+          App Store launch May 21
+        </span>
       </div>
     </footer>
 
@@ -447,35 +451,43 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     line-height: 1.55;
     margin: 14px 0 18px;
   }
-  .footer-waitlist {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .footer-waitlist input {
-    flex: 1;
-    min-width: 180px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    font-size: 13px;
+  /* Footer secondary CTA — replaces the duplicate waitlist input that
+     sat below the in-page waitlist forms. Sends footer-curious users
+     to the blog instead of asking for their email a second time. */
+  .footer-blog-cta {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
     background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    text-decoration: none;
     color: var(--text);
-    font-family: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+    max-width: 360px;
   }
-  .footer-waitlist button {
-    padding: 10px 16px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--r-pill);
-    font-size: 13px;
+  .footer-blog-cta:hover {
+    border-color: var(--primary);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+  .footer-blog-cta-title {
     font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
   }
-  .footer-waitlist button:hover { background: var(--primary-hover); }
-  .footer-waitlist button:disabled { opacity: 0.55; cursor: default; }
+  .footer-blog-cta-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .footer-blog-cta-link {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: 4px;
+  }
 
   /* Inline status under a `.waitlist-form`. Hidden by default (empty
      content) and revealed once the script sets text. Used by footer +
@@ -529,4 +541,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     gap: 8px;
   }
   .footer-baseline .status-line { font-style: italic; }
+  .footer-baseline .status-line a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    font-style: italic;
+  }
+  .footer-baseline .status-line a:hover { color: var(--primary); }
 </style>
