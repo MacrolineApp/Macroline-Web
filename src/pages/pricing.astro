@@ -2,38 +2,68 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Pricing — Macroline" description="Free tier for everyone. Pro at $4.99/mo unlocks AI input, the research agent, MCP for Claude, and full history.">
+<Base
+  title="Pricing — Macroline"
+  description="Free tier covers daily use. Pro is $4.99/mo (or $39/year) and unlocks unlimited AI meal logging plus Claude integration."
+>
   <section class="hero">
     <p class="eyebrow">Pricing</p>
     <h1>Honest pricing.<br/>Just like the data.</h1>
     <p class="lede">Free tier covers daily use. Pro adds the AI features that make Macroline feel magic.</p>
   </section>
 
-  <section class="tiers">
+  <!-- Billing toggle — defaults to annual (better-converting + lower churn).
+       Persisted in sessionStorage so navigating /pricing → /features → back
+       remembers the choice. data-billing attribute on the .tiers element
+       drives all the price-swap CSS below. -->
+  <div class="billing-toggle" role="group" aria-label="Billing period">
+    <button type="button" data-bill="monthly" aria-pressed="false">Monthly</button>
+    <button type="button" data-bill="annual" aria-pressed="true">Annual <span class="save-pill">save 35%</span></button>
+  </div>
+
+  <section class="tiers" data-billing="annual">
     <div class="tier free">
       <h2>Free</h2>
       <div class="price">$0<span>forever</span></div>
-      <ul>
+
+      <p class="tier-section-label">Included</p>
+      <ul class="features-list">
         <li>✓ Unlimited food logging</li>
         <li>✓ Search USDA + barcoded products</li>
         <li>✓ Daily macro dashboard</li>
         <li>✓ Goals &amp; weight tracking</li>
         <li>✓ 5 saved meals</li>
         <li>✓ 30-day history</li>
-        <li class="muted">— 5 barcode scans/day</li>
-        <li class="muted">— 3 AI meal descriptions/day</li>
-        <li class="muted">— No research agent (auto-find missing chain foods)</li>
-        <li class="muted">— No MCP / Claude integration</li>
       </ul>
-      <a href="#download" class="btn-ghost">Start free</a>
+
+      <p class="tier-section-label">Daily limits</p>
+      <ul class="limits-list">
+        <li><span class="limit-x" aria-hidden="true">✕</span> 5 barcode scans</li>
+        <li><span class="limit-x" aria-hidden="true">✕</span> 3 AI meal descriptions</li>
+        <li><span class="limit-x" aria-hidden="true">✕</span> No research agent</li>
+        <li><span class="limit-x" aria-hidden="true">✕</span> No Claude integration</li>
+      </ul>
+
+      <a href="https://my.macroline.app/signup" class="btn-ghost">Start free</a>
     </div>
 
     <div class="tier pro">
       <span class="badge">Recommended</span>
       <h2>Pro</h2>
-      <div class="price">$4.99<span>/month</span></div>
-      <p class="annual-hint">or $39.99/yr — save 33%</p>
-      <ul>
+      <div class="price-block">
+        <div class="price price-annual">
+          <span class="price-amount">$3.25</span><span class="price-unit">/mo</span>
+        </div>
+        <p class="price-caption price-caption-annual">billed annually ($39) · save $20 a year</p>
+        <div class="price price-monthly">
+          <span class="price-amount">$4.99</span><span class="price-unit">/mo</span>
+        </div>
+        <p class="price-caption price-caption-monthly">billed monthly</p>
+      </div>
+
+      <p class="trial-pill">✨ 7-day free trial · cancel anytime</p>
+
+      <ul class="features-list">
         <li>✓ Everything in Free</li>
         <li>✓ <strong>Unlimited AI meal descriptions</strong></li>
         <li>✓ <strong>Unlimited barcode scans</strong></li>
@@ -44,7 +74,8 @@ import Base from '../layouts/Base.astro';
         <li>✓ CSV export</li>
         <li>✓ Public REST API access (per-user keys)</li>
       </ul>
-      <a href="#download" class="btn-primary">Go Pro</a>
+
+      <a href="https://my.macroline.app/signup?plan=pro" class="btn-primary">Go Pro</a>
     </div>
   </section>
 
@@ -58,6 +89,50 @@ import Base from '../layouts/Base.astro';
     </p>
   </section>
 </Base>
+
+<script>
+  // Billing toggle — vanilla JS, no framework. The .tiers element carries
+  // data-billing="annual" | "monthly" which the CSS keys all price swaps
+  // off of. sessionStorage persists the choice so cross-page navigation
+  // within a session preserves the user's selected view.
+  //
+  // Storage key matches the brief's behavioral contract:
+  // sessionStorage.macroline.billing
+  const STORAGE_KEY = 'macroline.billing';
+  const tiersEl = document.querySelector('.tiers');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.billing-toggle button[data-bill]');
+
+  function setBilling(value: 'annual' | 'monthly') {
+    if (!tiersEl) return;
+    tiersEl.setAttribute('data-billing', value);
+    buttons.forEach((b) => {
+      const isActive = b.dataset.bill === value;
+      b.setAttribute('aria-pressed', String(isActive));
+      b.classList.toggle('is-active', isActive);
+    });
+    try {
+      sessionStorage.setItem(STORAGE_KEY, value);
+    } catch {
+      // sessionStorage can throw in some embedded WebViews; non-fatal.
+    }
+  }
+
+  // Restore prior selection (defaults to annual via initial data-billing).
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved === 'monthly' || saved === 'annual') setBilling(saved);
+    else setBilling('annual');
+  } catch {
+    setBilling('annual');
+  }
+
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const value = b.dataset.bill === 'monthly' ? 'monthly' : 'annual';
+      setBilling(value);
+    });
+  });
+</script>
 
 <style>
   /* Navy hero band — mirrors the homepage pattern. Breaks out of the
@@ -95,12 +170,62 @@ import Base from '../layouts/Base.astro';
     line-height: 1.55;
   }
 
+  /* Billing toggle — segmented pill above the price cards. */
+  .billing-toggle {
+    display: inline-flex;
+    margin: 32px auto 0;
+    padding: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    gap: 4px;
+    align-self: center;
+  }
+  .billing-toggle {
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .billing-toggle button {
+    padding: 8px 18px;
+    background: transparent;
+    border: none;
+    border-radius: var(--r-pill);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .billing-toggle button.is-active {
+    background: var(--primary);
+    color: white;
+  }
+  .billing-toggle button:hover:not(.is-active) { color: var(--text); }
+  .save-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    background: color-mix(in srgb, var(--protein) 25%, transparent);
+    color: var(--protein);
+  }
+  .billing-toggle button.is-active .save-pill {
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+  }
+
   .tiers {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     max-width: 800px;
-    margin: 40px auto 0;
+    margin: 20px auto 0;
   }
   @media (max-width: 720px) { .tiers { grid-template-columns: 1fr; } }
 
@@ -131,12 +256,89 @@ import Base from '../layouts/Base.astro';
     font-weight: 700;
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
+    line-height: 1;
   }
   .price span { font-size: 15px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
-  .annual-hint { color: var(--text-muted); font-size: 13px; margin: 4px 0 16px; }
-  .tier ul { list-style: none; padding: 0; margin: 24px 0; }
-  .tier li { padding: 8px 0; font-size: 14px; color: var(--text); }
-  .tier li.muted { color: var(--text-muted); }
+  .price-amount { display: inline; }
+  .price-unit {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+  .price-caption {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin: 6px 0 0;
+  }
+
+  /* Annual vs monthly: show the matching block, hide the other. The
+     data-billing attribute on .tiers gates which one is visible. */
+  .price-block .price-annual,
+  .price-block .price-caption-annual {
+    display: none;
+  }
+  .price-block .price-monthly,
+  .price-block .price-caption-monthly {
+    display: none;
+  }
+  .tiers[data-billing="annual"] .price-annual,
+  .tiers[data-billing="annual"] .price-caption-annual {
+    display: block;
+  }
+  .tiers[data-billing="monthly"] .price-monthly,
+  .tiers[data-billing="monthly"] .price-caption-monthly {
+    display: block;
+  }
+
+  /* 7-day trial pill — sits between price and feature list on the Pro card. */
+  .trial-pill {
+    display: inline-block;
+    margin: 14px 0 0;
+    padding: 6px 12px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--primary);
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Split-section labels above the Included / Daily limits lists in Free.
+     Pro reuses the same Included list (no limits section). */
+  .tier-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 24px 0 8px;
+  }
+  .tier.pro .tier-section-label:first-of-type { margin-top: 22px; }
+
+  .features-list, .limits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .features-list li, .limits-list li {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  /* Daily-limits rows use a small ✕ glyph in dimmed text — not red (this
+     is "not included," not "error"). */
+  .limits-list li {
+    color: var(--text-muted);
+  }
+  .limit-x {
+    display: inline-block;
+    width: 16px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
   .btn-primary, .btn-ghost {
     display: block;
     text-align: center;
@@ -144,10 +346,12 @@ import Base from '../layouts/Base.astro';
     border-radius: var(--r-pill);
     font-weight: 600;
     text-decoration: none;
-    margin-top: 16px;
+    margin-top: 20px;
   }
   .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-hover); color: white; text-decoration: none; }
   .btn-ghost { color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--text); text-decoration: none; }
 
   .comparison {
     margin-top: 60px;

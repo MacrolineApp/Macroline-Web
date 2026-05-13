@@ -16,11 +16,70 @@ const postsWithAuthors = await Promise.all(
 );
 
 const authors = await getCollection('authors');
+
+// "Start here" — three editor's-pick posts pinned above the regular grid.
+// IDs match the post filenames in src/content/blog.
+const FEATURED_IDS = ['glp1-macro-tracking', 'ai-native-vs-ai-bolted-on', 'verified-nutrition-data'];
+const featuredPosts = FEATURED_IDS
+  .map((id) => postsWithAuthors.find((p) => p.post.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+// Tag → bucket mapping for the filter pill row. Existing post frontmatter
+// uses ~60 specific tags; we collapse them into 5 user-facing buckets so
+// the filter has a manageable surface. Posts can match multiple buckets.
+const BUCKETS = [
+  {
+    key: 'all',
+    label: 'All',
+    match: () => true,
+  },
+  {
+    key: 'glp-1',
+    label: 'GLP-1',
+    match: (tags: string[]) =>
+      tags.some((t) => /glp-?1|semaglutide|tirzepatide|compounded|ozempic|wegovy/i.test(t)),
+  },
+  {
+    key: 'cutting',
+    label: 'Cutting',
+    match: (tags: string[]) =>
+      tags.some((t) => /cut|fat loss|deload|refeed|diet break|binge/i.test(t)),
+  },
+  {
+    key: 'bulking',
+    label: 'Bulking',
+    match: (tags: string[]) =>
+      tags.some((t) => /bulk|muscle gain|hypertroph|maintenance|protein|strength|lifting/i.test(t)),
+  },
+  {
+    key: 'methodology',
+    label: 'Methodology',
+    match: (tags: string[]) =>
+      tags.some((t) =>
+        /tracking|provenance|verification|data quality|evidence-based|nutrition science|nutrition label|food data|food literacy|skepticism|tdee|metabolism|tracking philosophy/i.test(t),
+      ),
+  },
+  {
+    key: 'mcp',
+    label: 'MCP / Developers',
+    match: (tags: string[]) =>
+      tags.some((t) =>
+        /\bmcp\b|developer|api|oauth|agent|ai-native|ai tools|product design|engineering|implementation|platform|programming|retrospective|threat model|ai privacy/i.test(t),
+      ),
+  },
+];
+
+// Compute which buckets each post belongs to. Renders as data-buckets
+// attribute so the client-side filter can hide/show by class match.
+const postBuckets = (tags: string[]): string =>
+  BUCKETS.filter((b) => b.key !== 'all' && b.match(tags))
+    .map((b) => b.key)
+    .join(' ');
 ---
 
 <Base
   title="Blog — Macroline"
-  description="Notes on AI macro tracking, GLP-1, and food data done right."
+  description="Notes from a tracker built differently — AI-native macro logging, GLP-1 protocols, food data quality, MCP development."
   ogImage="/og-blog.png"
 >
   <section class="blog-hero">
@@ -31,6 +90,30 @@ const authors = await getCollection('authors');
       actually trustworthy.
     </p>
   </section>
+
+  {featuredPosts.length > 0 && (
+    <section class="start-here">
+      <h2 class="section-label">Start here</h2>
+      <div class="featured-grid">
+        {featuredPosts.map(({ post, author }) => (
+          <a href={`/blog/${post.id}`} class="featured-card">
+            <span class="featured-badge">Editor's pick</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <div class="featured-meta">
+              {author && (
+                <div class="featured-author">
+                  <img src={author.data.photo} alt={author.data.name} />
+                  <span>{author.data.name}</span>
+                </div>
+              )}
+              <span class="read-more">Read →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 
   {authors.length > 0 && (
     <section class="contributors">
@@ -49,9 +132,28 @@ const authors = await getCollection('authors');
     </section>
   )}
 
-  <section class="post-list">
+  <!-- Tag filter pill row — client-side, no page reload. URL updates via
+       history.replaceState so /blog?tag=glp-1 is a shareable link. -->
+  <section class="filter-row" aria-label="Filter posts by topic">
+    {BUCKETS.map((b) => (
+      <button
+        type="button"
+        class="filter-pill"
+        data-bucket={b.key}
+        aria-pressed={b.key === 'all' ? 'true' : 'false'}
+      >
+        {b.label}
+      </button>
+    ))}
+  </section>
+
+  <section class="post-list" id="post-list">
     {postsWithAuthors.map(({ post, author }) => (
-      <a href={`/blog/${post.id}`} class="post-card">
+      <a
+        href={`/blog/${post.id}`}
+        class="post-card"
+        data-buckets={postBuckets(post.data.tags ?? [])}
+      >
         <div class="post-meta">
           <time datetime={post.data.publishedAt.toISOString()}>
             {post.data.publishedAt.toLocaleDateString('en-US', {
@@ -75,7 +177,55 @@ const authors = await getCollection('authors');
         </div>
       </a>
     ))}
+    <p class="empty-state" hidden>No posts match this filter — try "All" or a different topic.</p>
   </section>
+
+  <script>
+    // Tag filter: vanilla, client-side. Buckets are encoded as space-
+    // separated tokens on each .post-card[data-buckets]. The "all" pill
+    // shows every card; any other pill shows only cards whose
+    // data-buckets contains that key.
+    const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill[data-bucket]');
+    const cards = document.querySelectorAll<HTMLAnchorElement>('.post-card[data-buckets]');
+    const emptyState = document.querySelector<HTMLParagraphElement>('.empty-state');
+
+    function applyFilter(bucket: string) {
+      let visible = 0;
+      cards.forEach((card) => {
+        const buckets = (card.dataset.buckets ?? '').split(/\s+/).filter(Boolean);
+        const show = bucket === 'all' || buckets.includes(bucket);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      pills.forEach((p) => {
+        const isActive = p.dataset.bucket === bucket;
+        p.setAttribute('aria-pressed', String(isActive));
+        p.classList.toggle('is-active', isActive);
+      });
+      if (emptyState) emptyState.hidden = visible !== 0;
+
+      // Update the URL so the filtered view is a shareable link.
+      // history.replaceState (not pushState) so back/forward isn't
+      // polluted with a new entry per pill tap.
+      const url = new URL(window.location.href);
+      if (bucket === 'all') {
+        url.searchParams.delete('tag');
+      } else {
+        url.searchParams.set('tag', bucket);
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
+
+    pills.forEach((p) => {
+      p.addEventListener('click', () => {
+        applyFilter(p.dataset.bucket ?? 'all');
+      });
+    });
+
+    // Honor an existing ?tag=… in the URL on page load.
+    const initialTag = new URL(window.location.href).searchParams.get('tag');
+    if (initialTag) applyFilter(initialTag);
+  </script>
 </Base>
 
 <style>
@@ -123,9 +273,83 @@ const authors = await getCollection('authors');
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 700;
     margin: 0 0 16px;
   }
+
+  /* "Start here" — three featured cards, larger styling than the main grid
+     to telegraph "we recommend reading these first." */
+  .start-here {
+    margin-top: 50px;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .featured-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: var(--r-lg);
+    padding: 24px;
+    color: var(--text);
+    text-decoration: none;
+    position: relative;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .featured-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-hover);
+    text-decoration: none;
+  }
+  .featured-badge {
+    align-self: flex-start;
+    margin-bottom: 12px;
+    padding: 3px 10px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--r-pill);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .featured-card h3 {
+    font-size: 20px;
+    line-height: 1.25;
+    margin: 0 0 10px;
+  }
+  .featured-card p {
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0 0 16px;
+    flex: 1;
+    font-size: 14px;
+  }
+  .featured-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .featured-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+  .featured-author img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
   .contributors {
     margin-top: 50px;
     padding: 24px 0 32px;
@@ -163,11 +387,41 @@ const authors = await getCollection('authors');
   .chip-name { font-weight: 600; font-size: 14px; }
   .chip-role { font-size: 12px; color: var(--text-muted); }
 
+  /* Filter pill row — above the grid, horizontally scrollable on narrow
+     viewports so all five categories stay reachable without wrapping. */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 32px 0 16px;
+  }
+  .filter-pill {
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .filter-pill:hover {
+    color: var(--text);
+    border-color: var(--primary);
+  }
+  .filter-pill.is-active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
   .post-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 18px;
-    margin-top: 32px;
+    margin-top: 8px;
   }
   .post-card {
     display: flex;
@@ -231,5 +485,12 @@ const authors = await getCollection('authors');
     color: var(--primary);
     font-size: 13px;
     font-weight: 600;
+  }
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-muted);
+    padding: 32px 16px;
+    font-size: 14px;
   }
 </style>

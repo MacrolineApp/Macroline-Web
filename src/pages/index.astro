@@ -2,7 +2,10 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base>
+<Base
+  title="Macroline — Just say what you ate."
+  description="The AI-native macro tracker. Describe a meal, scan a barcode, or connect Claude. Every food has a verified source."
+>
   <section class="hero">
     <div class="hero-text">
       <p class="eyebrow">AI-native macro tracker</p>
@@ -12,13 +15,18 @@ import Base from '../layouts/Base.astro';
         verified source. No more guessing whether your tracker got the macros right.
       </p>
       <div class="cta-row">
-        <a href="#download" class="btn-primary">Join the waitlist</a>
+        <a href="https://testflight.apple.com/join/SBhsGn9q" target="_blank" rel="noopener" class="btn-primary">
+          Join TestFlight beta →
+        </a>
         <a href="/features" class="btn-ghost">See features</a>
       </div>
-      <p class="cta-sub">Free tier with everything that matters · Pro $4.99/mo unlocks AI input + Claude</p>
+      <p class="cta-sub">Public TestFlight open · App Store launch May 21 · Free tier with everything that matters · Pro $4.99/mo unlocks AI input + Claude</p>
     </div>
 
-    <!-- Stylized in-app preview card — gives the hero a visual anchor -->
+    <!-- Stylized in-app preview card — gives the hero a visual anchor.
+         Hidden on ≤720px (v1.5): at narrow widths the inline food entries
+         shrink below ~10px effective text size and become illegible — visual
+         filler instead of product proof. The hero copy + CTAs own mobile. -->
     <div class="hero-preview" aria-hidden="true">
       <div class="card-stack">
         <div class="card today-card">
@@ -76,8 +84,8 @@ import Base from '../layouts/Base.astro';
 
     <article class="pillar">
       <div class="pillar-icon">🔌</div>
-      <h2>Bring your own AI.</h2>
-      <p>Macroline runs as an MCP server. Connect Claude, ChatGPT, or any MCP-compatible assistant. Log dinner from your phone, your desktop, even your IDE.</p>
+      <h2>Log from Claude. Or ChatGPT. Anywhere.</h2>
+      <p>Macroline runs as an MCP server, so any modern AI assistant can log meals for you. Talk to Claude on your laptop, ChatGPT on your phone — it all lands in your diary.</p>
     </article>
   </section>
 
@@ -111,9 +119,68 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
+  <!-- Privacy promises strip — surfaces what's deep on /privacy. One of
+       the strongest trust signals available; was hidden three clicks deep. -->
+  <section class="promises">
+    <p class="promises-label">Our promises</p>
+    <div class="promises-grid">
+      <article class="promise promise-protein">
+        <span class="promise-icon" aria-hidden="true">🛡</span>
+        <h3>Never sold</h3>
+        <p>Your data isn't a product.</p>
+      </article>
+      <article class="promise promise-carbs">
+        <span class="promise-icon" aria-hidden="true">🚫</span>
+        <h3>Never trained</h3>
+        <p>We don't feed your meals to AI models.</p>
+      </article>
+      <article class="promise promise-fat">
+        <span class="promise-icon" aria-hidden="true">↗</span>
+        <h3>Export anytime</h3>
+        <p>CSV + JSON, your whole history.</p>
+      </article>
+      <article class="promise promise-accent">
+        <span class="promise-icon" aria-hidden="true">🗑</span>
+        <h3>Delete in one tap</h3>
+        <p>Cascades through every record.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Founder note — the site had no human anywhere. This is the single
+       highest-impact warmth fix for a category as personal as nutrition. -->
+  <section class="founder">
+    <div class="founder-photo">
+      <img
+        src="/founder.jpg"
+        alt="Mike — Macroline founder"
+        loading="lazy"
+        width="220"
+        height="280"
+      />
+    </div>
+    <div class="founder-text">
+      <h2>Built by one person who got tired of bad food data.</h2>
+      <p>
+        I'm Mike. I built Macroline because every macro tracker I tried lied to me — bad
+        community entries, wrong serving sizes, "estimates" that were guesses. The whole
+        product is one bet: if every number can be traced to a real source, people will trust it.
+      </p>
+      <p>
+        If something's off, I read the support inbox personally. Email me anytime at
+        <a href="mailto:info@macroline.app">info@macroline.app</a>.
+      </p>
+      <p class="founder-sig">— Mike, founder</p>
+    </div>
+  </section>
+
   <section id="download" class="download">
-    <h2>Coming soon to the App Store.</h2>
-    <p>Macroline launches first on iOS via TestFlight. Drop your email and we'll let you know.</p>
+    <h2>Public TestFlight is open now.</h2>
+    <p>App Store launch May 21. Drop your email below if you'd rather wait for the public release.</p>
+    <a href="https://testflight.apple.com/join/SBhsGn9q" target="_blank" rel="noopener" class="testflight-cta">
+      Join TestFlight beta →
+    </a>
+    <p class="download-or">Or wait for App Store launch — drop your email:</p>
     <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="home">
       <input type="email" name="email" placeholder="you@example.com" required />
       <button type="submit">Join waitlist</button>
@@ -147,6 +214,12 @@ import Base from '../layouts/Base.astro';
     .hero { grid-template-columns: 1fr; padding-block: 56px 48px; }
     .hero-text { text-align: center; }
     .cta-row { justify-content: center; }
+  }
+  /* v1.5: hide the in-app preview cards on narrow viewports — at 390px
+     wide the food entries shrink below readability and the phone mockup
+     becomes visual filler, not product proof. */
+  @media (max-width: 720px) {
+    .hero-preview { display: none; }
   }
   .eyebrow {
     font-size: 13px;
@@ -197,7 +270,7 @@ import Base from '../layouts/Base.astro';
     border: 1px solid rgba(248, 250, 252, 0.22);
   }
   .hero .btn-ghost:hover { background: rgba(248, 250, 252, 0.08); text-decoration: none; }
-  .cta-sub { color: #8AA0C4; font-size: 13px; margin-top: 18px; }
+  .cta-sub { color: #8AA0C4; font-size: 13px; margin-top: 18px; max-width: 540px; line-height: 1.5; }
 
   /* Hero preview — stylized in-app card */
   .hero-preview {
@@ -373,8 +446,120 @@ import Base from '../layouts/Base.astro';
   .tier-grid .estimated    .tier-dot { background: #EAB308; }
   .tier-grid .unverified   .tier-dot { background: #94A3B8; }
 
-  .download {
+  /* Privacy promises strip — surfaces the /privacy commitments. 4-up
+     desktop / 2x2 tablet / 1-col mobile. Icon chips use the macro
+     palette (protein/carbs/fat/accent) so it picks up the brand. */
+  .promises {
     margin-top: 100px;
+    text-align: center;
+  }
+  .promises-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+  }
+  .promises-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    text-align: left;
+  }
+  @media (max-width: 880px) {
+    .promises-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .promises-grid { grid-template-columns: 1fr; }
+  }
+  .promise {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 20px;
+  }
+  .promise-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .promise-protein .promise-icon { background: color-mix(in srgb, var(--protein) 16%, transparent); }
+  .promise-carbs   .promise-icon { background: color-mix(in srgb, var(--carbs) 16%, transparent); }
+  .promise-fat     .promise-icon { background: color-mix(in srgb, var(--fat) 16%, transparent); }
+  .promise-accent  .promise-icon { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+  .promise h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .promise p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Founder block — between provenance/promises and the download CTA.
+     Rectangular 220x280 photo on desktop (not a circular avatar) +
+     name + 60-100 word note. Photo stacks above the copy on mobile. */
+  .founder {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 32px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .founder { grid-template-columns: 1fr; text-align: center; }
+    .founder-photo { justify-self: center; max-width: 280px; width: 100%; }
+  }
+  .founder-photo {
+    position: relative;
+  }
+  .founder-photo img {
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: var(--r-lg);
+    display: block;
+    /* Subtle macro-gradient outline so the photo edge picks up the
+       brand palette without overpowering the lifestyle shot. */
+    border: 1px solid color-mix(in srgb, var(--protein) 30%, var(--border));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--carbs) 12%, transparent),
+      0 12px 28px -16px rgba(0, 0, 0, 0.35);
+  }
+  @media (max-width: 720px) {
+    .founder-photo img { width: 100%; height: auto; aspect-ratio: 220 / 280; max-width: 280px; }
+  }
+  .founder-text h2 {
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .founder-text p {
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0 0 12px;
+    font-size: 15px;
+  }
+  .founder-text .founder-sig {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 14px;
+  }
+
+  .download {
+    margin-top: 80px;
     text-align: center;
     padding: 60px 24px;
     background: var(--surface);
@@ -384,10 +569,30 @@ import Base from '../layouts/Base.astro';
   .download h2 { font-size: 32px; }
   .download p { color: var(--text-muted); margin-top: 12px; }
   .download-note { font-size: 12px; margin-top: 14px; }
+  .download-or {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 28px 0 10px;
+  }
+  .testflight-cta {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 24px;
+    padding: 16px 32px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .testflight-cta:hover { background: var(--primary-hover); color: white; text-decoration: none; }
   .signup-form {
     display: flex;
     gap: 8px;
-    margin-top: 24px;
+    margin-top: 0;
     justify-content: center;
     flex-wrap: wrap;
   }
