@@ -177,6 +177,19 @@ const effectiveDate = '2026-05-02';
     <p>
       The Macroline iOS app does not use cookies. The marketing site (macroline.app) uses minimal analytics provided by Cloudflare Pages, which counts page views without setting tracking cookies or collecting personally identifiable information. We do not use third-party advertising or social-media tracking pixels.
     </p>
+    <p>
+      A short transparency notice appears on your first visit summarising the above. If you dismissed it and want to re-read it, use the link below — it clears the local flag and reloads the page so the notice shows again.
+      <a href="#" id="ml-cookie-notice-manage" rel="noopener">Manage cookie notice</a>.
+    </p>
+    <script>
+      // Clear the localStorage dismissal flag and reload so the notice
+      // shows again. Mirrors the storage key used by CookieNotice.astro.
+      document.getElementById('ml-cookie-notice-manage')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        try { localStorage.removeItem('macroline:cookie-notice'); } catch { /* ignore */ }
+        window.location.reload();
+      });
+    </script>
 
     <h2>10. Changes to this policy</h2>
     <p>

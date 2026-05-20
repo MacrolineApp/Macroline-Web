@@ -1,4 +1,6 @@
 ---
+import CookieNotice from '../components/CookieNotice.astro';
+
 interface Props {
   title?: string;
   description?: string;
@@ -219,6 +221,8 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
         });
       }
     </script>
+
+    <CookieNotice />
   </body>
 </html>
 
