@@ -173,6 +173,14 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
           const email = emailEl.value.trim();
           if (!email) return;
           const source = form.dataset.source ?? 'unknown';
+          // Honeypot: read the hidden `name="hp"` input the form ships
+          // with. Real humans never touch it (it's off-screen + aria-
+          // hidden + tabindex=-1), scrapers fill it. Backend silently
+          // accepts when non-empty so the bot doesn't retry. Empty is
+          // the expected case; we still POST the field so the no-JS
+          // fallback path and the JS path stay consistent.
+          const hpEl = form.querySelector<HTMLInputElement>('input[name="hp"]');
+          const hp = hpEl?.value ?? '';
 
           btn.disabled = true;
           const originalLabel = btn.textContent;
@@ -183,7 +191,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
             const res = await fetch(form.action, {
               method: 'POST',
               headers: { 'content-type': 'application/json' },
-              body: JSON.stringify({ email, source }),
+              body: JSON.stringify({ email, source, hp }),
             });
             const data = (await res.json().catch(() => ({}))) as { ok?: boolean; alreadyOnList?: boolean; error?: string };
 
@@ -207,7 +215,9 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
                 msgEl.textContent =
                   data.error === 'invalid_email'
                     ? 'That email doesn’t look right — try again.'
-                    : 'Something went wrong. Try again in a moment.';
+                    : data.error === 'rate_limited'
+                      ? "We got a lot of signups from your network — try again in a bit."
+                      : 'Something went wrong. Try again in a moment.';
               }
             }
           } catch {
@@ -506,6 +516,20 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   .waitlist-msg:empty { display: none; }
   .waitlist-msg.is-success { color: var(--protein); font-weight: 600; }
   .waitlist-msg.is-error { color: #DC2626; font-weight: 500; }
+
+  /* Honeypot wrapper. Bots that auto-fill every visible-looking input
+     reveal themselves; the backend silently accepts (200) when hp is
+     non-empty so they don't retry. Off-screen positioning beats
+     display:none because some scraper headless browsers skip
+     display:none entirely. */
+  .hp-field {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 
   .footer-links {
     display: grid;

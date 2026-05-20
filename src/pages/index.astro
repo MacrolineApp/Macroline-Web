@@ -182,6 +182,9 @@ import Base from '../layouts/Base.astro';
     </a>
     <p class="download-or">Or wait for App Store launch — drop your email:</p>
     <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="home">
+      <div class="hp-field" aria-hidden="true">
+        <label>Website (leave blank)<input type="text" name="hp" tabindex="-1" autocomplete="off" /></label>
+      </div>
       <input type="email" name="email" placeholder="you@example.com" required />
       <button type="submit">Join waitlist</button>
       <p class="waitlist-msg" role="status" aria-live="polite"></p>

@@ -67,6 +67,9 @@ const formatted = post.data.publishedAt.toLocaleDateString('en-US', {
       <h2>Want this in your phone?</h2>
       <p>Macroline launches first on iOS. Drop your email and we'll let you know.</p>
       <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source={`blog:${post.id}`}>
+        <div class="hp-field" aria-hidden="true">
+          <label>Website (leave blank)<input type="text" name="hp" tabindex="-1" autocomplete="off" /></label>
+        </div>
         <input type="email" name="email" placeholder="you@example.com" required />
         <button type="submit">Join waitlist</button>
         <p class="waitlist-msg" role="status" aria-live="polite"></p>

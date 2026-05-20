@@ -118,6 +118,9 @@ import Base from '../layouts/Base.astro';
     <h2>Ready to try it?</h2>
     <p>Join the waitlist — we'll let you know when Macroline lands on the App Store.</p>
     <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="features">
+      <div class="hp-field" aria-hidden="true">
+        <label>Website (leave blank)<input type="text" name="hp" tabindex="-1" autocomplete="off" /></label>
+      </div>
       <input type="email" name="email" placeholder="you@example.com" required />
       <button type="submit">Join waitlist</button>
       <p class="waitlist-msg" role="status" aria-live="polite"></p>
