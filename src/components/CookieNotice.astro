@@ -1,0 +1,281 @@
+---
+// CookieNotice — Path A transparency notice (v1.5.1).
+//
+// macroline.app sets ZERO non-strictly-necessary cookies today (Cloudflare
+// Pages analytics is cookieless; Stripe only loads on /pricing checkout on
+// user action). This notice is informational, not consent-gating — a fake
+// Accept/Reject banner would contradict /privacy section 9 and waste the
+// brand equity we built on honesty. If we ever add a real tracker, swap to
+// the Path B categories variant per the brief (component shell is reusable).
+//
+// Self-contained: markup + scoped <style> + inline <script>. Vanilla JS,
+// no dependencies. localStorage key `macroline:cookie-notice` value
+// `dismissed-v1`; the `-v1` suffix is intentional so a future material
+// copy change (bump to `-v2`) re-shows once.
+---
+
+<aside id="ml-cookie-notice" class="ml-cn" role="status" aria-live="polite" hidden>
+  <div class="ml-cn-row">
+    <span class="ml-cn-ic" aria-hidden="true">🍪</span>
+    <div class="ml-cn-tx">
+      <b>No tracking, no theater.</b>
+      Cookieless analytics from Cloudflare. No third-party pixels, no ad cookies.
+      <button
+        type="button"
+        class="ml-cn-more"
+        aria-expanded="false"
+        aria-controls="ml-cn-detail"
+      >What we use ›</button>
+    </div>
+    <button type="button" class="ml-cn-ok">Got it</button>
+    <button type="button" class="ml-cn-x" aria-label="Dismiss">×</button>
+  </div>
+  <div id="ml-cn-detail" class="ml-cn-det" hidden>
+    <ul>
+      <li><span class="ml-cn-d" aria-hidden="true"></span>Cloudflare Pages analytics · server-side, cookieless <em>Necessary</em></li>
+      <li><span class="ml-cn-d" aria-hidden="true"></span>Inter font from rsms.me · typography only <em>Necessary</em></li>
+      <li><span class="ml-cn-d" aria-hidden="true"></span>Stripe · only on /pricing checkout — payments <em>Necessary</em></li>
+      <li><span class="ml-cn-d" aria-hidden="true"></span>No third-party trackers, ad cookies, or pixels <em class="confirmed">Confirmed</em></li>
+    </ul>
+    <a href="/privacy">Read full Privacy policy →</a>
+  </div>
+</aside>
+
+<style>
+  /* Astro scopes component styles by default — these only apply to this
+     partial, so no global namespace pollution. All colors come from
+     Base.astro tokens (--surface, --text, etc.) so dark mode flips
+     automatically via the existing @media (prefers-color-scheme: dark)
+     block. The one exception is the "ok" green dot/tag: the brand
+     palette has no green token, so we use a single CSS named color
+     (`seagreen`) — not a hex literal, single semantic value, scoped to
+     this partial. If green appears in more components later, promote
+     to a --ok token in Base.astro. */
+
+  .ml-cn {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+    z-index: 60;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+    line-height: 1.5;
+    /* Entrance state — JS toggles .is-visible to slide up + fade in. */
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 240ms ease;
+  }
+  .ml-cn.is-visible { transform: translateY(0); opacity: 1; }
+  .ml-cn[hidden] { display: none; }
+
+  .ml-cn-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ml-cn-ic {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .ml-cn-tx {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--text-muted);
+  }
+  .ml-cn-tx b { color: var(--text); font-weight: 600; margin-right: 4px; }
+  .ml-cn-more {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+    color: var(--primary);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ml-cn-more:hover { text-decoration: underline; }
+
+  .ml-cn-ok {
+    flex: 0 0 auto;
+    background: var(--primary);
+    /* `white` (CSS named color) matches the .nav-login pattern in
+       Base.astro — Base has no --on-primary token, and white sits
+       readably on both the light navy (#1E40AF) and dark light-blue
+       (#5B9EFF) values of --primary. No hex literal. */
+    color: white;
+    border: none;
+    border-radius: var(--r-pill);
+    padding: 10px 20px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ml-cn-ok:hover { background: var(--primary-hover); }
+  .ml-cn-x {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .ml-cn-x:hover { background: var(--surface-2); color: var(--text); }
+  .ml-cn-ok:focus-visible,
+  .ml-cn-x:focus-visible,
+  .ml-cn-more:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Expanded "what we use" detail */
+  .ml-cn-det {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .ml-cn-det[hidden] { display: none; }
+  .ml-cn-det ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ml-cn-det li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .ml-cn-d {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: seagreen;
+  }
+  .ml-cn-det em {
+    margin-left: auto;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .ml-cn-det em.confirmed {
+    /* color-mix keeps a single seagreen reference (no hex) and matches
+       the in-srgb tint pattern used throughout the iOS app's CSS. */
+    background: color-mix(in srgb, seagreen 14%, transparent);
+    color: seagreen;
+  }
+  .ml-cn-det a { color: var(--primary); font-weight: 600; }
+
+  /* Mobile — stack the buttons below the text, full-width Got it. */
+  @media (max-width: 640px) {
+    .ml-cn-row {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .ml-cn-ic { align-self: flex-start; }
+    .ml-cn-tx { flex: 1 1 100%; order: 2; margin-top: 8px; }
+    .ml-cn-ok {
+      order: 3;
+      flex: 1 1 100%;
+      margin-top: 12px;
+      padding: 12px 20px;
+    }
+    /* × stays inline at the top-right next to the icon so it's reachable
+       without scrolling — matches the mobile mock. */
+    .ml-cn-x { margin-left: auto; }
+  }
+
+  /* prefers-reduced-motion: skip the slide, fade only over 120ms. */
+  @media (prefers-reduced-motion: reduce) {
+    .ml-cn {
+      transform: none;
+      transition: opacity 120ms ease;
+    }
+    .ml-cn.is-visible { transform: none; }
+  }
+</style>
+
+<script>
+  // First-visit-only notice with localStorage persistence. Vanilla JS;
+  // runs once on page load. Honors prefers-reduced-motion (CSS handles
+  // the motion side; this script just doesn't yank focus or otherwise
+  // imply animation). Sets NO cookies — localStorage only.
+  const KEY = 'macroline:cookie-notice';
+  const DISMISSED = 'dismissed-v1';
+
+  const el = document.getElementById('ml-cookie-notice');
+  if (el) {
+    let stored: string | null = null;
+    try { stored = localStorage.getItem(KEY); } catch { /* private mode etc. — fall through */ }
+
+    if (stored !== DISMISSED) {
+      // 600ms gives the hero LCP room to paint before the notice slides up.
+      setTimeout(() => {
+        el.hidden = false;
+        // Next frame so the browser sees the initial transform state
+        // before we flip the class — otherwise the transition is skipped.
+        requestAnimationFrame(() => el.classList.add('is-visible'));
+      }, 600);
+    }
+
+    const moreBtn = el.querySelector<HTMLButtonElement>('.ml-cn-more');
+    const detail = el.querySelector<HTMLElement>('.ml-cn-det');
+    if (moreBtn && detail) {
+      moreBtn.addEventListener('click', () => {
+        const open = moreBtn.getAttribute('aria-expanded') === 'true';
+        moreBtn.setAttribute('aria-expanded', String(!open));
+        detail.hidden = open;
+      });
+    }
+
+    function dismiss() {
+      try { localStorage.setItem(KEY, DISMISSED); } catch { /* ignore */ }
+      el!.classList.remove('is-visible');
+      // 180ms fade-out matches the entrance duration roughly; then hide.
+      setTimeout(() => { el!.hidden = true; }, 180);
+    }
+
+    el.querySelector<HTMLButtonElement>('.ml-cn-ok')?.addEventListener('click', dismiss);
+    el.querySelector<HTMLButtonElement>('.ml-cn-x')?.addEventListener('click', dismiss);
+
+    // Esc dismisses, but ONLY when focus is inside the notice (it's a
+    // status surface, not a modal — global Esc would steal from page
+    // interactions). Mirrors the nav-toggle Esc behavior in Base.astro.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (el.hidden) return;
+      const active = document.activeElement;
+      if (active instanceof Node && el.contains(active)) dismiss();
+    });
+  }
+</script>
