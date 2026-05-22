@@ -116,15 +116,13 @@ import Base from '../layouts/Base.astro';
 
   <section class="cta">
     <h2>Ready to try it?</h2>
-    <p>Join the waitlist — we'll let you know when Macroline lands on the App Store.</p>
-    <form class="signup-form waitlist-form" action="https://api.macroline.app/api/waitlist" method="post" data-source="features">
-      <div class="hp-field" aria-hidden="true">
-        <label>Website (leave blank)<input type="text" name="hp" tabindex="-1" autocomplete="off" /></label>
-      </div>
-      <input type="email" name="email" placeholder="you@example.com" required />
-      <button type="submit">Join waitlist</button>
-      <p class="waitlist-msg" role="status" aria-live="polite"></p>
-    </form>
+    <p>Macroline is on the App Store — free to download. Or use the web app in any browser.</p>
+    <div class="cta-row">
+      <a href="https://apps.apple.com/us/app/macroline/id6765770579" target="_blank" rel="noopener" class="btn-primary">
+        Download on the App Store →
+      </a>
+      <a href="https://my.macroline.app" class="btn-ghost">Open the web app</a>
+    </div>
   </section>
 </Base>
 
@@ -242,6 +240,34 @@ import Base from '../layouts/Base.astro';
   }
   .cta h2 { font-size: 28px; }
   .cta p { color: var(--text-muted); margin-top: 8px; }
+  .cta .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .cta .btn-primary {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cta .btn-primary:hover { background: var(--primary-hover); text-decoration: none; }
+  .cta .btn-ghost {
+    display: inline-block;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px 24px;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cta .btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
   .signup-form {
     display: flex; gap: 8px;
     margin-top: 20px;
