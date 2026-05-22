@@ -151,87 +151,6 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
       </div>
     </footer>
 
-    <script>
-      // Waitlist forms: intercept submit and POST via fetch so we can show
-      // an inline success state without taking the user away from the page.
-      // The forms still have action="..." and method="post", so if JS is
-      // disabled the browser will do a full-page POST and the API will
-      // accept the form-urlencoded body (handler supports both content-types).
-      //
-      // Class hook is `.waitlist-form`; data-source attribute is sent along
-      // so the server can attribute signups to which form/page they came from
-      // (`home`, `features`, `blog:<slug>`, `footer`).
-      const forms = document.querySelectorAll<HTMLFormElement>('.waitlist-form');
-      for (const form of forms) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const emailEl = form.querySelector<HTMLInputElement>('input[name="email"]');
-          const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-          const msgEl = form.querySelector<HTMLParagraphElement>('.waitlist-msg');
-          if (!emailEl || !btn) return;
-
-          const email = emailEl.value.trim();
-          if (!email) return;
-          const source = form.dataset.source ?? 'unknown';
-          // Honeypot: read the hidden `name="hp"` input the form ships
-          // with. Real humans never touch it (it's off-screen + aria-
-          // hidden + tabindex=-1), scrapers fill it. Backend silently
-          // accepts when non-empty so the bot doesn't retry. Empty is
-          // the expected case; we still POST the field so the no-JS
-          // fallback path and the JS path stay consistent.
-          const hpEl = form.querySelector<HTMLInputElement>('input[name="hp"]');
-          const hp = hpEl?.value ?? '';
-
-          btn.disabled = true;
-          const originalLabel = btn.textContent;
-          btn.textContent = 'Sending…';
-          if (msgEl) msgEl.textContent = '';
-
-          try {
-            const res = await fetch(form.action, {
-              method: 'POST',
-              headers: { 'content-type': 'application/json' },
-              body: JSON.stringify({ email, source, hp }),
-            });
-            const data = (await res.json().catch(() => ({}))) as { ok?: boolean; alreadyOnList?: boolean; error?: string };
-
-            if (res.ok && data.ok) {
-              // Swap the input + button for the success message. Keep the
-              // form mounted (don't hide it) so screen readers see the
-              // state change via aria-live.
-              emailEl.style.display = 'none';
-              btn.style.display = 'none';
-              if (msgEl) {
-                msgEl.classList.add('is-success');
-                msgEl.textContent = data.alreadyOnList
-                  ? "You're already on the list. We'll be in touch."
-                  : "You're on the list — check your inbox.";
-              }
-            } else {
-              btn.disabled = false;
-              btn.textContent = originalLabel;
-              if (msgEl) {
-                msgEl.classList.add('is-error');
-                msgEl.textContent =
-                  data.error === 'invalid_email'
-                    ? 'That email doesn’t look right — try again.'
-                    : data.error === 'rate_limited'
-                      ? "We got a lot of signups from your network — try again in a bit."
-                      : 'Something went wrong. Try again in a moment.';
-              }
-            }
-          } catch {
-            btn.disabled = false;
-            btn.textContent = originalLabel;
-            if (msgEl) {
-              msgEl.classList.add('is-error');
-              msgEl.textContent = 'Couldn’t reach the server. Try again.';
-            }
-          }
-        });
-      }
-    </script>
-
     <CookieNotice />
   </body>
 </html>
@@ -465,9 +384,8 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     line-height: 1.55;
     margin: 14px 0 18px;
   }
-  /* Footer secondary CTA — replaces the duplicate waitlist input that
-     sat below the in-page waitlist forms. Sends footer-curious users
-     to the blog instead of asking for their email a second time. */
+  /* Footer secondary CTA — points footer-curious visitors to the blog
+     (the App Store + web-app links live in the baseline status line). */
   .footer-blog-cta {
     display: inline-flex;
     flex-direction: column;
@@ -501,34 +419,6 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     color: var(--primary);
     font-weight: 600;
     margin-top: 4px;
-  }
-
-  /* Inline status under a `.waitlist-form`. Hidden by default (empty
-     content) and revealed once the script sets text. Used by footer +
-     hero + features + post-article forms. */
-  .waitlist-msg {
-    margin: 4px 0 0;
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--text-muted);
-    flex-basis: 100%;
-  }
-  .waitlist-msg:empty { display: none; }
-  .waitlist-msg.is-success { color: var(--protein); font-weight: 600; }
-  .waitlist-msg.is-error { color: #DC2626; font-weight: 500; }
-
-  /* Honeypot wrapper. Bots that auto-fill every visible-looking input
-     reveal themselves; the backend silently accepts (200) when hp is
-     non-empty so they don't retry. Off-screen positioning beats
-     display:none because some scraper headless browsers skip
-     display:none entirely. */
-  .hp-field {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
   }
 
   .footer-links {

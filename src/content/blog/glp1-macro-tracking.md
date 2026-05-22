@@ -36,7 +36,7 @@ Macroline's roadmap includes weight tracking, GLP-1 dose schedules, side-effect 
 
 The point of tracking on a GLP-1 isn't to recover discipline you lost. It's to make sure the medication is doing the work *and* you're preserving muscle, hitting macros, and staying on target without obsessing over it.
 
-If that sounds like the kind of tracker you've been looking for, [join the waitlist](/#download).
+If that sounds like the kind of tracker you've been looking for, [download Macroline on the App Store](https://apps.apple.com/us/app/macroline/id6765770579) — or use the [web app](https://my.macroline.app) in any browser.
 
 ---
 
