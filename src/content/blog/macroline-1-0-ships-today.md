@@ -1,13 +1,12 @@
 ---
 title: What we built — Macroline 1.0 ships today
 description: Today Macroline 1.0 lands on the App Store. Here's what's in the box, what we deliberately left out, who 1.0 is for, and the design principles behind the cuts. Substance, no hype — that's the brand.
-publishedAt: 2026-05-21
+publishedAt: 2026-05-22
 author: alex-rivera
 tags: ["launch", "product", "macroline", "MCP", "GLP-1"]
-draft: true
 ---
 
-Today is launch day. Macroline 1.0 is on the App Store, available on iPhone, with the matching web companion at [my.macroline.app](https://my.macroline.app). The free tier covers the core tracking experience; the $4.99/month Pro tier unlocks AI-heavy features (more describe-a-meal quota, MCP integration to connect Claude or any MCP-compatible assistant, advanced history charts) and removes the soft daily limits on cost-heavy operations.
+Today is launch day. Macroline is live on the [App Store](https://apps.apple.com/us/app/macroline/id6765770579), available on iPhone, with the matching web companion at [my.macroline.app](https://my.macroline.app). The free tier covers the core tracking experience; the $4.99/month Pro tier unlocks AI-heavy features (more describe-a-meal quota, MCP integration to connect Claude or any MCP-compatible assistant, advanced history charts) and removes the soft daily limits on cost-heavy operations.
 
 I want to walk through what 1.0 actually is — the *substance*, not the marketing copy — because the shape of a product on launch day says more about the design intent than any subsequent feature push does. Here is what we built.
 
@@ -59,7 +58,7 @@ If you're tracking macros for a real reason — a cut, a bulk, a bariatric or GL
 
 If you want a tracker that turns your eating into a stream you post about, gives you streak mechanics, and recommends a specific diet — that's a different product, and there are many good ones. We aren't trying to be that.
 
-Macroline 1.0 is on the App Store today. The web companion is at [my.macroline.app](https://my.macroline.app), the MCP setup guide is at [/connect-claude](/connect-claude), and you can read more about the principles behind every cut in the rest of this blog.
+Macroline is on the [App Store](https://apps.apple.com/us/app/macroline/id6765770579) today. The web companion is at [my.macroline.app](https://my.macroline.app), the MCP setup guide is at [/connect-claude](/connect-claude), and you can read more about the principles behind every cut in the rest of this blog.
 
 Just say what you ate. We'll do the rest.
 
