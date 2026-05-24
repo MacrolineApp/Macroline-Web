@@ -20,7 +20,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0F172A" />
+    <meta name="theme-color" content="#FCFBF9" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>{title}</title>
@@ -50,6 +50,25 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
         </svg>
         <span class="brand-name">macroline</span>
       </a>
+      <nav id="primary-nav" class="primary-nav">
+        <a href="/features">Features</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/blog">Blog</a>
+        <a href="https://my.macroline.app/login" class="nav-login">Log in</a>
+      </nav>
+      <!-- Persistent App Store CTA — always visible (outside the collapsible
+           nav) so it stays on screen at every breakpoint, including the
+           mobile drawer state. The fix Mike asked for. -->
+      <a
+        class="appbtn"
+        href="https://apps.apple.com/us/app/macroline/id6765770579"
+        target="_blank"
+        rel="noopener"
+        aria-label="Download Macroline on the App Store"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 1.6c0 1.1-.4 2.1-1.2 2.9-.9.95-2 1.5-3.1 1.4-.1-1.1.4-2.2 1.1-2.9.85-.9 2.1-1.5 3.2-1.4zM20.3 17c-.5 1.2-.8 1.7-1.5 2.7-1 1.5-2.4 3.3-4.1 3.3-1.5 0-1.9-1-3.9-1-2 0-2.4 1-3.9 1-1.7 0-3-1.7-4-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.3.9 4.5 2.4-3.9 2.2-3.3 7.8.6 9.3z"/></svg>
+        <span class="appbtn-label"><span>Download on the</span><b>App Store</b></span>
+      </a>
       <button
         type="button"
         class="nav-toggle"
@@ -59,12 +78,6 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
       >
         <span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <nav id="primary-nav" class="primary-nav">
-        <a href="/features">Features</a>
-        <a href="/pricing">Pricing</a>
-        <a href="/blog">Blog</a>
-        <a href="https://my.macroline.app/login" class="nav-login">Log in</a>
-      </nav>
     </header>
 
     <script>
@@ -114,6 +127,18 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
             <span>macroline</span>
           </a>
           <p class="footer-tag">The AI-native macro tracker. Just say what you ate.</p>
+          <div class="footer-badges">
+            <a
+              class="footer-badge"
+              href="https://apps.apple.com/us/app/macroline/id6765770579"
+              target="_blank"
+              rel="noopener"
+              aria-label="Download Macroline on the App Store"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 1.6c0 1.1-.4 2.1-1.2 2.9-.9.95-2 1.5-3.1 1.4-.1-1.1.4-2.2 1.1-2.9.85-.9 2.1-1.5 3.2-1.4zM20.3 17c-.5 1.2-.8 1.7-1.5 2.7-1 1.5-2.4 3.3-4.1 3.3-1.5 0-1.9-1-3.9-1-2 0-2.4 1-3.9 1-1.7 0-3-1.7-4-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.3.9 4.5 2.4-3.9 2.2-3.3 7.8.6 9.3z"/></svg>
+              <span class="footer-badge-label"><span>Download on the</span><b>App Store</b></span>
+            </a>
+          </div>
           <a class="footer-blog-cta" href="/blog">
             <span class="footer-blog-cta-title">Notes from the macro lab.</span>
             <span class="footer-blog-cta-sub">Twice-weekly posts on macros, GLP-1, and the science of food data.</span>
@@ -144,7 +169,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
       <div class="footer-baseline">
         <span>© {new Date().getFullYear()} Macroline. All rights reserved.</span>
         <span class="status-line">
-          <a href="https://apps.apple.com/us/app/macroline/id6765770579" target="_blank" rel="noopener">Now on the App Store</a>
+          On the App Store
           <span aria-hidden="true"> · </span>
           <a href="https://my.macroline.app">Web app</a>
         </span>
@@ -157,21 +182,28 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
 
 <style is:global>
   :root {
-    --bg: #FAFAFA;
+    /* Warmed palette — bright/airy, navy kept as the brand anchor, a fresh
+       green for vitality. The cool slate/navy default gave way to a warm
+       off-white + green-tinted insets. */
+    --bg: #FCFBF9;          /* warm off-white (was cold #FAFAFA) */
     --surface: #FFFFFF;
-    --surface-2: #F1F5F9;
-    --text: #0F172A;
-    --text-muted: #64748B;
-    --border: #E2E8F0;
+    --surface-2: #F4F7F4;   /* faint green-tinted inset */
+    --text: #14241C;        /* warm near-black w/ green undertone */
+    --text-muted: #5C6B63;
+    --border: #E7ECE7;
+    --navy: #0A1628;        /* brand anchor — footer, App Store buttons */
+    --fresh: #16A34A;       /* vitality green — primary marketing accent/CTA */
+    --fresh-hover: #15893F;
     --primary: #1E40AF;
     --primary-hover: #1D4ED8;
     --accent: #5B9EFF;
-    --protein: #F08E3A;
-    --carbs:   #F0B020;
-    --fat:     #8B6DFF;
-    --r-md: 12px;
-    --r-lg: 18px;
+    --protein: #F2792B;     /* bumped for marketing energy */
+    --carbs:   #F2B705;
+    --fat:     #8B5CF6;
+    --r-md: 14px;
+    --r-lg: 22px;
     --r-pill: 999px;
+    --shadow: 0 24px 50px -28px rgba(20, 36, 28, 0.28);
   }
 
   /* Brand-navy dark mode — matches the iOS app's blue theme so users
@@ -218,14 +250,40 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   }
 
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 24px;
-    position: relative;
+    gap: 22px;
+    /* Full-bleed sticky bar; inner content centered to ~1100px via padding
+       so we get a blurred backdrop edge-to-edge without a wrapper div. */
+    padding: 13px max(24px, calc(50vw - 550px));
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
   }
+
+  /* Persistent App Store CTA — navy pill, Apple glyph + two-line label. */
+  .appbtn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--navy);
+    color: #fff;
+    padding: 9px 16px;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .appbtn:hover { background: #13233f; color: #fff; text-decoration: none; }
+  .appbtn svg { width: 16px; height: 16px; }
+  .appbtn-label { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+  .appbtn-label span { font-size: 9px; opacity: 0.75; font-weight: 500; }
+  .appbtn-label b { font-size: 13px; }
   .brand {
     display: flex;
     align-items: center;
@@ -252,14 +310,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
   /* Right-anchored "Log in" pill — visually separates the call-to-action
      from the regular nav links so signed-out visitors find the entry point. */
   .site-header .primary-nav .nav-login {
-    margin-left: 8px;
-    padding: 8px 16px;
-    border-radius: var(--r-pill);
-    background: var(--primary);
-    color: white;
+    margin-left: 4px;
+    color: var(--text);
     font-weight: 600;
   }
-  .site-header .primary-nav .nav-login:hover { background: var(--primary-hover); color: white; }
+  .site-header .primary-nav .nav-login:hover { color: var(--fresh); text-decoration: none; }
 
   /* Hamburger button — desktop hidden, mobile visible. Three-bar icon
      animates into an X when open. */
@@ -302,6 +357,10 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
 
   @media (max-width: 720px) {
     .nav-toggle { display: inline-flex; }
+    /* App Store pill stays visible next to the hamburger; trim the
+       "Download on the" line so it fits beside the menu button. */
+    .appbtn { margin-left: auto; padding: 8px 13px; gap: 7px; }
+    .appbtn-label span { display: none; }
 
     /* Drawer mode: nav slides down from below the header on mobile.
        Hidden by default, revealed by data-nav-open="true" on the header. */
@@ -340,7 +399,11 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
       margin-left: 0;
       margin-top: 8px;
       text-align: center;
+      background: var(--fresh);
+      color: #fff;
+      border-radius: var(--r-pill);
     }
+    .site-header .primary-nav .nav-login:hover { background: var(--fresh-hover); color: #fff; }
   }
 
   /* Footer — full-bleed band so the page closes cleanly. The brand
@@ -348,14 +411,31 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
      a second chance to drop their email; link columns on the right
      cover product/company/legal. The faint baseline strip at the bottom
      carries copyright + a launch-status reminder. */
+  /* Footer goes navy — the brand anchor — to ground the warm, bright page. */
   .site-footer {
-    border-top: 1px solid var(--border);
     margin-top: 96px;
     padding: 56px 24px 24px;
-    background: var(--surface);
-    color: var(--text-muted);
+    background: var(--navy);
+    color: #cdd9ec;
     font-size: 14px;
   }
+  .footer-badges { display: flex; gap: 10px; margin: 0 0 18px; }
+  .footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: var(--navy);
+    padding: 11px 18px;
+    border-radius: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .footer-badge:hover { background: #f1f1f1; text-decoration: none; color: var(--navy); }
+  .footer-badge svg { width: 22px; height: 22px; }
+  .footer-badge-label { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
+  .footer-badge-label span { font-size: 10px; opacity: 0.7; font-weight: 500; }
+  .footer-badge-label b { font-size: 15px; }
   .footer-inner {
     max-width: 1100px;
     margin: 0 auto;
@@ -374,12 +454,12 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     gap: 10px;
     font-family: 'Inter Display', 'Inter', sans-serif;
     font-weight: 600;
-    color: var(--text);
+    color: #fff;
     font-size: 17px;
   }
-  .footer-logo:hover { text-decoration: none; color: var(--text); }
+  .footer-logo:hover { text-decoration: none; color: #fff; }
   .footer-tag {
-    color: var(--text-muted);
+    color: #9fb3d1;
     font-size: 14px;
     line-height: 1.55;
     margin: 14px 0 18px;
@@ -391,32 +471,32 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     flex-direction: column;
     gap: 4px;
     padding: 14px 16px;
-    background: var(--bg);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--r-md);
     text-decoration: none;
-    color: var(--text);
+    color: #fff;
     transition: border-color 0.15s ease, transform 0.15s ease;
     max-width: 360px;
   }
   .footer-blog-cta:hover {
-    border-color: var(--primary);
+    border-color: rgba(255, 255, 255, 0.32);
     text-decoration: none;
     transform: translateY(-1px);
   }
   .footer-blog-cta-title {
     font-weight: 600;
     font-size: 14px;
-    color: var(--text);
+    color: #fff;
   }
   .footer-blog-cta-sub {
     font-size: 12px;
-    color: var(--text-muted);
+    color: #9fb3d1;
     line-height: 1.45;
   }
   .footer-blog-cta-link {
     font-size: 13px;
-    color: var(--primary);
+    color: #7ab8ff;
     font-weight: 600;
     margin-top: 4px;
   }
@@ -435,35 +515,32 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     font-weight: 700;
     letter-spacing: 0.10em;
     text-transform: uppercase;
-    color: var(--text);
+    color: #fff;
     margin: 0 0 6px;
   }
   .footer-col a {
-    color: var(--text-muted);
+    color: #9fb3d1;
     font-size: 14px;
     text-decoration: none;
   }
-  .footer-col a:hover { color: var(--text); text-decoration: none; }
+  .footer-col a:hover { color: #fff; text-decoration: none; }
 
   .footer-baseline {
     max-width: 1100px;
-    margin: 32px auto 0;
+    margin: 34px auto 0;
     padding-top: 18px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: var(--text-muted);
+    color: #7f93b1;
     flex-wrap: wrap;
     gap: 8px;
   }
-  .footer-baseline .status-line { font-style: italic; }
   .footer-baseline .status-line a {
-    color: var(--text-muted);
-    text-decoration: underline;
-    text-decoration-color: var(--border);
-    font-style: italic;
+    color: #9fb3d1;
+    text-decoration: none;
   }
-  .footer-baseline .status-line a:hover { color: var(--primary); }
+  .footer-baseline .status-line a:hover { color: #fff; }
 </style>
