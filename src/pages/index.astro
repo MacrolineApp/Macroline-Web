@@ -8,85 +8,103 @@ import Base from '../layouts/Base.astro';
 >
   <section class="hero">
     <div class="hero-text">
-      <p class="eyebrow">AI-native macro tracker</p>
+      <p class="eyebrow"><span class="pip" aria-hidden="true"></span> AI-native macro tracker</p>
       <h1>Just say what<br/>you ate.</h1>
       <p class="hero-sub">
         Describe a meal, scan a barcode, or connect Claude. Every food has a
-        verified source. No more guessing whether your tracker got the macros right.
+        verified source — so you can finally trust the numbers.
       </p>
       <div class="cta-row">
-        <a href="https://apps.apple.com/us/app/macroline/id6765770579" target="_blank" rel="noopener" class="btn-primary">
-          Download on the App Store →
+        <a href="https://apps.apple.com/us/app/macroline/id6765770579" target="_blank" rel="noopener" class="badge">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 1.6c0 1.1-.4 2.1-1.2 2.9-.9.95-2 1.5-3.1 1.4-.1-1.1.4-2.2 1.1-2.9.85-.9 2.1-1.5 3.2-1.4zM20.3 17c-.5 1.2-.8 1.7-1.5 2.7-1 1.5-2.4 3.3-4.1 3.3-1.5 0-1.9-1-3.9-1-2 0-2.4 1-3.9 1-1.7 0-3-1.7-4-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.3.9 4.5 2.4-3.9 2.2-3.3 7.8.6 9.3z"/></svg>
+          <span class="badge-label"><span>Download on the</span><b>App Store</b></span>
         </a>
         <a href="/features" class="btn-ghost">See features</a>
       </div>
-      <p class="cta-sub">On the App Store now · Free tier with everything that matters · Pro $4.99/mo unlocks AI input + Claude · Or use the <a href="https://my.macroline.app">web app</a></p>
+      <p class="cta-sub"><b>Free</b> tier with everything that matters · <b>Pro $4.99/mo</b> unlocks AI input + Claude · or use the <a href="https://my.macroline.app">web app</a></p>
     </div>
 
-    <!-- Stylized in-app preview card — gives the hero a visual anchor.
-         Hidden on ≤720px (v1.5): at narrow widths the inline food entries
-         shrink below ~10px effective text size and become illegible — visual
-         filler instead of product proof. The hero copy + CTAs own mobile. -->
-    <div class="hero-preview" aria-hidden="true">
-      <div class="card-stack">
-        <div class="card today-card">
-          <div class="card-head">
-            <span class="card-label">Today</span>
-            <span class="card-cal">1,847 <span class="cal-unit">cal</span></span>
-          </div>
-          <div class="macro-row">
-            <div class="macro-bar protein">
-              <span class="bar-fill" style="width: 78%"></span>
-              <span class="bar-label">Protein</span>
-              <span class="bar-num">142g</span>
-            </div>
-            <div class="macro-bar carbs">
-              <span class="bar-fill" style="width: 62%"></span>
-              <span class="bar-label">Carbs</span>
-              <span class="bar-num">186g</span>
-            </div>
-            <div class="macro-bar fat">
-              <span class="bar-fill" style="width: 54%"></span>
-              <span class="bar-label">Fat</span>
-              <span class="bar-num">64g</span>
-            </div>
-          </div>
+    <!-- Food-forward hero visual: a real food photo with the in-app "Today"
+         card floating over the lower-left corner, light-themed to match the
+         warm site. The photo is the LCP element, so it loads eager. -->
+    <div class="hero-visual">
+      <div class="hero-photo">
+        <img
+          src="/food/hero-salmon.jpg"
+          alt="Grilled salmon with a fresh green salad, avocado, and lemon on a pale plate"
+          width="800"
+          height="1000"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <span class="ph-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h2l1.5-2h7L19 7h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          Sourced macros, every meal
+        </span>
+      </div>
+      <div class="float-card" aria-hidden="true">
+        <div class="fc-head">
+          <span class="fc-label">Today</span>
+          <span class="fc-cal">1,847<span> cal</span></span>
         </div>
-        <div class="card describe-card">
-          <div class="describe-prompt">"chicken caesar wrap and a coke"</div>
-          <div class="describe-result">
-            <div class="match">
-              <span class="match-name">Chicken Caesar Wrap <span class="tier authoritative">Verified</span></span>
-              <span class="match-cal">540 cal</span>
-            </div>
-            <div class="match">
-              <span class="match-name">Coca-Cola, 12 fl oz <span class="tier authoritative">Verified</span></span>
-              <span class="match-cal">140 cal</span>
-            </div>
-          </div>
-        </div>
+        <div class="bar p"><i></i><b>Protein</b><em>142g</em></div>
+        <div class="bar c"><i></i><b>Carbs</b><em>186g</em></div>
+        <div class="bar f"><i></i><b>Fat</b><em>64g</em></div>
       </div>
     </div>
   </section>
 
   <section class="pillars">
-    <article class="pillar">
-      <div class="pillar-icon">🎙</div>
+    <article class="pillar a">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>
+      </div>
       <h2>Speak it. Log it.</h2>
-      <p>"I had a chicken caesar wrap with extra parmesan and a coke." Macroline parses natural language, finds the right foods, and logs the right portions. Voice or text, your call.</p>
+      <p>"A chicken caesar wrap with extra parmesan and a coke." Macroline parses natural language, finds the right foods, and logs the right portions. Voice or text, your call.</p>
     </article>
 
-    <article class="pillar">
-      <div class="pillar-icon">🔍</div>
+    <article class="pillar b">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
       <h2>Honest data.</h2>
       <p>Every food links to its source — USDA, manufacturer pages, official restaurant nutrition. Tap any number to see where it came from. No more bad community entries with wrong macros.</p>
     </article>
 
-    <article class="pillar">
-      <div class="pillar-icon">🔌</div>
+    <article class="pillar c">
+      <div class="pillar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 7V2M15 7V2M8 7h8v4a4 4 0 0 1-8 0zM12 15v7"/></svg>
+      </div>
       <h2>Log from Claude. Or ChatGPT. Anywhere.</h2>
       <p>Macroline runs as an MCP server, so any modern AI assistant can log meals for you. Talk to Claude on your laptop, ChatGPT on your phone — it all lands in your diary.</p>
     </article>
+  </section>
+
+  <!-- Real food + provenance band — ties the food imagery to the moat:
+       every pictured meal carries a Verified provenance chip. -->
+  <section class="foodband">
+    <div class="foodband-head">
+      <h2>Real food. Real numbers.</h2>
+      <p>Every meal you log carries a provenance tier and a citation — the warmth of real food, backed by data you can actually trust.</p>
+    </div>
+    <div class="food-grid">
+      <figure class="food-cell">
+        <img src="/food/oats.jpg" alt="Overnight oats with blueberries, raspberries, and honey" width="800" height="800" loading="lazy" />
+        <figcaption class="chip"><span class="dot" aria-hidden="true"></span>Verified</figcaption>
+      </figure>
+      <figure class="food-cell">
+        <img src="/food/salad.jpg" alt="Colorful grain salad bowl with sweet potato, chickpeas, and tahini" width="800" height="800" loading="lazy" />
+        <figcaption class="chip"><span class="dot" aria-hidden="true"></span>Verified</figcaption>
+      </figure>
+      <figure class="food-cell">
+        <img src="/food/chicken.jpg" alt="Grilled chicken over rice with broccoli and roasted peppers" width="800" height="800" loading="lazy" />
+        <figcaption class="chip"><span class="dot" aria-hidden="true"></span>Verified</figcaption>
+      </figure>
+      <figure class="food-cell">
+        <img src="/food/smoothie.jpg" alt="Green smoothie with almonds, banana, spinach, and kiwi" width="800" height="800" loading="lazy" />
+        <figcaption class="chip"><span class="dot" aria-hidden="true"></span>Verified</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="moat">
@@ -125,22 +143,30 @@ import Base from '../layouts/Base.astro';
     <p class="promises-label">Our promises</p>
     <div class="promises-grid">
       <article class="promise promise-protein">
-        <span class="promise-icon" aria-hidden="true">🛡</span>
+        <span class="promise-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5z"/></svg>
+        </span>
         <h3>Never sold</h3>
         <p>Your data isn't a product.</p>
       </article>
       <article class="promise promise-carbs">
-        <span class="promise-icon" aria-hidden="true">🚫</span>
+        <span class="promise-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg>
+        </span>
         <h3>Never trained</h3>
         <p>We don't feed your meals to AI models.</p>
       </article>
       <article class="promise promise-fat">
-        <span class="promise-icon" aria-hidden="true">↗</span>
+        <span class="promise-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        </span>
         <h3>Export anytime</h3>
         <p>CSV + JSON, your whole history.</p>
       </article>
       <article class="promise promise-accent">
-        <span class="promise-icon" aria-hidden="true">🗑</span>
+        <span class="promise-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13h10l1-13"/></svg>
+        </span>
         <h3>Delete in one tap</h3>
         <p>Cascades through every record.</p>
       </article>
@@ -185,223 +211,249 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
-  /* Navy hero band — breaks out of the constrained <main> to fill the
-     viewport, then re-constrains its inner content. Bridges the visual
-     seam between marketing site (light) and the iOS app (navy) so the
-     handoff at install feels continuous. */
+  /* Bright, warm, food-forward hero. Full-bleed warm gradient with a soft
+     carbs-yellow glow top-right and a fresh-green glow bottom-left (was the
+     dark navy band); re-constrains its inner content to the page width. */
   .hero {
     margin-inline: calc(50% - 50vw);
-    padding-inline: max(24px, calc(50vw - 538px));
-    padding-block: 80px 72px;
+    padding-inline: max(24px, calc(50vw - 550px));
+    padding-block: 64px 56px;
     background:
-      radial-gradient(ellipse 700px 500px at 92% 8%, rgba(91, 158, 255, 0.22) 0%, transparent 55%),
-      radial-gradient(ellipse 600px 450px at 4% 96%, rgba(139, 108, 255, 0.16) 0%, transparent 60%),
-      linear-gradient(180deg, #0E1A35 0%, #0A1628 60%, #061029 100%);
-    color: #F8FAFC;
+      radial-gradient(ellipse 760px 520px at 88% -6%, rgba(242, 183, 5, 0.18) 0%, transparent 58%),
+      radial-gradient(ellipse 620px 480px at -4% 108%, rgba(22, 163, 74, 0.14) 0%, transparent 60%),
+      linear-gradient(180deg, #FFFDF8 0%, var(--bg) 100%);
+    color: var(--text);
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.05fr 0.95fr;
     gap: 48px;
     align-items: center;
-    border-bottom: 1px solid rgba(96, 165, 250, 0.12);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
   }
   @media (max-width: 880px) {
-    .hero { grid-template-columns: 1fr; padding-block: 56px 48px; }
+    .hero { grid-template-columns: 1fr; padding-block: 48px 40px; }
     .hero-text { text-align: center; }
     .cta-row { justify-content: center; }
   }
-  /* v1.5: hide the in-app preview cards on narrow viewports — at 390px
-     wide the food entries shrink below readability and the phone mockup
-     becomes visual filler, not product proof. */
-  @media (max-width: 720px) {
-    .hero-preview { display: none; }
-  }
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 13px;
     font-weight: 700;
-    color: #5B9EFF;
-    letter-spacing: 0.16em;
+    color: var(--fresh);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin: 0 0 14px;
+    margin: 0 0 16px;
   }
+  .eyebrow .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--fresh); }
   .hero h1 {
-    font-size: clamp(40px, 6.5vw, 72px);
-    line-height: 1.02;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.0;
     letter-spacing: -0.04em;
     margin: 0;
-    color: #FFFFFF;
+    color: var(--text);
   }
   .hero-sub {
-    font-size: 18px;
-    color: #94B3D7;
+    font-size: 19px;
+    color: var(--text-muted);
     margin: 22px 0 0;
-    max-width: 540px;
+    max-width: 500px;
     line-height: 1.55;
   }
   .cta-row {
     display: flex;
-    gap: 12px;
-    margin-top: 28px;
+    gap: 14px;
+    margin-top: 30px;
+    align-items: center;
     flex-wrap: wrap;
   }
-  .btn-primary, .btn-ghost {
+  /* Apple App Store badge — navy pill, the brand anchor against the warm hero. */
+  .badge {
     display: inline-flex;
     align-items: center;
-    padding: 14px 24px;
+    gap: 11px;
+    background: var(--navy);
+    color: #fff;
+    padding: 13px 22px;
     border-radius: var(--r-pill);
     font-weight: 600;
-    font-size: 15px;
     text-decoration: none;
   }
-  /* Inside the navy hero band, the primary CTA flips to brand blue
-     on near-black so it reads as a glowing pill against the gradient. */
-  .hero .btn-primary {
-    background: #5B9EFF;
-    color: #04122E;
-  }
-  .hero .btn-primary:hover { background: #76B6FF; text-decoration: none; }
-  .hero .btn-ghost {
-    color: #F8FAFC;
-    border: 1px solid rgba(248, 250, 252, 0.22);
-  }
-  .hero .btn-ghost:hover { background: rgba(248, 250, 252, 0.08); text-decoration: none; }
-  .cta-sub { color: #8AA0C4; font-size: 13px; margin-top: 18px; max-width: 540px; line-height: 1.5; }
-
-  /* Hero preview — stylized in-app card */
-  .hero-preview {
-    position: relative;
-    min-height: 420px;
-  }
-  .card-stack {
-    position: relative;
-    height: 100%;
-  }
-  .card {
-    background: linear-gradient(160deg, #1a2a4a 0%, #0f1830 100%);
-    border: 1px solid rgba(96, 165, 250, 0.15);
-    border-radius: 20px;
-    padding: 22px;
-    color: #f8fafc;
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.4), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(16px);
-  }
-  .today-card {
-    width: 100%;
-    max-width: 360px;
-    transform: rotate(-1.5deg);
-    margin-left: auto;
-  }
-  .describe-card {
-    width: 100%;
-    max-width: 320px;
-    margin-top: -32px;
-    margin-left: 0;
-    transform: rotate(2deg);
-    position: relative;
-    z-index: 1;
-  }
-  @media (prefers-color-scheme: dark) {
-    .card {
-      background: linear-gradient(160deg, #1a2a4a 0%, #0a0f1f 100%);
-      border-color: rgba(96, 165, 250, 0.2);
-    }
-  }
-  .card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 18px;
-  }
-  .card-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
+  .badge:hover { background: #13233f; color: #fff; text-decoration: none; }
+  .badge svg { width: 22px; height: 22px; }
+  .badge-label { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
+  .badge-label span { font-size: 10px; opacity: 0.8; font-weight: 500; }
+  .badge-label b { font-size: 16px; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text);
     font-weight: 600;
+    font-size: 15px;
+    padding: 13px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    text-decoration: none;
   }
-  .card-cal {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .cal-unit {
-    font-size: 14px;
-    color: #94a3b8;
-    font-weight: 400;
-    margin-left: 4px;
-  }
-  .macro-row { display: grid; gap: 10px; }
-  .macro-bar {
-    position: relative;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .bar-fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    border-radius: 14px;
-    opacity: 0.5;
-  }
-  .macro-bar.protein .bar-fill { background: var(--protein); }
-  .macro-bar.carbs   .bar-fill { background: var(--carbs); }
-  .macro-bar.fat     .bar-fill { background: var(--fat); }
-  .bar-label, .bar-num { position: relative; z-index: 1; }
-  .bar-num { font-family: ui-monospace, 'SF Mono', monospace; font-weight: 600; }
+  .btn-ghost:hover { background: var(--surface-2); text-decoration: none; }
+  .cta-sub { color: var(--text-muted); font-size: 13px; margin-top: 18px; max-width: 500px; line-height: 1.5; }
+  .cta-sub b { color: var(--text); }
+  .cta-sub a { color: var(--fresh); }
 
-  .describe-prompt {
-    font-style: italic;
-    font-size: 14px;
-    color: #94a3b8;
-    margin-bottom: 14px;
-    padding: 10px 14px;
-    background: rgba(96, 165, 250, 0.1);
-    border-left: 3px solid var(--primary);
-    border-radius: 4px;
+  /* Hero visual — food photo with the in-app "Today" card floating over the
+     lower-left corner, light-themed to match the warm site. */
+  .hero-visual { position: relative; min-height: 440px; }
+  @media (max-width: 880px) { .hero-visual { min-height: 0; margin-top: 8px; } }
+  .hero-photo {
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 4 / 5;
+    max-width: 380px;
+    margin-left: auto;
+    /* Gradient under the photo — also the placeholder tint until the real
+       AI food photo lands at /food/hero-salmon.jpg. */
+    background: linear-gradient(150deg, #2f7d4f 0%, #6aa84f 42%, #d9b44a 100%);
   }
-  .describe-result { display: grid; gap: 10px; }
-  .match {
-    display: flex;
-    justify-content: space-between;
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph-tag {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    background: rgba(10, 22, 40, 0.72);
+    color: #fff;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    display: inline-flex;
+    gap: 6px;
     align-items: center;
-    padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 10px;
-    font-size: 13px;
   }
-  .match-name { display: flex; align-items: center; gap: 8px; }
-  .match-cal { font-weight: 600; font-family: ui-monospace, 'SF Mono', monospace; font-size: 12px; }
-  .tier {
-    font-size: 9px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 2px 6px;
-    border-radius: 4px;
+  .ph-tag svg { width: 12px; height: 12px; opacity: 0.85; }
+  .float-card {
+    position: absolute;
+    left: -8px;
+    bottom: 36px;
+    width: 268px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
   }
-  .tier.authoritative { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+  @media (max-width: 880px) {
+    .hero-photo { margin: 0 auto; }
+    .float-card { left: 50%; transform: translateX(-50%); bottom: -18px; width: min(268px, 88%); }
+  }
+  @media (max-width: 480px) {
+    .float-card { position: static; transform: none; width: 100%; margin: 14px auto 0; }
+  }
+  .fc-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .fc-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+  .fc-cal { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+  .fc-cal span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .bar {
+    height: 24px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    position: relative;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 11px;
+    font-size: 12px;
+    font-weight: 600;
+    overflow: hidden;
+    color: var(--text);
+  }
+  .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 12px; }
+  .bar.p i { width: 78%; background: color-mix(in srgb, var(--protein) 80%, #fff); }
+  .bar.c i { width: 62%; background: color-mix(in srgb, var(--carbs) 80%, #fff); }
+  .bar.f i { width: 54%; background: color-mix(in srgb, var(--fat) 75%, #fff); }
+  .bar b, .bar em { position: relative; z-index: 1; font-style: normal; }
+  .bar em { font-family: ui-monospace, 'SF Mono', monospace; }
 
   .pillars {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
-    margin-top: 80px;
+    margin-top: 84px;
   }
   .pillar {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-lg);
-    padding: 28px;
+    padding: 30px 26px;
+    position: relative;
   }
-  .pillar-icon { font-size: 28px; margin-bottom: 12px; }
-  .pillar h2 { font-size: 22px; margin-bottom: 8px; }
+  /* 3px colored top-accent per card. */
+  .pillar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 26px;
+    right: 26px;
+    height: 3px;
+    border-radius: 3px;
+  }
+  .pillar.a::before { background: var(--protein); }
+  .pillar.b::before { background: var(--fresh); }
+  .pillar.c::before { background: var(--fat); }
+  /* Real line icons in colored rounded chips (was emoji). */
+  .pillar-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+  }
+  .pillar-icon svg { width: 24px; height: 24px; }
+  .pillar.a .pillar-icon { background: color-mix(in srgb, var(--protein) 14%, #fff); color: var(--protein); }
+  .pillar.b .pillar-icon { background: color-mix(in srgb, var(--fresh) 14%, #fff); color: var(--fresh); }
+  .pillar.c .pillar-icon { background: color-mix(in srgb, var(--fat) 14%, #fff); color: var(--fat); }
+  .pillar h2 { font-size: 21px; margin-bottom: 8px; }
   .pillar p { color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* Real food + provenance band — 4-up square photos, each with a Verified
+     provenance chip tying the imagery back to the moat. */
+  .foodband { margin-top: 84px; }
+  .foodband-head { text-align: center; margin-bottom: 32px; }
+  .foodband-head h2 { font-size: clamp(28px, 4vw, 40px); }
+  .foodband-head p { color: var(--text-muted); font-size: 17px; margin: 14px auto 0; max-width: 560px; }
+  .food-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 720px) { .food-grid { grid-template-columns: repeat(2, 1fr); } }
+  .food-cell {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    /* Placeholder tint until the real AI food photo lands at /food/*. */
+    background: linear-gradient(150deg, #3f8f5a, #86c06a);
+  }
+  .food-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .food-cell .chip {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #0f5132;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 7px;
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .food-cell .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fresh); }
 
   .moat {
     margin-top: 100px;
@@ -479,13 +531,13 @@ import Base from '../layouts/Base.astro';
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    font-size: 18px;
     margin-bottom: 10px;
   }
-  .promise-protein .promise-icon { background: color-mix(in srgb, var(--protein) 16%, transparent); }
-  .promise-carbs   .promise-icon { background: color-mix(in srgb, var(--carbs) 16%, transparent); }
-  .promise-fat     .promise-icon { background: color-mix(in srgb, var(--fat) 16%, transparent); }
-  .promise-accent  .promise-icon { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+  .promise-icon svg { width: 18px; height: 18px; }
+  .promise-protein .promise-icon { background: color-mix(in srgb, var(--protein) 16%, transparent); color: var(--protein); }
+  .promise-carbs   .promise-icon { background: color-mix(in srgb, var(--carbs) 16%, transparent); color: color-mix(in srgb, var(--carbs) 70%, #6b5300); }
+  .promise-fat     .promise-icon { background: color-mix(in srgb, var(--fat) 16%, transparent); color: var(--fat); }
+  .promise-accent  .promise-icon { background: color-mix(in srgb, var(--fresh) 16%, transparent); color: var(--fresh); }
   .promise h3 {
     font-size: 15px;
     margin-bottom: 4px;
