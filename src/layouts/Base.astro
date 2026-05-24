@@ -206,21 +206,9 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     --shadow: 0 24px 50px -28px rgba(20, 36, 28, 0.28);
   }
 
-  /* Brand-navy dark mode — matches the iOS app's blue theme so users
-     who keep the OS in dark mode see Macroline's navy palette, not
-     generic black. */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0A1628;
-      --surface: #142242;
-      --surface-2: #1F2A45;
-      --text: #F8FAFC;
-      --text-muted: #94B3D7;
-      --border: rgba(96, 165, 250, 0.15);
-      --primary: #5B9EFF;
-      --primary-hover: #76B6FF;
-    }
-  }
+  /* No dark mode — the bright/warm palette is the brand look in every OS
+     appearance (Mike 2026-05-24). Removing the prefers-color-scheme:dark
+     override is what kept the site reading navy in OS dark mode. */
 
   * { box-sizing: border-box; }
   html, body {
@@ -411,12 +399,13 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
      a second chance to drop their email; link columns on the right
      cover product/company/legal. The faint baseline strip at the bottom
      carries copyright + a launch-status reminder. */
-  /* Footer goes navy — the brand anchor — to ground the warm, bright page. */
+  /* Bright footer — matches the warm site everywhere (no navy surfaces). */
   .site-footer {
     margin-top: 96px;
     padding: 56px 24px 24px;
-    background: var(--navy);
-    color: #cdd9ec;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
     font-size: 14px;
   }
   .footer-badges { display: flex; gap: 10px; margin: 0 0 18px; }
@@ -424,14 +413,14 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #fff;
-    color: var(--navy);
+    background: var(--navy);
+    color: #fff;
     padding: 11px 18px;
     border-radius: 14px;
     font-weight: 600;
     text-decoration: none;
   }
-  .footer-badge:hover { background: #f1f1f1; text-decoration: none; color: var(--navy); }
+  .footer-badge:hover { background: #13233f; text-decoration: none; color: #fff; }
   .footer-badge svg { width: 22px; height: 22px; }
   .footer-badge-label { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
   .footer-badge-label span { font-size: 10px; opacity: 0.7; font-weight: 500; }
@@ -454,12 +443,12 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     gap: 10px;
     font-family: 'Inter Display', 'Inter', sans-serif;
     font-weight: 600;
-    color: #fff;
+    color: var(--text);
     font-size: 17px;
   }
-  .footer-logo:hover { text-decoration: none; color: #fff; }
+  .footer-logo:hover { text-decoration: none; color: var(--text); }
   .footer-tag {
-    color: #9fb3d1;
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.55;
     margin: 14px 0 18px;
@@ -471,32 +460,32 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     flex-direction: column;
     gap: 4px;
     padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--r-md);
     text-decoration: none;
-    color: #fff;
+    color: var(--text);
     transition: border-color 0.15s ease, transform 0.15s ease;
     max-width: 360px;
   }
   .footer-blog-cta:hover {
-    border-color: rgba(255, 255, 255, 0.32);
+    border-color: var(--fresh);
     text-decoration: none;
     transform: translateY(-1px);
   }
   .footer-blog-cta-title {
     font-weight: 600;
     font-size: 14px;
-    color: #fff;
+    color: var(--text);
   }
   .footer-blog-cta-sub {
     font-size: 12px;
-    color: #9fb3d1;
+    color: var(--text-muted);
     line-height: 1.45;
   }
   .footer-blog-cta-link {
     font-size: 13px;
-    color: #7ab8ff;
+    color: var(--fresh);
     font-weight: 600;
     margin-top: 4px;
   }
@@ -515,32 +504,32 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://macroline.app
     font-weight: 700;
     letter-spacing: 0.10em;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--text);
     margin: 0 0 6px;
   }
   .footer-col a {
-    color: #9fb3d1;
+    color: var(--text-muted);
     font-size: 14px;
     text-decoration: none;
   }
-  .footer-col a:hover { color: #fff; text-decoration: none; }
+  .footer-col a:hover { color: var(--text); text-decoration: none; }
 
   .footer-baseline {
     max-width: 1100px;
     margin: 34px auto 0;
     padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: #7f93b1;
+    color: var(--text-muted);
     flex-wrap: wrap;
     gap: 8px;
   }
   .footer-baseline .status-line a {
-    color: #9fb3d1;
+    color: var(--text-muted);
     text-decoration: none;
   }
-  .footer-baseline .status-line a:hover { color: #fff; }
+  .footer-baseline .status-line a:hover { color: var(--text); }
 </style>
