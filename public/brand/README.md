@@ -4,7 +4,7 @@ Static assets for press, partner integrations, and the Claude Connectors directo
 
 | File | Use |
 |---|---|
-| `macroline-logo-512.svg` | Primary square logo. 512×512 viewBox with deep navy gradient frame. Use this for connector listings, app store directories, and any context expecting a square logo. |
+| `macroline-logo-512.svg` | Primary square logo. 512×512 viewBox with a bright warm (white→cream) frame, matching the app icon. Use this for connector listings, app store directories, and any context expecting a square logo. |
 | `macroline-mark.svg` | Bar-chart mark only, no frame. Use inline in text or in headers where the framed logo is too heavy. |
 | `macroline-wordmark.svg` | Horizontal lockup of mark + lowercase "macroline" word. Use on dark backgrounds. |
 
