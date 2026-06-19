@@ -4,15 +4,15 @@ import Base from '../layouts/Base.astro';
 
 <Base
   title="Macroline — Just say what you ate."
-  description="The AI-native macro tracker. Describe a meal, scan a barcode, or connect Claude. Every food has a verified source."
+  description="The honest macro tracker. Every food shows its real source: USDA, the label, or a clearly marked estimate. Describe a meal, scan a barcode, or connect Claude."
 >
   <section class="hero">
     <div class="hero-text">
-      <p class="eyebrow"><span class="pip" aria-hidden="true"></span> AI-native macro tracker</p>
+      <p class="eyebrow"><span class="pip" aria-hidden="true"></span> Honest macro tracking</p>
       <h1>Just say what<br/>you ate.</h1>
       <p class="hero-sub">
-        Describe a meal, scan a barcode, or connect Claude. Every food has a
-        verified source — so you can finally trust the numbers.
+        The honest macro tracker. Every number shows its real source: USDA, the
+        label, or a clear estimate.
       </p>
       <div class="cta-row">
         <a href="https://apps.apple.com/us/app/macroline/id6765770579" target="_blank" rel="noopener" class="badge">
@@ -78,6 +78,49 @@ import Base from '../layouts/Base.astro';
       <h2>Log from Claude. Or ChatGPT. Anywhere.</h2>
       <p>Macroline runs as an MCP server, so any modern AI assistant can log meals for you. Talk to Claude on your laptop, ChatGPT on your phone — it all lands in your diary.</p>
     </article>
+  </section>
+
+  <!-- Live-feature showcase — the homepage's first real app screen, beside the
+       features shipped since launch. Phone shot left, feature list right. -->
+  <section class="showcase">
+    <div class="showcase-art">
+      <img
+        src="/screenshots/01-just-say.png"
+        alt="Macroline home screen: calories left on a ring, protein, carbs and fat bars, a GLP-1 protein reminder, a weight trend line, and a search-or-describe bar"
+        width="1290"
+        height="2796"
+        loading="lazy"
+      />
+    </div>
+    <div class="showcase-text">
+      <p class="eyebrow"><span class="pip" aria-hidden="true"></span> What's inside</p>
+      <h2>Everything you need, nothing that nags.</h2>
+      <ul class="showcase-list">
+        <li>
+          <b>A home screen that gets out of the way.</b>
+          Today's calories, protein, your trend, and your usuals, all at a glance.
+        </li>
+        <li>
+          <b>Protein target, calculated.</b>
+          Enter your weight and goal, get a starting protein number to track toward.
+          It's a starting point; adjust it with your dietitian.
+        </li>
+        <li>
+          <b>Your usuals, a couple of taps away.</b>
+          You don't eat a thousand foods, you eat the same twenty. Re-log them from
+          Recents without searching.
+        </li>
+        <li>
+          <b>Trends, not noise.</b>
+          Sync your weight and watch the multi-week trend line instead of the daily bounce.
+        </li>
+        <li>
+          <b>Built for GLP-1.</b>
+          Log your dose and side effects, and see your dose-in-system across the week.
+          Macroline is not medical advice.
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- Real food + provenance band — ties the food imagery to the moat:
@@ -419,6 +462,53 @@ import Base from '../layouts/Base.astro';
   .pillar.c .pillar-icon { background: color-mix(in srgb, var(--fat) 14%, #fff); color: var(--fat); }
   .pillar h2 { font-size: 21px; margin-bottom: 8px; }
   .pillar p { color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* Live-feature showcase — real app screen + the features shipped since launch. */
+  .showcase {
+    margin-top: 84px;
+    display: grid;
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .showcase { grid-template-columns: 1fr; gap: 28px; }
+  }
+  .showcase-art { display: flex; justify-content: center; }
+  .showcase-art img {
+    width: 100%;
+    max-width: 296px;
+    height: auto;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: block;
+  }
+  .showcase-text h2 {
+    font-size: clamp(26px, 3.4vw, 36px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 22px;
+    color: var(--text);
+  }
+  .showcase-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .showcase-list li {
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-left: 26px;
+    position: relative;
+  }
+  .showcase-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fresh);
+  }
+  .showcase-list b { color: var(--text); font-weight: 700; }
 
   /* Real food + provenance band — 4-up square photos, each with a Verified
      provenance chip tying the imagery back to the moat. */

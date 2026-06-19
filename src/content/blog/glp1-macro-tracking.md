@@ -2,6 +2,7 @@
 title: GLP-1 and macro tracking — why precision matters more, not less
 description: GLP-1 medications change appetite, satiety, and food choices. Here's how macro tracking should adapt — and why "good enough" calorie estimates aren't.
 publishedAt: 2026-05-02
+updatedAt: 2026-06-19
 author: maya-chen
 tags: ["GLP-1", "weight loss", "tracking philosophy"]
 ---
@@ -32,7 +33,7 @@ This is exactly what the medications are designed to do. And it changes what tra
 
 ## What we're building
 
-Macroline's roadmap includes weight tracking, GLP-1 dose schedules, side-effect logging, and weekly-average dashboards. The principle: **track for awareness, not for shame.** No streak pressure, no comparative leaderboards, no "you ate too much" copy. Just real data about what you ate, what you weigh, and how you're trending.
+Macroline ships weight tracking, GLP-1 dose logging, side-effect logging, and weekly-average dashboards today. The principle: **track for awareness, not for shame.** No streak pressure, no comparative leaderboards, no "you ate too much" copy. Just real data about what you ate, what you weigh, and how you're trending.
 
 The point of tracking on a GLP-1 isn't to recover discipline you lost. It's to make sure the medication is doing the work *and* you're preserving muscle, hitting macros, and staying on target without obsessing over it.
 
