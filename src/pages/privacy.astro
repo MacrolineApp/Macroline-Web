@@ -30,6 +30,7 @@ const effectiveDate = '2026-05-02';
       <li><strong>Diary entries.</strong> Foods you log, the quantity, optional meal type (breakfast/lunch/dinner/snack), the timestamp, and any optional notes.</li>
       <li><strong>Body and goal data.</strong> Calorie and macronutrient targets you set, weight entries you log (if any), display name, and timezone.</li>
       <li><strong>Custom foods.</strong> Foods you add to your private library that aren't in our public database.</li>
+      <li><strong>Body log (optional).</strong> If you use the Body log, the entries you choose to record: bowel movements (time and, optionally, Bristol type, amount, ease, whether blood was present, a note), urine entries (time, colour on an 8-shade chart, amount), period days (date and optional flow), daily symptoms (e.g., nausea, bloating, "didn't go"), and the supplements you take with their schedule and when you marked them taken. These are stored on our servers like your diary, used only to show you your own history and observational patterns in your own data (for example, average fiber on days with and without a movement), never used to predict cycles or fertility, never sold or shared, and deleted with your account. Each section can be switched off in Settings → Body log.</li>
       <li><strong>Free-text descriptions.</strong> When you use the "Describe meal" feature, the text you submit is sent to our AI provider (Anthropic) for parsing into structured items. The text is not used by Anthropic to train models (per the API terms in effect at the time of this policy).</li>
       <li><strong>Customer support communications.</strong> If you email us, we keep the message to respond.</li>
     </ul>
@@ -63,8 +64,8 @@ const effectiveDate = '2026-05-02';
     </p>
     <ul>
       <li><strong>read:foods</strong> — search the public food database and your custom foods.</li>
-      <li><strong>read:diary</strong> — read your diary entries, exercise logs, and daily summaries.</li>
-      <li><strong>write:diary</strong> — add new diary, exercise, and water entries.</li>
+      <li><strong>read:diary</strong> — read your diary entries, exercise logs, daily summaries, and (if you use it) your Body log and medication/supplement records.</li>
+      <li><strong>write:diary</strong> — add new diary, exercise, water, Body log, and medication/supplement entries.</li>
       <li><strong>write:goals</strong> — update your calorie and macro targets.</li>
     </ul>
     <p>
